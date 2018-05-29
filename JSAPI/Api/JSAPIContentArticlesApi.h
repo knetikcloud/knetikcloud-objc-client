@@ -29,7 +29,7 @@ extern NSInteger kJSAPIContentArticlesApiMissingParamErrorCode;
 -(instancetype) initWithApiClient:(JSAPIApiClient *)apiClient NS_DESIGNATED_INITIALIZER;
 
 /// Create a new article
-/// Articles are blobs of text with titles, a category and assets. Formatting and display of the text is in the hands of the front end.<br><br><b>Permissions:</b> ARTICLES_ADMIN
+/// Articles are blobs of text with titles, a category and assets. Formatting and display of the text is in the hands of the front end.<br><br><b>Permissions:</b> POST
 ///
 /// @param articleResource The new article (optional)
 /// 
@@ -79,7 +79,7 @@ extern NSInteger kJSAPIContentArticlesApiMissingParamErrorCode;
 
 
 /// Delete an existing article
-/// <b>Permissions Needed:</b> ARTICLES_ADMIN
+/// <b>Permissions Needed:</b> DELETE
 ///
 /// @param _id The article id
 /// 
@@ -133,7 +133,7 @@ extern NSInteger kJSAPIContentArticlesApiMissingParamErrorCode;
 
 
 /// Get a single article
-/// <b>Permissions Needed:</b> ANY
+/// <b>Permissions Needed:</b> GET
 ///
 /// @param _id The article id
 /// 
@@ -185,7 +185,7 @@ extern NSInteger kJSAPIContentArticlesApiMissingParamErrorCode;
 
 
 /// List and search articles
-/// Get a list of articles with optional filtering. Assets will not be filled in on the resources returned. Use 'Get a single article' to retrieve the full resource with assets for a given item as needed. <br><br><b>Permissions Needed:</b> ANY
+/// Get a list of articles with optional filtering. Assets will not be filled in on the resources returned. Use 'Get a single article' to retrieve the full resource with assets for a given item as needed. <br><br><b>Permissions Needed:</b> LIST
 ///
 /// @param filterActiveOnly Filter for articles that are active (true) or inactive (false) (optional)
 /// @param filterCategory Filter for articles from a specific category by id (optional)
@@ -257,7 +257,7 @@ extern NSInteger kJSAPIContentArticlesApiMissingParamErrorCode;
 
 
 /// Update an existing article
-/// <b>Permissions Needed:</b> ARTICLES_ADMIN
+/// <b>Permissions Needed:</b> PUT
 ///
 /// @param _id The article id
 /// @param articleResource The article object (optional)

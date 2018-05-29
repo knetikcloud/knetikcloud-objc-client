@@ -33,7 +33,7 @@ Method | HTTP request | Description
 
 Add a tag to a user
 
-<b>Permissions Needed:</b> USERS_ADMIN
+<b>Permissions Needed:</b> TAGS
 
 ### Example 
 ```objc
@@ -274,7 +274,7 @@ Name | Type | Description  | Notes
 
 Get a single user
 
-Additional private info is included as USERS_ADMIN. <br><br><b>Permissions Needed:</b> ANY
+Additional private info is included if access controls allow GET. <br><br><b>Permissions Needed:</b> ANY
 
 ### Example 
 ```objc
@@ -332,7 +332,7 @@ Name | Type | Description  | Notes
 
 List tags for a user
 
-<b>Permissions Needed:</b> USERS_ADMIN
+<b>Permissions Needed:</b> GET
 
 ### Example 
 ```objc
@@ -528,7 +528,7 @@ Name | Type | Description  | Notes
 
 List and search users
 
-Additional private info is included as USERS_ADMIN. <br><br><b>Permissions Needed:</b> ANY
+Additional private info is included with LIST_PRIVATE. <br><br><b>Permissions Needed:</b> LIST
 
 ### Example 
 ```objc
@@ -739,7 +739,7 @@ No authorization required
 
 Register a new user
 
-Password should be in plain text and will be encrypted on receipt. Use SSL for security. <br><br><b>Permissions Needed:</b> ANY
+Password should be in plain text and will be encrypted on receipt. Use SSL for security. <br><br><b>Permissions Needed:</b> POST
 
 ### Example 
 ```objc
@@ -798,7 +798,7 @@ Name | Type | Description  | Notes
 
 Remove a tag from a user
 
-<b>Permissions Needed:</b> USERS_ADMIN
+<b>Permissions Needed:</b> TAGS
 
 ### Example 
 ```objc
@@ -857,7 +857,7 @@ void (empty response body)
 
 Set a user's password
 
-Password should be in plain text and will be encrypted on receipt. Use SSL for security. <br><br><b>Permissions Needed:</b> USERS_ADMIN or (USERS_USER and owner)
+Password should be in plain text and will be encrypted on receipt. Use SSL for security. <br><br><b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -1026,7 +1026,7 @@ void (empty response body)
 
 Update a user
 
-Password will not be edited on this endpoint, use password specific endpoints. <br><br><b>Permissions Needed:</b> USERS_ADMIN or owner
+Password will not be edited on this endpoint, use password specific endpoints. <br><br><b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc

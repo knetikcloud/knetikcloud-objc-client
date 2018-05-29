@@ -4,7 +4,6 @@ All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.c
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**addUserLog**](JSAPILogsApi.md#adduserlog) | **POST** /audit/logs | Add a user log entry
 [**getBREEventLog**](JSAPILogsApi.md#getbreeventlog) | **GET** /bre/logs/event-log/{id} | Get an existing BRE event log entry by id
 [**getBREEventLogs**](JSAPILogsApi.md#getbreeventlogs) | **GET** /bre/logs/event-log | Returns a list of BRE event log entries
 [**getBREForwardLog**](JSAPILogsApi.md#getbreforwardlog) | **GET** /bre/logs/forward-log/{id} | Get an existing forward log entry by id
@@ -12,61 +11,6 @@ Method | HTTP request | Description
 [**getUserLog**](JSAPILogsApi.md#getuserlog) | **GET** /audit/logs/{id} | Returns a user log entry by id
 [**getUserLogs**](JSAPILogsApi.md#getuserlogs) | **GET** /audit/logs | Returns a page of user logs entries
 
-
-# **addUserLog**
-```objc
--(NSURLSessionTask*) addUserLogWithLogEntry: (JSAPIUserActionLog*) logEntry
-        completionHandler: (void (^)(NSError* error)) handler;
-```
-
-Add a user log entry
-
-<b>Permissions Needed:</b> owner
-
-### Example 
-```objc
-JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-
-JSAPIUserActionLog* logEntry = [[JSAPIUserActionLog alloc] init]; // The user log entry to be added (optional)
-
-JSAPILogsApi*apiInstance = [[JSAPILogsApi alloc] init];
-
-// Add a user log entry
-[apiInstance addUserLogWithLogEntry:logEntry
-          completionHandler: ^(NSError* error) {
-                        if (error) {
-                            NSLog(@"Error calling JSAPILogsApi->addUserLog: %@", error);
-                        }
-                    }];
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **logEntry** | [**JSAPIUserActionLog***](JSAPIUserActionLog.md)| The user log entry to be added | [optional] 
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getBREEventLog**
 ```objc

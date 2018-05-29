@@ -29,22 +29,6 @@ extern NSInteger kJSAPILogsApiMissingParamErrorCode;
 
 -(instancetype) initWithApiClient:(JSAPIApiClient *)apiClient NS_DESIGNATED_INITIALIZER;
 
-/// Add a user log entry
-/// <b>Permissions Needed:</b> owner
-///
-/// @param logEntry The user log entry to be added (optional)
-/// 
-///  code:200 message:"OK",
-///  code:400 message:"Bad Request",
-///  code:401 message:"Unauthorized",
-///  code:403 message:"Forbidden",
-///  code:404 message:"Not Found"
-///
-/// @return void
--(NSURLSessionTask*) addUserLogWithLogEntry: (JSAPIUserActionLog*) logEntry
-    completionHandler: (void (^)(NSError* error)) handler;
-
-
 /// Get an existing BRE event log entry by id
 /// <b>Permissions Needed:</b> BRE_RULE_ENGINE_EVENTS_ADMIN
 ///

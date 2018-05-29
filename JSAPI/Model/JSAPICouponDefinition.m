@@ -22,7 +22,7 @@
 
 + (NSDictionary *)modalDictionary {
 
-  return @{ @"code": @"code", @"_description": @"description", @"discountType": @"discount_type", @"exclusive": @"exclusive", @"maxDiscount": @"max_discount", @"maxQuantity": @"max_quantity", @"minCartTotal": @"min_cart_total", @"name": @"name", @"selfExclusive": @"self_exclusive", @"targetItemId": @"target_item_id", @"type": @"type", @"uniqueKey": @"unique_key", @"validForTags": @"valid_for_tags", @"value": @"value", @"vendorId": @"vendor_id" };
+  return @{ @"code": @"code", @"couponId": @"coupon_id", @"_description": @"description", @"discountType": @"discount_type", @"exclusive": @"exclusive", @"maxDiscount": @"max_discount", @"maxQuantity": @"max_quantity", @"minCartTotal": @"min_cart_total", @"name": @"name", @"selfExclusive": @"self_exclusive", @"targetItemId": @"target_item_id", @"type": @"type", @"uniqueKey": @"unique_key", @"validForTags": @"valid_for_tags", @"value": @"value", @"vendorId": @"vendor_id" };
 }
 
 /**
@@ -32,7 +32,7 @@
  */
 + (BOOL)propertyIsOptional:(NSString *)propertyName {
 
-  NSArray *optionalProperties = @[@"_description", @"exclusive", @"maxDiscount", @"maxQuantity", @"minCartTotal", @"selfExclusive", @"targetItemId", @"validForTags", @"vendorId"];
+  NSArray *optionalProperties = @[@"couponId", @"_description", @"exclusive", @"maxDiscount", @"maxQuantity", @"minCartTotal", @"selfExclusive", @"targetItemId", @"validForTags", @"vendorId"];
 
   return [optionalProperties containsObject:propertyName];
 }

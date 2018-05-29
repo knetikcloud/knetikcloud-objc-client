@@ -169,7 +169,7 @@ extern NSInteger kJSAPIUsersSubscriptionsApiMissingParamErrorCode;
 ///
 /// @param userId The id of the user
 /// @param inventoryId The id of the user&#39;s inventory
-/// @param theOverrideDetails override (optional)
+/// @param override The override details (optional)
 /// 
 ///  code:204 message:"No Content",
 ///  code:400 message:"Bad Request",
@@ -180,7 +180,7 @@ extern NSInteger kJSAPIUsersSubscriptionsApiMissingParamErrorCode;
 /// @return void
 -(NSURLSessionTask*) setUserSubscriptionPriceWithUserId: (NSNumber*) userId
     inventoryId: (NSNumber*) inventoryId
-    theOverrideDetails: (JSAPISubscriptionPriceOverrideRequest*) theOverrideDetails
+    override: (JSAPISubscriptionPriceOverrideRequest*) override
     completionHandler: (void (^)(NSError* error)) handler;
 
 

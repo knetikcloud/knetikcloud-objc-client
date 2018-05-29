@@ -761,12 +761,26 @@ NSInteger kJSAPIMediaVideosApiMissingParamErrorCode = 234513;
 ///
 /// Delete a video disposition
 /// <b>Permissions Needed:</b> VIDEOS_USER or VIDEOS_ADMIN
+///  @param videoId The video id 
+///
 ///  @param dispositionId The disposition id 
 ///
 ///  @returns void
 ///
--(NSURLSessionTask*) deleteVideoDispositionWithDispositionId: (NSNumber*) dispositionId
+-(NSURLSessionTask*) deleteVideoDispositionWithVideoId: (NSNumber*) videoId
+    dispositionId: (NSNumber*) dispositionId
     completionHandler: (void (^)(NSError* error)) handler {
+    // verify the required parameter 'videoId' is set
+    if (videoId == nil) {
+        NSParameterAssert(videoId);
+        if(handler) {
+            NSDictionary * userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Missing required parameter '%@'", nil),@"videoId"] };
+            NSError* error = [NSError errorWithDomain:kJSAPIMediaVideosApiErrorDomain code:kJSAPIMediaVideosApiMissingParamErrorCode userInfo:userInfo];
+            handler(error);
+        }
+        return nil;
+    }
+
     // verify the required parameter 'dispositionId' is set
     if (dispositionId == nil) {
         NSParameterAssert(dispositionId);
@@ -781,6 +795,9 @@ NSInteger kJSAPIMediaVideosApiMissingParamErrorCode = 234513;
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/media/videos/{video_id}/dispositions/{disposition_id}"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
+    if (videoId != nil) {
+        pathParams[@"video_id"] = videoId;
+    }
     if (dispositionId != nil) {
         pathParams[@"disposition_id"] = dispositionId;
     }
@@ -1292,6 +1309,8 @@ NSInteger kJSAPIMediaVideosApiMissingParamErrorCode = 234513;
 /// <b>Permissions Needed:</b> ANY
 ///  @param videoId The video id 
 ///
+///  @param filterCreatedDate Filters invoices by creation date. Multiple values possible for range search. Format: filter_created_date=OP,ts&... where OP in (GT, LT, GOE, LOE, EQ) and ts is a unix timestamp in seconds. Ex: filter_created_date=GT,1452154258,LT,1554254874 (optional)
+///
 ///  @param size The number of objects returned per page (optional, default to 25)
 ///
 ///  @param page The number of the page returned, starting with 1 (optional, default to 1)
@@ -1299,6 +1318,7 @@ NSInteger kJSAPIMediaVideosApiMissingParamErrorCode = 234513;
 ///  @returns JSAPIPageResourceDispositionResource_*
 ///
 -(NSURLSessionTask*) getVideoDispositionsWithVideoId: (NSNumber*) videoId
+    filterCreatedDate: (NSString*) filterCreatedDate
     size: (NSNumber*) size
     page: (NSNumber*) page
     completionHandler: (void (^)(JSAPIPageResourceDispositionResource_* output, NSError* error)) handler {
@@ -1321,6 +1341,9 @@ NSInteger kJSAPIMediaVideosApiMissingParamErrorCode = 234513;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (filterCreatedDate != nil) {
+        queryParams[@"filter_created_date"] = filterCreatedDate;
+    }
     if (size != nil) {
         queryParams[@"size"] = size;
     }

@@ -22,7 +22,7 @@
 
 + (NSDictionary *)modalDictionary {
 
-  return @{ @"active": @"active", @"additionalProperties": @"additional_properties", @"body": @"body", @"category": @"category", @"createdDate": @"created_date", @"_id": @"id", @"tags": @"tags", @"template": @"template", @"title": @"title", @"updatedDate": @"updated_date" };
+  return @{ @"active": @"active", @"additionalProperties": @"additional_properties", @"body": @"body", @"category": @"category", @"createdDate": @"created_date", @"_id": @"id", @"tags": @"tags", @"template": @"template", @"title": @"title", @"updatedDate": @"updated_date", @"viewCount": @"view_count" };
 }
 
 /**
@@ -32,7 +32,7 @@
  */
 + (BOOL)propertyIsOptional:(NSString *)propertyName {
 
-  NSArray *optionalProperties = @[@"additionalProperties", @"createdDate", @"_id", @"tags", @"template", @"updatedDate"];
+  NSArray *optionalProperties = @[@"additionalProperties", @"createdDate", @"_id", @"tags", @"template", @"updatedDate", @"viewCount"];
 
   return [optionalProperties containsObject:propertyName];
 }

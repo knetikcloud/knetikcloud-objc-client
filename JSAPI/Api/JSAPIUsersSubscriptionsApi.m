@@ -683,13 +683,13 @@ NSInteger kJSAPIUsersSubscriptionsApiMissingParamErrorCode = 234513;
 ///
 ///  @param inventoryId The id of the user's inventory 
 ///
-///  @param theOverrideDetails override (optional)
+///  @param override The override details (optional)
 ///
 ///  @returns void
 ///
 -(NSURLSessionTask*) setUserSubscriptionPriceWithUserId: (NSNumber*) userId
     inventoryId: (NSNumber*) inventoryId
-    theOverrideDetails: (JSAPISubscriptionPriceOverrideRequest*) theOverrideDetails
+    override: (JSAPISubscriptionPriceOverrideRequest*) override
     completionHandler: (void (^)(NSError* error)) handler {
     // verify the required parameter 'userId' is set
     if (userId == nil) {
@@ -744,7 +744,7 @@ NSInteger kJSAPIUsersSubscriptionsApiMissingParamErrorCode = 234513;
     id bodyParam = nil;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *localVarFiles = [[NSMutableDictionary alloc] init];
-    bodyParam = theOverrideDetails;
+    bodyParam = override;
 
     return [self.apiClient requestWithPath: resourcePath
                                     method: @"PUT"

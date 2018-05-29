@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 **client** | **NSString*** |  | [optional] 
 **customer** | **NSString*** |  | [optional] 
 **doNotBroadcast** | **NSNumber*** |  | [optional] 
+**local** | **NSNumber*** |  | [optional] 
 **section** | **NSString*** |  | [optional] 
 **source** | **NSObject*** |  | [optional] 
 **specifics** | **NSString*** |  | [optional] 

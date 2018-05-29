@@ -1,6 +1,6 @@
-#import "JSAPIGroupMemberStatusWrapper.h"
+#import "JSAPIPageResourceUserSidResource_.h"
 
-@implementation JSAPIGroupMemberStatusWrapper
+@implementation JSAPIPageResourceUserSidResource_
 
 - (instancetype)init {
   self = [super init];
@@ -22,7 +22,7 @@
 
 + (NSDictionary *)modalDictionary {
 
-  return @{ @"value": @"value" };
+  return @{ @"content": @"content", @"first": @"first", @"last": @"last", @"number": @"number", @"numberOfElements": @"number_of_elements", @"size": @"size", @"sort": @"sort", @"totalElements": @"total_elements", @"totalPages": @"total_pages" };
 }
 
 /**
@@ -32,7 +32,7 @@
  */
 + (BOOL)propertyIsOptional:(NSString *)propertyName {
 
-  NSArray *optionalProperties = @[@"value"];
+  NSArray *optionalProperties = @[@"content", @"first", @"last", @"number", @"numberOfElements", @"size", @"sort", @"totalElements", @"totalPages"];
 
   return [optionalProperties containsObject:propertyName];
 }

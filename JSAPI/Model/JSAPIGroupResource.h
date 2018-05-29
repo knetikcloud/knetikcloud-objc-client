@@ -43,7 +43,7 @@
 /* The unique name of another group that this group is a subset of [optional]
  */
 @property(nonatomic) NSString* parent;
-/* The status which describes whether other users can freely join the group or not 
+/* The status of the group. Max size 50 [optional]
  */
 @property(nonatomic) NSString* status;
 /* The number of users in child groups [optional]

@@ -77,6 +77,7 @@ extern NSInteger kJSAPIDispositionsApiMissingParamErrorCode;
 /// Returns a list of disposition counts
 /// <b>Permissions Needed:</b> ANY
 ///
+/// @param filterCreatedDate Filters invoices by creation date. Multiple values possible for range search. Format: filter_created_date&#x3D;OP,ts&amp;... where OP in (GT, LT, GOE, LOE, EQ) and ts is a unix timestamp in seconds. Ex: filter_created_date&#x3D;GT,1452154258,LT,1554254874 (optional)
 /// @param filterContext Filter for dispositions within a context type (games, articles, polls, etc). Optionally with a specific id like filter_context&#x3D;video:47 (optional)
 /// @param filterOwner Filter for dispositions from a specific user by id or &#39;me&#39; (optional)
 /// 
@@ -87,7 +88,8 @@ extern NSInteger kJSAPIDispositionsApiMissingParamErrorCode;
 ///  code:404 message:"Not Found"
 ///
 /// @return NSArray<JSAPIDispositionCount>*
--(NSURLSessionTask*) getDispositionCountsWithFilterContext: (NSString*) filterContext
+-(NSURLSessionTask*) getDispositionCountsWithFilterCreatedDate: (NSString*) filterCreatedDate
+    filterContext: (NSString*) filterContext
     filterOwner: (NSString*) filterOwner
     completionHandler: (void (^)(NSArray<JSAPIDispositionCount>* output, NSError* error)) handler;
 
@@ -95,6 +97,7 @@ extern NSInteger kJSAPIDispositionsApiMissingParamErrorCode;
 /// Returns a page of dispositions
 /// <b>Permissions Needed:</b> ANY
 ///
+/// @param filterCreatedDate Filters invoices by creation date. Multiple values possible for range search. Format: filter_created_date&#x3D;OP,ts&amp;... where OP in (GT, LT, GOE, LOE, EQ) and ts is a unix timestamp in seconds. Ex: filter_created_date&#x3D;GT,1452154258,LT,1554254874 (optional)
 /// @param filterContext Filter for dispositions within a context type (games, articles, polls, etc). Optionally with a specific id like filter_context&#x3D;video:47 (optional)
 /// @param filterOwner Filter for dispositions from a specific user by id or &#39;me&#39; (optional)
 /// @param size The number of objects returned per page (optional) (default to 25)
@@ -108,7 +111,8 @@ extern NSInteger kJSAPIDispositionsApiMissingParamErrorCode;
 ///  code:404 message:"Not Found"
 ///
 /// @return JSAPIPageResourceDispositionResource_*
--(NSURLSessionTask*) getDispositionsWithFilterContext: (NSString*) filterContext
+-(NSURLSessionTask*) getDispositionsWithFilterCreatedDate: (NSString*) filterCreatedDate
+    filterContext: (NSString*) filterContext
     filterOwner: (NSString*) filterOwner
     size: (NSNumber*) size
     page: (NSNumber*) page

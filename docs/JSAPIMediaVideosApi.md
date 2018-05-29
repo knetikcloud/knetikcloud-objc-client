@@ -633,7 +633,8 @@ void (empty response body)
 
 # **deleteVideoDisposition**
 ```objc
--(NSURLSessionTask*) deleteVideoDispositionWithDispositionId: (NSNumber*) dispositionId
+-(NSURLSessionTask*) deleteVideoDispositionWithVideoId: (NSNumber*) videoId
+    dispositionId: (NSNumber*) dispositionId
         completionHandler: (void (^)(NSError* error)) handler;
 ```
 
@@ -652,12 +653,14 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 [apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
 
 
+NSNumber* videoId = @789; // The video id
 NSNumber* dispositionId = @789; // The disposition id
 
 JSAPIMediaVideosApi*apiInstance = [[JSAPIMediaVideosApi alloc] init];
 
 // Delete a video disposition
-[apiInstance deleteVideoDispositionWithDispositionId:dispositionId
+[apiInstance deleteVideoDispositionWithVideoId:videoId
+              dispositionId:dispositionId
           completionHandler: ^(NSError* error) {
                         if (error) {
                             NSLog(@"Error calling JSAPIMediaVideosApi->deleteVideoDisposition: %@", error);
@@ -669,6 +672,7 @@ JSAPIMediaVideosApi*apiInstance = [[JSAPIMediaVideosApi alloc] init];
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **videoId** | **NSNumber***| The video id | 
  **dispositionId** | **NSNumber***| The disposition id | 
 
 ### Return type
@@ -1056,6 +1060,7 @@ Name | Type | Description  | Notes
 # **getVideoDispositions**
 ```objc
 -(NSURLSessionTask*) getVideoDispositionsWithVideoId: (NSNumber*) videoId
+    filterCreatedDate: (NSString*) filterCreatedDate
     size: (NSNumber*) size
     page: (NSNumber*) page
         completionHandler: (void (^)(JSAPIPageResourceDispositionResource_* output, NSError* error)) handler;
@@ -1077,6 +1082,7 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSNumber* videoId = @56; // The video id
+NSString* filterCreatedDate = @"filterCreatedDate_example"; // Filters invoices by creation date. Multiple values possible for range search. Format: filter_created_date=OP,ts&... where OP in (GT, LT, GOE, LOE, EQ) and ts is a unix timestamp in seconds. Ex: filter_created_date=GT,1452154258,LT,1554254874 (optional)
 NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
 NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
@@ -1084,6 +1090,7 @@ JSAPIMediaVideosApi*apiInstance = [[JSAPIMediaVideosApi alloc] init];
 
 // Returns a page of dispositions for a video
 [apiInstance getVideoDispositionsWithVideoId:videoId
+              filterCreatedDate:filterCreatedDate
               size:size
               page:page
           completionHandler: ^(JSAPIPageResourceDispositionResource_* output, NSError* error) {
@@ -1101,6 +1108,7 @@ JSAPIMediaVideosApi*apiInstance = [[JSAPIMediaVideosApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **videoId** | **NSNumber***| The video id | 
+ **filterCreatedDate** | **NSString***| Filters invoices by creation date. Multiple values possible for range search. Format: filter_created_date&#x3D;OP,ts&amp;... where OP in (GT, LT, GOE, LOE, EQ) and ts is a unix timestamp in seconds. Ex: filter_created_date&#x3D;GT,1452154258,LT,1554254874 | [optional] 
  **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
  **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 

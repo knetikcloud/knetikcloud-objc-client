@@ -17,13 +17,17 @@
 
 
 
-@protocol JSAPIGroupMemberStatusWrapper
+@protocol JSAPIUserSidResource
 @end
 
-@interface JSAPIGroupMemberStatusWrapper : JSAPIObject
+@interface JSAPIUserSidResource : JSAPIObject
 
-
-@property(nonatomic) NSString* value;
+/* The security id 
+ */
+@property(nonatomic) NSString* sid;
+/* The id of the user [optional]
+ */
+@property(nonatomic) NSNumber* userId;
 
 + (NSDictionary *)modalDictionary;
 

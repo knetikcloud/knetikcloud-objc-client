@@ -4,7 +4,6 @@
 #import "JSAPIChatMessageRequest.h"
 #import "JSAPIChatMessageResource.h"
 #import "JSAPIGroupMemberResource.h"
-#import "JSAPIGroupMemberStatusWrapper.h"
 #import "JSAPIGroupResource.h"
 #import "JSAPIPageResourceChatMessageResource_.h"
 #import "JSAPIPageResourceGroupMemberResource_.h"
@@ -63,7 +62,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// Adds a new member to the group
-/// <b>Permissions Needed:</b> GROUP_ADMIN or self if open
+/// <b>Permissions Needed:</b> POST or JOIN if self
 ///  @param uniqueName The group unique name 
 ///
 ///  @param user The id and status for a user to add to the group 
@@ -146,7 +145,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// Adds multiple members to the group
-/// <b>Permissions Needed:</b> GROUP_ADMIN
+/// <b>Permissions Needed:</b> POST
 ///  @param uniqueName The group unique name 
 ///
 ///  @param users The id and status for a list of users to add to the group 
@@ -229,7 +228,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// Create a group
-/// <b>Permissions Needed:</b> GROUP_ADMIN
+/// <b>Permissions Needed:</b> POST
 ///  @param groupResource The new group (optional)
 ///
 ///  @returns JSAPIGroupResource*
@@ -394,7 +393,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// Removes a group from the system
-/// All groups listing this as the parent are also removed and users are in turn removed from this and those groups. This may result in users no longer being in this group's parent if they were not added to it directly as well. <br><br><b>Permissions Needed:</b> GROUP_ADMIN
+/// All groups listing this as the parent are also removed and users are in turn removed from this and those groups. This may result in users no longer being in this group's parent if they were not added to it directly as well. <br><br><b>Permissions Needed:</b> DELETE
 ///  @param uniqueName The group unique name 
 ///
 ///  @returns void
@@ -710,7 +709,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// Loads a specific group's details
-/// <b>Permissions Needed:</b> ANY
+/// <b>Permissions Needed:</b> GET
 ///  @param uniqueName The group unique name 
 ///
 ///  @returns JSAPIGroupResource*
@@ -846,7 +845,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// Get a user from a group
-/// <b>Permissions Needed:</b> ANY
+/// <b>Permissions Needed:</b> GET
 ///  @param uniqueName The group unique name 
 ///
 ///  @param userId The id of the user 
@@ -1068,7 +1067,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// Lists members of the group
-/// <b>Permissions Needed:</b> ANY
+/// <b>Permissions Needed:</b> LIST
 ///  @param uniqueName The group unique name 
 ///
 ///  @param size The number of objects returned per page (optional, default to 25)
@@ -1371,7 +1370,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// List groups a user is in
-/// <b>Permissions Needed:</b> ANY
+/// <b>Permissions Needed:</b> LIST_GROUPS
 ///  @param userId The id of the user 
 ///
 ///  @param filterChildren Whether to limit group list to children of groups only. If true, shows only groups with parents. If false, shows only groups with no parent. (optional)
@@ -1445,7 +1444,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// List and search groups
-/// <b>Permissions Needed:</b> ANY
+/// <b>Permissions Needed:</b> LIST
 ///  @param filterTemplate Filter for groups using a specific template, by id (optional)
 ///
 ///  @param filterMemberCount Filters groups by member count. Multiple values possible for range search. Format: filter_member_count=OP,ts&... where OP in (GT, LT, GOE, LOE, EQ). Ex: filter_member_count=GT,14,LT,17 (optional)
@@ -1622,7 +1621,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// Removes a user from a group
-/// <b>Permissions Needed:</b> GROUP_ADMIN or self if open
+/// <b>Permissions Needed:</b> DELETE
 ///  @param uniqueName The group unique name 
 ///
 ///  @param userId The id of the user to remove 
@@ -1707,7 +1706,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// Update a group
-/// If adding/removing/changing parent, user membership in group/new parent groups may be modified. The parent being removed will remove members from this sub group unless they were added explicitly to the parent and the new parent will gain members unless they were already a part of it. <br><br><b>Permissions Needed:</b> GROUP_ADMIN or admin of the group
+/// If adding/removing/changing parent, user membership in group/new parent groups may be modified. The parent being removed will remove members from this sub group unless they were added explicitly to the parent and the new parent will gain members unless they were already a part of it. <br><br><b>Permissions Needed:</b> PUT
 ///  @param uniqueName The group unique name 
 ///
 ///  @param groupResource The updated group (optional)
@@ -1779,7 +1778,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// Change a user's order
-/// <b>Permissions Needed:</b> GROUP_ADMIN
+/// <b>Permissions Needed:</b> PUT
 ///  @param uniqueName The group unique name 
 ///
 ///  @param userId The user id of the member to modify 
@@ -1879,7 +1878,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// Change a user's membership properties
-/// <b>Permissions Needed:</b> GROUP_ADMIN
+/// <b>Permissions Needed:</b> PUT
 ///  @param uniqueName The group unique name 
 ///
 ///  @param userId The user id of the member to modify 
@@ -1979,7 +1978,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// Change a user's status
-/// <b>Permissions Needed:</b> GROUP_ADMIN
+/// <b>Permissions Needed:</b> PUT
 ///  @param uniqueName The group unique name 
 ///
 ///  @param userId The user id of the member to modify 
@@ -1990,7 +1989,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 ///
 -(NSURLSessionTask*) updateGroupMemberStatusWithUniqueName: (NSString*) uniqueName
     userId: (NSNumber*) userId
-    status: (JSAPIGroupMemberStatusWrapper*) status
+    status: (JSAPIStringWrapper*) status
     completionHandler: (void (^)(NSError* error)) handler {
     // verify the required parameter 'uniqueName' is set
     if (uniqueName == nil) {

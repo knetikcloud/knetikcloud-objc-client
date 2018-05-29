@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **messageOfTheDay** | **NSString*** | A message of the day for members of the group | [optional] 
 **name** | **NSString*** | The name of the group. Max 50 characters | 
 **parent** | **NSString*** | The unique name of another group that this group is a subset of | [optional] 
-**status** | **NSString*** | The status which describes whether other users can freely join the group or not | 
+**status** | **NSString*** | The status of the group. Max size 50 | [optional] 
 **subMemberCount** | **NSNumber*** | The number of users in child groups | [optional] 
 **tags** | **NSArray&lt;NSString*&gt;*** | Tags for search | [optional] 
 **template** | **NSString*** | A group template this group is validated against. May be null and no validation of additional_properties will be done | [optional] 

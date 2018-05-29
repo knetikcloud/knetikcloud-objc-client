@@ -25,6 +25,9 @@
 /* A unique identifier for the discount. Can be used to remove the discount, and uniqueness within the cart will be enforced. 
  */
 @property(nonatomic) NSString* code;
+/* The id of the coupon. [optional]
+ */
+@property(nonatomic) NSNumber* couponId;
 /* A description for the discount. [optional]
  */
 @property(nonatomic) NSString* _description;

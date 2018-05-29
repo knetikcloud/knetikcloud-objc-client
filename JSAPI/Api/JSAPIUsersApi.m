@@ -61,7 +61,7 @@ NSInteger kJSAPIUsersApiMissingParamErrorCode = 234513;
 
 ///
 /// Add a tag to a user
-/// <b>Permissions Needed:</b> USERS_ADMIN
+/// <b>Permissions Needed:</b> TAGS
 ///  @param userId The id of the user 
 ///
 ///  @param tag tag 
@@ -353,7 +353,7 @@ NSInteger kJSAPIUsersApiMissingParamErrorCode = 234513;
 
 ///
 /// Get a single user
-/// Additional private info is included as USERS_ADMIN. <br><br><b>Permissions Needed:</b> ANY
+/// Additional private info is included if access controls allow GET. <br><br><b>Permissions Needed:</b> ANY
 ///  @param _id The id of the user or 'me' 
 ///
 ///  @returns JSAPIUserResource*
@@ -421,7 +421,7 @@ NSInteger kJSAPIUsersApiMissingParamErrorCode = 234513;
 
 ///
 /// List tags for a user
-/// <b>Permissions Needed:</b> USERS_ADMIN
+/// <b>Permissions Needed:</b> GET
 ///  @param userId The id of the user 
 ///
 ///  @returns NSArray<NSString*>*
@@ -626,7 +626,7 @@ NSInteger kJSAPIUsersApiMissingParamErrorCode = 234513;
 
 ///
 /// List and search users
-/// Additional private info is included as USERS_ADMIN. <br><br><b>Permissions Needed:</b> ANY
+/// Additional private info is included with LIST_PRIVATE. <br><br><b>Permissions Needed:</b> LIST
 ///  @param filterDisplayname Filter for users whose display name starts with provided string. (optional)
 ///
 ///  @param filterEmail Filter for users whose email starts with provided string. Requires USERS_ADMIN permission (optional)
@@ -911,7 +911,7 @@ NSInteger kJSAPIUsersApiMissingParamErrorCode = 234513;
 
 ///
 /// Register a new user
-/// Password should be in plain text and will be encrypted on receipt. Use SSL for security. <br><br><b>Permissions Needed:</b> ANY
+/// Password should be in plain text and will be encrypted on receipt. Use SSL for security. <br><br><b>Permissions Needed:</b> POST
 ///  @param userResource The user resource object (optional)
 ///
 ///  @returns JSAPIUserResource*
@@ -966,7 +966,7 @@ NSInteger kJSAPIUsersApiMissingParamErrorCode = 234513;
 
 ///
 /// Remove a tag from a user
-/// <b>Permissions Needed:</b> USERS_ADMIN
+/// <b>Permissions Needed:</b> TAGS
 ///  @param userId The id of the user 
 ///
 ///  @param tag The tag to remove 
@@ -1051,7 +1051,7 @@ NSInteger kJSAPIUsersApiMissingParamErrorCode = 234513;
 
 ///
 /// Set a user's password
-/// Password should be in plain text and will be encrypted on receipt. Use SSL for security. <br><br><b>Permissions Needed:</b> USERS_ADMIN or (USERS_USER and owner)
+/// Password should be in plain text and will be encrypted on receipt. Use SSL for security. <br><br><b>Permissions Needed:</b> PUT
 ///  @param _id The id of the user 
 ///
 ///  @param password The new plain text password (optional)
@@ -1246,7 +1246,7 @@ NSInteger kJSAPIUsersApiMissingParamErrorCode = 234513;
 
 ///
 /// Update a user
-/// Password will not be edited on this endpoint, use password specific endpoints. <br><br><b>Permissions Needed:</b> USERS_ADMIN or owner
+/// Password will not be edited on this endpoint, use password specific endpoints. <br><br><b>Permissions Needed:</b> PUT
 ///  @param _id The id of the user or 'me' 
 ///
 ///  @param userResource The user resource object (optional)

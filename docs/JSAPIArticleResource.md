@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **template** | **NSString*** | An article template this article is validated against (private). May be null and no validation of additional_properties will be done | [optional] 
 **title** | **NSString*** | The title of the article | 
 **updatedDate** | **NSNumber*** | The date/time this resource was last updated in seconds since unix epoch | [optional] 
+**viewCount** | **NSNumber*** | The view count of the article | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -56,61 +56,6 @@ NSInteger kJSAPILogsApiMissingParamErrorCode = 234513;
 #pragma mark - Api Methods
 
 ///
-/// Add a user log entry
-/// <b>Permissions Needed:</b> owner
-///  @param logEntry The user log entry to be added (optional)
-///
-///  @returns void
-///
--(NSURLSessionTask*) addUserLogWithLogEntry: (JSAPIUserActionLog*) logEntry
-    completionHandler: (void (^)(NSError* error)) handler {
-    NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/audit/logs"];
-
-    NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
-
-    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
-    NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
-    [headerParams addEntriesFromDictionary:self.defaultHeaders];
-    // HTTP header `Accept`
-    NSString *acceptHeader = [self.apiClient.sanitizer selectHeaderAccept:@[@"application/json"]];
-    if(acceptHeader.length > 0) {
-        headerParams[@"Accept"] = acceptHeader;
-    }
-
-    // response content type
-    NSString *responseContentType = [[acceptHeader componentsSeparatedByString:@", "] firstObject] ?: @"";
-
-    // request content type
-    NSString *requestContentType = [self.apiClient.sanitizer selectHeaderContentType:@[@"application/json"]];
-
-    // Authentication setting
-    NSArray *authSettings = @[@"oauth2_client_credentials_grant", @"oauth2_password_grant"];
-
-    id bodyParam = nil;
-    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
-    NSMutableDictionary *localVarFiles = [[NSMutableDictionary alloc] init];
-    bodyParam = logEntry;
-
-    return [self.apiClient requestWithPath: resourcePath
-                                    method: @"POST"
-                                pathParams: pathParams
-                               queryParams: queryParams
-                                formParams: formParams
-                                     files: localVarFiles
-                                      body: bodyParam
-                              headerParams: headerParams
-                              authSettings: authSettings
-                        requestContentType: requestContentType
-                       responseContentType: responseContentType
-                              responseType: nil
-                           completionBlock: ^(id data, NSError *error) {
-                                if(handler) {
-                                    handler(error);
-                                }
-                            }];
-}
-
-///
 /// Get an existing BRE event log entry by id
 /// <b>Permissions Needed:</b> BRE_RULE_ENGINE_EVENTS_ADMIN
 ///  @param _id The BRE event log entry id 

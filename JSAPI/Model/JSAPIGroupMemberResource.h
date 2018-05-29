@@ -46,7 +46,7 @@
 /* The position of the member in the group if applicable. Read notes for details [optional]
  */
 @property(nonatomic) NSString* order;
-/* The member's access level. Default: member [optional]
+/* The member's status. Max size 50. Default: member [optional]
  */
 @property(nonatomic) NSString* status;
 /* A template this member additional properties are validated against (private). May be null and no validation of properties will be done [optional]

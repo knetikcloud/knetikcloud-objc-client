@@ -29,6 +29,8 @@
 
 @property(nonatomic) NSNumber* doNotBroadcast;
 
+@property(nonatomic) NSNumber* local;
+
 @property(nonatomic) NSString* section;
 
 @property(nonatomic) NSObject* source;

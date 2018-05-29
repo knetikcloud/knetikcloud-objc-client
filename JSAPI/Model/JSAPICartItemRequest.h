@@ -28,7 +28,7 @@
 /* The catalog SKU of the item 
  */
 @property(nonatomic) NSString* catalogSku;
-/* Allows to override the price of an item, if the behavior configuration permits it 
+/* Override the price of an item, if the behavior configuration permits it. Do not send if taking standard pricing. Minimum 0 [optional]
  */
 @property(nonatomic) NSNumber* priceOverride;
 /* The quantity of the item 

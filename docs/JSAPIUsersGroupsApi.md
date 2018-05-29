@@ -43,7 +43,7 @@ Method | HTTP request | Description
 
 Adds a new member to the group
 
-<b>Permissions Needed:</b> GROUP_ADMIN or self if open
+<b>Permissions Needed:</b> POST or JOIN if self
 
 ### Example 
 ```objc
@@ -105,7 +105,7 @@ Name | Type | Description  | Notes
 
 Adds multiple members to the group
 
-<b>Permissions Needed:</b> GROUP_ADMIN
+<b>Permissions Needed:</b> POST
 
 ### Example 
 ```objc
@@ -166,7 +166,7 @@ Name | Type | Description  | Notes
 
 Create a group
 
-<b>Permissions Needed:</b> GROUP_ADMIN
+<b>Permissions Needed:</b> POST
 
 ### Example 
 ```objc
@@ -340,7 +340,7 @@ Name | Type | Description  | Notes
 
 Removes a group from the system
 
-All groups listing this as the parent are also removed and users are in turn removed from this and those groups. This may result in users no longer being in this group's parent if they were not added to it directly as well. <br><br><b>Permissions Needed:</b> GROUP_ADMIN
+All groups listing this as the parent are also removed and users are in turn removed from this and those groups. This may result in users no longer being in this group's parent if they were not added to it directly as well. <br><br><b>Permissions Needed:</b> DELETE
 
 ### Example 
 ```objc
@@ -576,7 +576,7 @@ void (empty response body)
 
 Loads a specific group's details
 
-<b>Permissions Needed:</b> ANY
+<b>Permissions Needed:</b> GET
 
 ### Example 
 ```objc
@@ -693,7 +693,7 @@ Name | Type | Description  | Notes
 
 Get a user from a group
 
-<b>Permissions Needed:</b> ANY
+<b>Permissions Needed:</b> GET
 
 ### Example 
 ```objc
@@ -881,7 +881,7 @@ Name | Type | Description  | Notes
 
 Lists members of the group
 
-<b>Permissions Needed:</b> ANY
+<b>Permissions Needed:</b> LIST
 
 ### Example 
 ```objc
@@ -1139,7 +1139,7 @@ Name | Type | Description  | Notes
 
 List groups a user is in
 
-<b>Permissions Needed:</b> ANY
+<b>Permissions Needed:</b> LIST_GROUPS
 
 ### Example 
 ```objc
@@ -1208,7 +1208,7 @@ Name | Type | Description  | Notes
 
 List and search groups
 
-<b>Permissions Needed:</b> ANY
+<b>Permissions Needed:</b> LIST
 
 ### Example 
 ```objc
@@ -1343,7 +1343,7 @@ No authorization required
 
 Removes a user from a group
 
-<b>Permissions Needed:</b> GROUP_ADMIN or self if open
+<b>Permissions Needed:</b> DELETE
 
 ### Example 
 ```objc
@@ -1402,7 +1402,7 @@ void (empty response body)
 
 Update a group
 
-If adding/removing/changing parent, user membership in group/new parent groups may be modified. The parent being removed will remove members from this sub group unless they were added explicitly to the parent and the new parent will gain members unless they were already a part of it. <br><br><b>Permissions Needed:</b> GROUP_ADMIN or admin of the group
+If adding/removing/changing parent, user membership in group/new parent groups may be modified. The parent being removed will remove members from this sub group unless they were added explicitly to the parent and the new parent will gain members unless they were already a part of it. <br><br><b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -1462,7 +1462,7 @@ void (empty response body)
 
 Change a user's order
 
-<b>Permissions Needed:</b> GROUP_ADMIN
+<b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -1525,7 +1525,7 @@ void (empty response body)
 
 Change a user's membership properties
 
-<b>Permissions Needed:</b> GROUP_ADMIN
+<b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -1582,13 +1582,13 @@ void (empty response body)
 ```objc
 -(NSURLSessionTask*) updateGroupMemberStatusWithUniqueName: (NSString*) uniqueName
     userId: (NSNumber*) userId
-    status: (JSAPIGroupMemberStatusWrapper*) status
+    status: (JSAPIStringWrapper*) status
         completionHandler: (void (^)(NSError* error)) handler;
 ```
 
 Change a user's status
 
-<b>Permissions Needed:</b> GROUP_ADMIN
+<b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -1603,7 +1603,7 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 NSString* uniqueName = @"uniqueName_example"; // The group unique name
 NSNumber* userId = @56; // The user id of the member to modify
-JSAPIGroupMemberStatusWrapper* status = [[JSAPIGroupMemberStatusWrapper alloc] init]; // The new status for the user
+JSAPIStringWrapper* status = [[JSAPIStringWrapper alloc] init]; // The new status for the user
 
 JSAPIUsersGroupsApi*apiInstance = [[JSAPIUsersGroupsApi alloc] init];
 
@@ -1624,7 +1624,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **uniqueName** | **NSString***| The group unique name | 
  **userId** | **NSNumber***| The user id of the member to modify | 
- **status** | [**JSAPIGroupMemberStatusWrapper***](JSAPIGroupMemberStatusWrapper.md)| The new status for the user | 
+ **status** | [**JSAPIStringWrapper***](JSAPIStringWrapper.md)| The new status for the user | 
 
 ### Return type
 

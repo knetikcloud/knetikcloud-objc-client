@@ -4,6 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **code** | **NSString*** | A unique identifier for the discount. Can be used to remove the discount, and uniqueness within the cart will be enforced. | 
+**couponId** | **NSNumber*** | The id of the coupon. | [optional] 
 **_description** | **NSString*** | A description for the discount. | [optional] 
 **discountType** | **NSString*** | The type of discount in terms of how it deducts price. | 
 **exclusive** | **NSNumber*** | Whether this discount is exclusive and cannot be used in conjunction with other discounts/coupons. default&#x3D;false | [optional] 

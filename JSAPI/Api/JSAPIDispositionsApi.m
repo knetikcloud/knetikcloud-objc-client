@@ -246,13 +246,16 @@ NSInteger kJSAPIDispositionsApiMissingParamErrorCode = 234513;
 ///
 /// Returns a list of disposition counts
 /// <b>Permissions Needed:</b> ANY
+///  @param filterCreatedDate Filters invoices by creation date. Multiple values possible for range search. Format: filter_created_date=OP,ts&... where OP in (GT, LT, GOE, LOE, EQ) and ts is a unix timestamp in seconds. Ex: filter_created_date=GT,1452154258,LT,1554254874 (optional)
+///
 ///  @param filterContext Filter for dispositions within a context type (games, articles, polls, etc). Optionally with a specific id like filter_context=video:47 (optional)
 ///
 ///  @param filterOwner Filter for dispositions from a specific user by id or 'me' (optional)
 ///
 ///  @returns NSArray<JSAPIDispositionCount>*
 ///
--(NSURLSessionTask*) getDispositionCountsWithFilterContext: (NSString*) filterContext
+-(NSURLSessionTask*) getDispositionCountsWithFilterCreatedDate: (NSString*) filterCreatedDate
+    filterContext: (NSString*) filterContext
     filterOwner: (NSString*) filterOwner
     completionHandler: (void (^)(NSArray<JSAPIDispositionCount>* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/dispositions/count"];
@@ -260,6 +263,9 @@ NSInteger kJSAPIDispositionsApiMissingParamErrorCode = 234513;
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (filterCreatedDate != nil) {
+        queryParams[@"filter_created_date"] = filterCreatedDate;
+    }
     if (filterContext != nil) {
         queryParams[@"filter_context"] = filterContext;
     }
@@ -309,6 +315,8 @@ NSInteger kJSAPIDispositionsApiMissingParamErrorCode = 234513;
 ///
 /// Returns a page of dispositions
 /// <b>Permissions Needed:</b> ANY
+///  @param filterCreatedDate Filters invoices by creation date. Multiple values possible for range search. Format: filter_created_date=OP,ts&... where OP in (GT, LT, GOE, LOE, EQ) and ts is a unix timestamp in seconds. Ex: filter_created_date=GT,1452154258,LT,1554254874 (optional)
+///
 ///  @param filterContext Filter for dispositions within a context type (games, articles, polls, etc). Optionally with a specific id like filter_context=video:47 (optional)
 ///
 ///  @param filterOwner Filter for dispositions from a specific user by id or 'me' (optional)
@@ -321,7 +329,8 @@ NSInteger kJSAPIDispositionsApiMissingParamErrorCode = 234513;
 ///
 ///  @returns JSAPIPageResourceDispositionResource_*
 ///
--(NSURLSessionTask*) getDispositionsWithFilterContext: (NSString*) filterContext
+-(NSURLSessionTask*) getDispositionsWithFilterCreatedDate: (NSString*) filterCreatedDate
+    filterContext: (NSString*) filterContext
     filterOwner: (NSString*) filterOwner
     size: (NSNumber*) size
     page: (NSNumber*) page
@@ -332,6 +341,9 @@ NSInteger kJSAPIDispositionsApiMissingParamErrorCode = 234513;
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (filterCreatedDate != nil) {
+        queryParams[@"filter_created_date"] = filterCreatedDate;
+    }
     if (filterContext != nil) {
         queryParams[@"filter_context"] = filterContext;
     }

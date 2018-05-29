@@ -32,7 +32,7 @@
  */
 + (BOOL)propertyIsOptional:(NSString *)propertyName {
 
-  NSArray *optionalProperties = @[@"additionalProperties", @"_description", @"memberCount", @"messageOfTheDay", @"parent", @"subMemberCount", @"tags", @"template", @"uniqueName"];
+  NSArray *optionalProperties = @[@"additionalProperties", @"_description", @"memberCount", @"messageOfTheDay", @"parent", @"status", @"subMemberCount", @"tags", @"template", @"uniqueName"];
 
   return [optionalProperties containsObject:propertyName];
 }

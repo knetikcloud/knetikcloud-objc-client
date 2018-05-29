@@ -58,6 +58,9 @@
 /* The date/time this resource was last updated in seconds since unix epoch [optional]
  */
 @property(nonatomic) NSNumber* updatedDate;
+/* The view count of the article [optional]
+ */
+@property(nonatomic) NSNumber* viewCount;
 
 + (NSDictionary *)modalDictionary;
 

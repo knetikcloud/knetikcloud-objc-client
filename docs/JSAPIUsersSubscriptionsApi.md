@@ -456,7 +456,7 @@ void (empty response body)
 ```objc
 -(NSURLSessionTask*) setUserSubscriptionPriceWithUserId: (NSNumber*) userId
     inventoryId: (NSNumber*) inventoryId
-    theOverrideDetails: (JSAPISubscriptionPriceOverrideRequest*) theOverrideDetails
+    override: (JSAPISubscriptionPriceOverrideRequest*) override
         completionHandler: (void (^)(NSError* error)) handler;
 ```
 
@@ -477,14 +477,14 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 NSNumber* userId = @56; // The id of the user
 NSNumber* inventoryId = @56; // The id of the user's inventory
-JSAPISubscriptionPriceOverrideRequest* theOverrideDetails = [[JSAPISubscriptionPriceOverrideRequest alloc] init]; // override (optional)
+JSAPISubscriptionPriceOverrideRequest* override = [[JSAPISubscriptionPriceOverrideRequest alloc] init]; // The override details (optional)
 
 JSAPIUsersSubscriptionsApi*apiInstance = [[JSAPIUsersSubscriptionsApi alloc] init];
 
 // Set a new subscription price for a user
 [apiInstance setUserSubscriptionPriceWithUserId:userId
               inventoryId:inventoryId
-              theOverrideDetails:theOverrideDetails
+              override:override
           completionHandler: ^(NSError* error) {
                         if (error) {
                             NSLog(@"Error calling JSAPIUsersSubscriptionsApi->setUserSubscriptionPrice: %@", error);
@@ -498,7 +498,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **userId** | **NSNumber***| The id of the user | 
  **inventoryId** | **NSNumber***| The id of the user&#39;s inventory | 
- **theOverrideDetails** | [**JSAPISubscriptionPriceOverrideRequest***](JSAPISubscriptionPriceOverrideRequest.md)| override | [optional] 
+ **override** | [**JSAPISubscriptionPriceOverrideRequest***](JSAPISubscriptionPriceOverrideRequest.md)| The override details | [optional] 
 
 ### Return type
 
