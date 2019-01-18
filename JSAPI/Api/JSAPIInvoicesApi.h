@@ -5,6 +5,7 @@
 #import "JSAPIInvoiceResource.h"
 #import "JSAPIPageResourceInvoiceLogEntry_.h"
 #import "JSAPIPageResourceInvoiceResource_.h"
+#import "JSAPIPageResourceString_.h"
 #import "JSAPIPayBySavedMethodRequest.h"
 #import "JSAPIResult.h"
 #import "JSAPIStringWrapper.h"
@@ -50,6 +51,8 @@ extern NSInteger kJSAPIInvoicesApiMissingParamErrorCode;
 /// Lists available fulfillment statuses
 /// <b>Permissions Needed:</b> ANY
 ///
+/// @param size The number of objects returned per page (optional) (default to 25)
+/// @param page The number of the page returned, starting with 1 (optional) (default to 1)
 /// 
 ///  code:200 message:"OK",
 ///  code:400 message:"Bad Request",
@@ -57,9 +60,10 @@ extern NSInteger kJSAPIInvoicesApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSArray<NSString*>*
--(NSURLSessionTask*) getFulFillmentStatusesWithCompletionHandler: 
-    (void (^)(NSArray<NSString*>* output, NSError* error)) handler;
+/// @return JSAPIPageResourceString_*
+-(NSURLSessionTask*) getFulFillmentStatusesWithSize: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceString_* output, NSError* error)) handler;
 
 
 /// Retrieve an invoice
@@ -149,6 +153,8 @@ extern NSInteger kJSAPIInvoicesApiMissingParamErrorCode;
 /// Lists available payment statuses
 /// <b>Permissions Needed:</b> ANY
 ///
+/// @param size The number of objects returned per page (optional) (default to 25)
+/// @param page The number of the page returned, starting with 1 (optional) (default to 1)
 /// 
 ///  code:200 message:"OK",
 ///  code:400 message:"Bad Request",
@@ -156,9 +162,10 @@ extern NSInteger kJSAPIInvoicesApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSArray<NSString*>*
--(NSURLSessionTask*) getPaymentStatusesWithCompletionHandler: 
-    (void (^)(NSArray<NSString*>* output, NSError* error)) handler;
+/// @return JSAPIPageResourceString_*
+-(NSURLSessionTask*) getPaymentStatusesWithSize: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceString_* output, NSError* error)) handler;
 
 
 /// Pay an invoice using a saved payment method

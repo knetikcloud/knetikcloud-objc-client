@@ -1,6 +1,7 @@
 #import "JSAPIPaymentsApi.h"
 #import "JSAPIQueryParamCollection.h"
 #import "JSAPIApiClient.h"
+#import "JSAPIPageResourcePaymentMethodResource_.h"
 #import "JSAPIPageResourcePaymentMethodTypeResource_.h"
 #import "JSAPIPaymentAuthorizationResource.h"
 #import "JSAPIPaymentMethodResource.h"
@@ -457,7 +458,7 @@ NSInteger kJSAPIPaymentsApiMissingParamErrorCode = 234513;
 ///
 ///  @param order a comma separated list of sorting requirements in priority order, each entry matching PROPERTY_NAME:[ASC|DESC] (optional, default to id:ASC)
 ///
-///  @returns NSArray<JSAPIPaymentMethodResource>*
+///  @returns JSAPIPageResourcePaymentMethodResource_*
 ///
 -(NSURLSessionTask*) getPaymentMethodsWithUserId: (NSNumber*) userId
     filterName: (NSString*) filterName
@@ -467,7 +468,7 @@ NSInteger kJSAPIPaymentsApiMissingParamErrorCode = 234513;
     size: (NSNumber*) size
     page: (NSNumber*) page
     order: (NSString*) order
-    completionHandler: (void (^)(NSArray<JSAPIPaymentMethodResource>* output, NSError* error)) handler {
+    completionHandler: (void (^)(JSAPIPageResourcePaymentMethodResource_* output, NSError* error)) handler {
     // verify the required parameter 'userId' is set
     if (userId == nil) {
         NSParameterAssert(userId);
@@ -540,10 +541,10 @@ NSInteger kJSAPIPaymentsApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSArray<JSAPIPaymentMethodResource>*"
+                              responseType: @"JSAPIPageResourcePaymentMethodResource_*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSArray<JSAPIPaymentMethodResource>*)data, error);
+                                    handler((JSAPIPageResourcePaymentMethodResource_*)data, error);
                                 }
                             }];
 }

@@ -1,6 +1,6 @@
 # JSAPICategoriesApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -14,7 +14,7 @@ Method | HTTP request | Description
 [**getCategoryTemplates**](JSAPICategoriesApi.md#getcategorytemplates) | **GET** /categories/templates | List and search category templates
 [**getTags**](JSAPICategoriesApi.md#gettags) | **GET** /tags | List all trivia tags in the system
 [**updateCategory**](JSAPICategoriesApi.md#updatecategory) | **PUT** /categories/{id} | Update an existing category
-[**updateCategoryTemplate**](JSAPICategoriesApi.md#updatecategorytemplate) | **PUT** /categories/templates/{id} | Update a category template
+[**updateCategoryTemplate**](JSAPICategoriesApi.md#updatecategorytemplate) | **PATCH** /categories/templates/{id} | Update a category template
 
 
 # **createCategory**
@@ -83,7 +83,7 @@ Name | Type | Description  | Notes
 
 Create a category template
 
-Templates define a type of category and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+Templates define a type of category and the properties they have.<br /><b>Permissions Needed:</b> POST
 
 ### Example 
 ```objc
@@ -197,7 +197,7 @@ void (empty response body)
 
 Delete a category template
 
-If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+If cascade = 'detach', it will force delete the template even if it's attached to other objects.<br /><b>Permissions Needed:</b> DELETE
 
 ### Example 
 ```objc
@@ -387,7 +387,7 @@ Name | Type | Description  | Notes
 
 Get a single category template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or CATEGORIES_ADMIN
+<b>Permissions Needed:</b> GET
 
 ### Example 
 ```objc
@@ -447,7 +447,7 @@ Name | Type | Description  | Notes
 
 List and search category templates
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or CATEGORIES_ADMIN
+<b>Permissions Needed:</b> LIST
 
 ### Example 
 ```objc
@@ -630,13 +630,14 @@ Name | Type | Description  | Notes
 # **updateCategoryTemplate**
 ```objc
 -(NSURLSessionTask*) updateCategoryTemplateWithId: (NSString*) _id
-    template: (JSAPITemplateResource*) template
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
         completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler;
 ```
 
 Update a category template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN
+<b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -650,13 +651,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* _id = @"_id_example"; // The id of the template
-JSAPITemplateResource* template = [[JSAPITemplateResource alloc] init]; // The updated template information (optional)
+JSAPIPatchResource* templatePatchResource = [[JSAPIPatchResource alloc] init]; // The patch resource object (optional)
+NSNumber* testValidation = @true; // If true, this will test validation but not submit the patch request (optional)
 
 JSAPICategoriesApi*apiInstance = [[JSAPICategoriesApi alloc] init];
 
 // Update a category template
 [apiInstance updateCategoryTemplateWithId:_id
-              template:template
+              templatePatchResource:templatePatchResource
+              testValidation:testValidation
           completionHandler: ^(JSAPITemplateResource* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
@@ -672,7 +675,8 @@ JSAPICategoriesApi*apiInstance = [[JSAPICategoriesApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **_id** | **NSString***| The id of the template | 
- **template** | [**JSAPITemplateResource***](JSAPITemplateResource.md)| The updated template information | [optional] 
+ **templatePatchResource** | [**JSAPIPatchResource***](JSAPIPatchResource.md)| The patch resource object | [optional] 
+ **testValidation** | **NSNumber***| If true, this will test validation but not submit the patch request | [optional] 
 
 ### Return type
 

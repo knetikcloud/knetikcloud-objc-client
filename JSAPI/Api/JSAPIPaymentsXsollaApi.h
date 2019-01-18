@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "JSAPIResult.h"
+#import "JSAPIStringWrapper.h"
 #import "JSAPIXsollaPaymentRequest.h"
 #import "JSAPIApi.h"
 
@@ -35,9 +36,9 @@ extern NSInteger kJSAPIPaymentsXsollaApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSString*
+/// @return JSAPIStringWrapper*
 -(NSURLSessionTask*) createXsollaTokenUrlWithRequest: (JSAPIXsollaPaymentRequest*) request
-    completionHandler: (void (^)(NSString* output, NSError* error)) handler;
+    completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler;
 
 
 

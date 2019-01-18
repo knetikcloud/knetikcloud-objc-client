@@ -2,11 +2,12 @@
 #import "JSAPIQueryParamCollection.h"
 #import "JSAPIApiClient.h"
 #import "JSAPIAchievementDefinitionResource.h"
-#import "JSAPIBreTriggerResource.h"
 #import "JSAPIIntWrapper.h"
 #import "JSAPIPageResourceAchievementDefinitionResource_.h"
+#import "JSAPIPageResourceBreTriggerResource_.h"
 #import "JSAPIPageResourceTemplateResource_.h"
 #import "JSAPIPageResourceUserAchievementGroupResource_.h"
+#import "JSAPIPatchResource.h"
 #import "JSAPIResult.h"
 #import "JSAPITemplateResource.h"
 #import "JSAPIUserAchievementGroupResource.h"
@@ -114,7 +115,7 @@ NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode = 234513;
 
 ///
 /// Create an achievement template
-/// Achievement templates define a type of achievement and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// Achievement templates define a type of achievement and the properties they have.<br /><b>Permissions Needed:</b> POST
 ///  @param template The achievement template to be created (optional)
 ///
 ///  @returns JSAPITemplateResource*
@@ -237,7 +238,7 @@ NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode = 234513;
 
 ///
 /// Delete an achievement template
-/// If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// If cascade = 'detach', it will force delete the template even if it's attached to other objects.<br /><b>Permissions Needed:</b> DELETE
 ///  @param _id The id of the template 
 ///
 ///  @param cascade The value needed to delete used templates (optional)
@@ -379,7 +380,7 @@ NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode = 234513;
 
 ///
 /// Get a single achievement template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or ACHIEVEMENTS_ADMIN
+/// <b>Permissions Needed:</b> GET
 ///  @param _id The id of the template 
 ///
 ///  @returns JSAPITemplateResource*
@@ -447,7 +448,7 @@ NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode = 234513;
 
 ///
 /// List and search achievement templates
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or ACHIEVEMENTS_ADMIN
+/// <b>Permissions Needed:</b> LIST
 ///  @param size The number of objects returned per page (optional, default to 25)
 ///
 ///  @param page The number of the page returned, starting with 1 (optional, default to 1)
@@ -517,15 +518,26 @@ NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode = 234513;
 ///
 /// Get the list of triggers that can be used to trigger an achievement progress update
 /// <b>Permissions Needed:</b> ACHIEVEMENTS_ADMIN
-///  @returns NSArray<JSAPIBreTriggerResource>*
+///  @param size The number of objects returned per page (optional, default to 25)
 ///
--(NSURLSessionTask*) getAchievementTriggersWithCompletionHandler: 
-    (void (^)(NSArray<JSAPIBreTriggerResource>* output, NSError* error)) handler {
+///  @param page The number of the page returned, starting with 1 (optional, default to 1)
+///
+///  @returns JSAPIPageResourceBreTriggerResource_*
+///
+-(NSURLSessionTask*) getAchievementTriggersWithSize: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceBreTriggerResource_* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/achievements/triggers"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (size != nil) {
+        queryParams[@"size"] = size;
+    }
+    if (page != nil) {
+        queryParams[@"page"] = page;
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -558,10 +570,10 @@ NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSArray<JSAPIBreTriggerResource>*"
+                              responseType: @"JSAPIPageResourceBreTriggerResource_*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSArray<JSAPIBreTriggerResource>*)data, error);
+                                    handler((JSAPIPageResourceBreTriggerResource_*)data, error);
                                 }
                             }];
 }
@@ -664,10 +676,16 @@ NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode = 234513;
 /// Used by other services that depend on achievements.  <br><br><b>Permissions Needed:</b> ACHIEVEMENTS_ADMIN
 ///  @param name The name of the derived achievement 
 ///
-///  @returns NSArray<JSAPIAchievementDefinitionResource>*
+///  @param size The number of objects returned per page (optional, default to 25)
+///
+///  @param page The number of the page returned, starting with 1 (optional, default to 1)
+///
+///  @returns JSAPIPageResourceAchievementDefinitionResource_*
 ///
 -(NSURLSessionTask*) getDerivedAchievementsWithName: (NSString*) name
-    completionHandler: (void (^)(NSArray<JSAPIAchievementDefinitionResource>* output, NSError* error)) handler {
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceAchievementDefinitionResource_* output, NSError* error)) handler {
     // verify the required parameter 'name' is set
     if (name == nil) {
         NSParameterAssert(name);
@@ -687,6 +705,12 @@ NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode = 234513;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (size != nil) {
+        queryParams[@"size"] = size;
+    }
+    if (page != nil) {
+        queryParams[@"page"] = page;
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -719,10 +743,10 @@ NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSArray<JSAPIAchievementDefinitionResource>*"
+                              responseType: @"JSAPIPageResourceAchievementDefinitionResource_*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSArray<JSAPIAchievementDefinitionResource>*)data, error);
+                                    handler((JSAPIPageResourceAchievementDefinitionResource_*)data, error);
                                 }
                             }];
 }
@@ -821,7 +845,7 @@ NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode = 234513;
 ///
 ///  @param filterAchievementTagset Filter for achievements with specified tags (separated by comma) (optional)
 ///
-///  @param filterAchievementName Filter for achievements whose name contains a string (optional)
+///  @param filterGroupName Filter for achievements whose group/level name contains a string (optional)
 ///
 ///  @param size The number of objects returned per page (optional, default to 25)
 ///
@@ -832,7 +856,7 @@ NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode = 234513;
 -(NSURLSessionTask*) getUserAchievementsProgressWithUserId: (NSNumber*) userId
     filterAchievementDerived: (NSNumber*) filterAchievementDerived
     filterAchievementTagset: (NSString*) filterAchievementTagset
-    filterAchievementName: (NSString*) filterAchievementName
+    filterGroupName: (NSString*) filterGroupName
     size: (NSNumber*) size
     page: (NSNumber*) page
     completionHandler: (void (^)(JSAPIPageResourceUserAchievementGroupResource_* output, NSError* error)) handler {
@@ -861,8 +885,8 @@ NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode = 234513;
     if (filterAchievementTagset != nil) {
         queryParams[@"filter_achievement_tagset"] = filterAchievementTagset;
     }
-    if (filterAchievementName != nil) {
-        queryParams[@"filter_achievement_name"] = filterAchievementName;
+    if (filterGroupName != nil) {
+        queryParams[@"filter_group_name"] = filterGroupName;
     }
     if (size != nil) {
         queryParams[@"size"] = size;
@@ -912,14 +936,14 @@ NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode = 234513;
 
 ///
 /// Retrieve progress on a given achievement for all users
-/// Assets will not be filled in on the resources returned. Use 'Get single achievement progress for user' to retrieve the full resource with assets for a given user as needed. <br><br><b>Permissions Needed:</b> ACHIEVEMENTS_ADMIN
+/// Assets will not be filled in on the resources returned. Use 'Get single achievement progress for user' to retrieve the full resource with assets for a given user as needed. <br><br><b>Permissions Needed:</b> ACHIEVEMENTS_ADMIN<br /><b>Permissions Needed:</b> NONE
 ///  @param achievementName The achievement's name 
 ///
 ///  @param filterAchievementDerived Filter for achievements that are derived from other services (optional)
 ///
 ///  @param filterAchievementTagset Filter for achievements with specified tags (separated by comma) (optional)
 ///
-///  @param filterAchievementName Filter for achievements whose name contains a string (optional)
+///  @param filterGroupName Filter for achievements whose group/level name contains a string (optional)
 ///
 ///  @param size The number of objects returned per page (optional, default to 25)
 ///
@@ -930,7 +954,7 @@ NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode = 234513;
 -(NSURLSessionTask*) getUsersAchievementProgressWithAchievementName: (NSString*) achievementName
     filterAchievementDerived: (NSNumber*) filterAchievementDerived
     filterAchievementTagset: (NSString*) filterAchievementTagset
-    filterAchievementName: (NSString*) filterAchievementName
+    filterGroupName: (NSString*) filterGroupName
     size: (NSNumber*) size
     page: (NSNumber*) page
     completionHandler: (void (^)(JSAPIPageResourceUserAchievementGroupResource_* output, NSError* error)) handler {
@@ -959,8 +983,8 @@ NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode = 234513;
     if (filterAchievementTagset != nil) {
         queryParams[@"filter_achievement_tagset"] = filterAchievementTagset;
     }
-    if (filterAchievementName != nil) {
-        queryParams[@"filter_achievement_name"] = filterAchievementName;
+    if (filterGroupName != nil) {
+        queryParams[@"filter_group_name"] = filterGroupName;
     }
     if (size != nil) {
         queryParams[@"size"] = size;
@@ -1010,12 +1034,12 @@ NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode = 234513;
 
 ///
 /// Retrieve progress on achievements for all users
-/// Assets will not be filled in on the resources returned. Use 'Get single achievement progress for user' to retrieve the full resource with assets for a given user as needed. <br><br><b>Permissions Needed:</b> ACHIEVEMENTS_ADMIN
+/// Assets will not be filled in on the resources returned. Use 'Get single achievement progress for user' to retrieve the full resource with assets for a given user as needed. <br><br><b>Permissions Needed:</b> ACHIEVEMENTS_ADMIN<br /><b>Permissions Needed:</b> LIST
 ///  @param filterAchievementDerived Filter for achievements that are derived from other services (optional)
 ///
 ///  @param filterAchievementTagset Filter for achievements with specified tags (separated by comma) (optional)
 ///
-///  @param filterAchievementName Filter for achievements whose name contains a string (optional)
+///  @param filterGroupName Filter for achievements whose group/level name contains a string (optional)
 ///
 ///  @param size The number of objects returned per page (optional, default to 25)
 ///
@@ -1025,7 +1049,7 @@ NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode = 234513;
 ///
 -(NSURLSessionTask*) getUsersAchievementsProgressWithFilterAchievementDerived: (NSNumber*) filterAchievementDerived
     filterAchievementTagset: (NSString*) filterAchievementTagset
-    filterAchievementName: (NSString*) filterAchievementName
+    filterGroupName: (NSString*) filterGroupName
     size: (NSNumber*) size
     page: (NSNumber*) page
     completionHandler: (void (^)(JSAPIPageResourceUserAchievementGroupResource_* output, NSError* error)) handler {
@@ -1040,8 +1064,8 @@ NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode = 234513;
     if (filterAchievementTagset != nil) {
         queryParams[@"filter_achievement_tagset"] = filterAchievementTagset;
     }
-    if (filterAchievementName != nil) {
-        queryParams[@"filter_achievement_name"] = filterAchievementName;
+    if (filterGroupName != nil) {
+        queryParams[@"filter_group_name"] = filterGroupName;
     }
     if (size != nil) {
         queryParams[@"size"] = size;
@@ -1341,15 +1365,18 @@ NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode = 234513;
 
 ///
 /// Update an achievement template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> PUT
 ///  @param _id The id of the template 
 ///
-///  @param template The updated template (optional)
+///  @param templatePatchResource The patch resource object (optional)
+///
+///  @param testValidation If true, this will test validation but not submit the patch request (optional)
 ///
 ///  @returns JSAPITemplateResource*
 ///
 -(NSURLSessionTask*) updateAchievementTemplateWithId: (NSString*) _id
-    template: (JSAPITemplateResource*) template
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
     completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler {
     // verify the required parameter '_id' is set
     if (_id == nil) {
@@ -1370,6 +1397,9 @@ NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode = 234513;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (testValidation != nil) {
+        queryParams[@"test_validation"] = [testValidation isEqual:@(YES)] ? @"true" : @"false";
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -1390,10 +1420,10 @@ NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode = 234513;
     id bodyParam = nil;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *localVarFiles = [[NSMutableDictionary alloc] init];
-    bodyParam = template;
+    bodyParam = templatePatchResource;
 
     return [self.apiClient requestWithPath: resourcePath
-                                    method: @"PUT"
+                                    method: @"PATCH"
                                 pathParams: pathParams
                                queryParams: queryParams
                                 formParams: formParams

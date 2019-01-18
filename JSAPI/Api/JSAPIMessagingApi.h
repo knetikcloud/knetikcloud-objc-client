@@ -46,7 +46,7 @@ extern NSInteger kJSAPIMessagingApiMissingParamErrorCode;
 ///  code:404 message:"Not Found"
 ///
 /// @return NSDictionary<NSString*, NSString*>*
--(NSURLSessionTask*) compileMessageTemplateWithRequest: (JSAPIMessageTemplateBulkRequest*) request
+-(NSURLSessionTask*) compileMessageTemplatesWithRequest: (JSAPIMessageTemplateBulkRequest*) request
     completionHandler: (void (^)(NSDictionary<NSString*, NSString*>* output, NSError* error)) handler;
 
 

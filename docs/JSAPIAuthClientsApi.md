@@ -1,6 +1,6 @@
 # JSAPIAuthClientsApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -187,8 +187,9 @@ Name | Type | Description  | Notes
 
 # **getClientGrantTypes**
 ```objc
--(NSURLSessionTask*) getClientGrantTypesWithCompletionHandler: 
-        (void (^)(NSArray<JSAPIGrantTypeResource>* output, NSError* error)) handler;
+-(NSURLSessionTask*) getClientGrantTypesWithSize: (NSNumber*) size
+    page: (NSNumber*) page
+        completionHandler: (void (^)(JSAPIPageResourceGrantTypeResource_* output, NSError* error)) handler;
 ```
 
 List available client grant types
@@ -206,12 +207,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 [apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
 
 
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
 JSAPIAuthClientsApi*apiInstance = [[JSAPIAuthClientsApi alloc] init];
 
 // List available client grant types
-[apiInstance getClientGrantTypesWithCompletionHandler: 
-          ^(NSArray<JSAPIGrantTypeResource>* output, NSError* error) {
+[apiInstance getClientGrantTypesWithSize:size
+              page:page
+          completionHandler: ^(JSAPIPageResourceGrantTypeResource_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -222,11 +226,15 @@ JSAPIAuthClientsApi*apiInstance = [[JSAPIAuthClientsApi alloc] init];
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
 ### Return type
 
-[**NSArray<JSAPIGrantTypeResource>***](JSAPIGrantTypeResource.md)
+[**JSAPIPageResourceGrantTypeResource_***](JSAPIPageResourceGrantTypeResource_.md)
 
 ### Authorization
 

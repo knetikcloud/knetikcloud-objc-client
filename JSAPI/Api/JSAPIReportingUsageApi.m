@@ -1,6 +1,7 @@
 #import "JSAPIReportingUsageApi.h"
 #import "JSAPIQueryParamCollection.h"
 #import "JSAPIApiClient.h"
+#import "JSAPIPageResourceString_.h"
 #import "JSAPIPageResourceUsageInfo_.h"
 #import "JSAPIResult.h"
 
@@ -632,11 +633,11 @@ NSInteger kJSAPIReportingUsageApiMissingParamErrorCode = 234513;
 ///
 ///  @param endDate The ending of the range being requested, unix timestamp in seconds 
 ///
-///  @returns NSArray<NSString*>*
+///  @returns JSAPIPageResourceString_*
 ///
 -(NSURLSessionTask*) getUsageEndpointsWithStartDate: (NSNumber*) startDate
     endDate: (NSNumber*) endDate
-    completionHandler: (void (^)(NSArray<NSString*>* output, NSError* error)) handler {
+    completionHandler: (void (^)(JSAPIPageResourceString_* output, NSError* error)) handler {
     // verify the required parameter 'startDate' is set
     if (startDate == nil) {
         NSParameterAssert(startDate);
@@ -702,10 +703,10 @@ NSInteger kJSAPIReportingUsageApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSArray<NSString*>*"
+                              responseType: @"JSAPIPageResourceString_*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSArray<NSString*>*)data, error);
+                                    handler((JSAPIPageResourceString_*)data, error);
                                 }
                             }];
 }

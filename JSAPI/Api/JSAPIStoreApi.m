@@ -1,10 +1,11 @@
 #import "JSAPIStoreApi.h"
 #import "JSAPIQueryParamCollection.h"
 #import "JSAPIApiClient.h"
-#import "JSAPIBehaviorDefinitionResource.h"
 #import "JSAPIInvoiceResource.h"
+#import "JSAPIPageResourceBehaviorDefinitionResource_.h"
 #import "JSAPIPageResourceStoreItemTemplateResource_.h"
 #import "JSAPIPageResourceStoreItem_.h"
+#import "JSAPIPatchResource.h"
 #import "JSAPIQuickBuyRequest.h"
 #import "JSAPIResult.h"
 #import "JSAPIStoreItem.h"
@@ -58,7 +59,7 @@ NSInteger kJSAPIStoreApiMissingParamErrorCode = 234513;
 
 ///
 /// Create an item template
-/// Item Templates define a type of item and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// Item Templates define a type of item and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> POST
 ///  @param itemTemplateResource The new item template (optional)
 ///
 ///  @returns JSAPIStoreItemTemplateResource*
@@ -174,7 +175,7 @@ NSInteger kJSAPIStoreApiMissingParamErrorCode = 234513;
 
 ///
 /// Delete an item template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> DELETE
 ///  @param _id The id of the template 
 ///
 ///  @param cascade force deleting the template if it's attached to other objects, cascade = detach (optional)
@@ -317,15 +318,26 @@ NSInteger kJSAPIStoreApiMissingParamErrorCode = 234513;
 ///
 /// List available item behaviors
 /// <b>Permissions Needed:</b> ANY
-///  @returns NSArray<JSAPIBehaviorDefinitionResource>*
+///  @param size The number of objects returned per page (optional, default to 25)
 ///
--(NSURLSessionTask*) getBehaviorsWithCompletionHandler: 
-    (void (^)(NSArray<JSAPIBehaviorDefinitionResource>* output, NSError* error)) handler {
+///  @param page The number of the page returned, starting with 1 (optional, default to 1)
+///
+///  @returns JSAPIPageResourceBehaviorDefinitionResource_*
+///
+-(NSURLSessionTask*) getBehaviorsWithSize: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceBehaviorDefinitionResource_* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/store/items/behaviors"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (size != nil) {
+        queryParams[@"size"] = size;
+    }
+    if (page != nil) {
+        queryParams[@"page"] = page;
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -358,17 +370,17 @@ NSInteger kJSAPIStoreApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSArray<JSAPIBehaviorDefinitionResource>*"
+                              responseType: @"JSAPIPageResourceBehaviorDefinitionResource_*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSArray<JSAPIBehaviorDefinitionResource>*)data, error);
+                                    handler((JSAPIPageResourceBehaviorDefinitionResource_*)data, error);
                                 }
                             }];
 }
 
 ///
 /// Get a single item template
-/// Item Templates define a type of item and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// Item Templates define a type of item and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> GET
 ///  @param _id The id of the template 
 ///
 ///  @returns JSAPIStoreItemTemplateResource*
@@ -436,7 +448,7 @@ NSInteger kJSAPIStoreApiMissingParamErrorCode = 234513;
 
 ///
 /// List and search item templates
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> LIST
 ///  @param size The number of objects returned per page (optional, default to 25)
 ///
 ///  @param page The number of the page returned, starting with 1 (optional, default to 1)
@@ -781,15 +793,18 @@ NSInteger kJSAPIStoreApiMissingParamErrorCode = 234513;
 
 ///
 /// Update an item template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> PUT
 ///  @param _id The id of the template 
 ///
-///  @param itemTemplateResource The item template resource object (optional)
+///  @param templatePatchResource The patch resource object (optional)
+///
+///  @param testValidation If true, this will test validation but not submit the patch request (optional)
 ///
 ///  @returns JSAPIStoreItemTemplateResource*
 ///
 -(NSURLSessionTask*) updateItemTemplateWithId: (NSString*) _id
-    itemTemplateResource: (JSAPIStoreItemTemplateResource*) itemTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
     completionHandler: (void (^)(JSAPIStoreItemTemplateResource* output, NSError* error)) handler {
     // verify the required parameter '_id' is set
     if (_id == nil) {
@@ -810,6 +825,9 @@ NSInteger kJSAPIStoreApiMissingParamErrorCode = 234513;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (testValidation != nil) {
+        queryParams[@"test_validation"] = [testValidation isEqual:@(YES)] ? @"true" : @"false";
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -830,10 +848,10 @@ NSInteger kJSAPIStoreApiMissingParamErrorCode = 234513;
     id bodyParam = nil;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *localVarFiles = [[NSMutableDictionary alloc] init];
-    bodyParam = itemTemplateResource;
+    bodyParam = templatePatchResource;
 
     return [self.apiClient requestWithPath: resourcePath
-                                    method: @"PUT"
+                                    method: @"PATCH"
                                 pathParams: pathParams
                                queryParams: queryParams
                                 formParams: formParams

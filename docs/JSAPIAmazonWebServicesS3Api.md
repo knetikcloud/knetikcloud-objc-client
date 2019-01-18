@@ -1,11 +1,11 @@
 # JSAPIAmazonWebServicesS3Api
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getDownloadURL**](JSAPIAmazonWebServicesS3Api.md#getdownloadurl) | **GET** /amazon/s3/downloadurl | Get a temporary signed S3 URL for download
-[**getSignedS3URL**](JSAPIAmazonWebServicesS3Api.md#getsigneds3url) | **GET** /amazon/s3/signedposturl | Get a signed S3 URL for upload
+[**getDownloadURL**](JSAPIAmazonWebServicesS3Api.md#getdownloadurl) | **GET** /amazon/s3/download-url | Get a temporary signed S3 URL for download
+[**getSignedS3URL**](JSAPIAmazonWebServicesS3Api.md#getsigneds3url) | **GET** /amazon/s3/signed-post-url | Get a signed S3 URL for upload
 
 
 # **getDownloadURL**
@@ -13,7 +13,7 @@ Method | HTTP request | Description
 -(NSURLSessionTask*) getDownloadURLWithBucket: (NSString*) bucket
     path: (NSString*) path
     expiration: (NSNumber*) expiration
-        completionHandler: (void (^)(NSString* output, NSError* error)) handler;
+        completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler;
 ```
 
 Get a temporary signed S3 URL for download
@@ -32,7 +32,7 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* bucket = @"bucket_example"; // S3 bucket name (optional)
-NSString* path = @"path_example"; // The path to the file relative to the bucket (the s3 object key) (optional)
+NSString* path = @"path_example"; // The path to the file relative the bucket (the s3 object key) (optional)
 NSNumber* expiration = @60; // The number of seconds this URL will be valid. Default to 60 (optional) (default to 60)
 
 JSAPIAmazonWebServicesS3Api*apiInstance = [[JSAPIAmazonWebServicesS3Api alloc] init];
@@ -41,7 +41,7 @@ JSAPIAmazonWebServicesS3Api*apiInstance = [[JSAPIAmazonWebServicesS3Api alloc] i
 [apiInstance getDownloadURLWithBucket:bucket
               path:path
               expiration:expiration
-          completionHandler: ^(NSString* output, NSError* error) {
+          completionHandler: ^(JSAPIStringWrapper* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -56,12 +56,12 @@ JSAPIAmazonWebServicesS3Api*apiInstance = [[JSAPIAmazonWebServicesS3Api alloc] i
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **bucket** | **NSString***| S3 bucket name | [optional] 
- **path** | **NSString***| The path to the file relative to the bucket (the s3 object key) | [optional] 
+ **path** | **NSString***| The path to the file relative the bucket (the s3 object key) | [optional] 
  **expiration** | **NSNumber***| The number of seconds this URL will be valid. Default to 60 | [optional] [default to 60]
 
 ### Return type
 
-**NSString***
+[**JSAPIStringWrapper***](JSAPIStringWrapper.md)
 
 ### Authorization
 

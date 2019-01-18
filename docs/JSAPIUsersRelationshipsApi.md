@@ -1,12 +1,12 @@
 # JSAPIUsersRelationshipsApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createUserRelationship**](JSAPIUsersRelationshipsApi.md#createuserrelationship) | **POST** /users/relationships | Create a user relationship
 [**deleteUserRelationship**](JSAPIUsersRelationshipsApi.md#deleteuserrelationship) | **DELETE** /users/relationships/{id} | Delete a user relationship
-[**getUserRelationship**](JSAPIUsersRelationshipsApi.md#getuserrelationship) | **GET** /users/relationships/{id} | Get a user relationship
+[**getRelationship**](JSAPIUsersRelationshipsApi.md#getrelationship) | **GET** /users/relationships/{id} | Get a user relationship
 [**getUserRelationships**](JSAPIUsersRelationshipsApi.md#getuserrelationships) | **GET** /users/relationships | Get a list of user relationships
 [**updateUserRelationship**](JSAPIUsersRelationshipsApi.md#updateuserrelationship) | **PUT** /users/relationships/{id} | Update a user relationship
 
@@ -19,7 +19,7 @@ Method | HTTP request | Description
 
 Create a user relationship
 
-<b>Permissions Needed:</b> RELATIONSHIPS_ADMIN
+<b>Permissions Needed:</b> RELATIONSHIPS_ADMIN<br /><b>Permissions Needed:</b> NONE
 
 ### Example 
 ```objc
@@ -77,7 +77,7 @@ Name | Type | Description  | Notes
 
 Delete a user relationship
 
-<b>Permissions Needed:</b> RELATIONSHIPS_ADMIN
+<b>Permissions Needed:</b> RELATIONSHIPS_ADMIN<br /><b>Permissions Needed:</b> NONE
 
 ### Example 
 ```objc
@@ -124,15 +124,15 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **getUserRelationship**
+# **getRelationship**
 ```objc
--(NSURLSessionTask*) getUserRelationshipWithId: (NSNumber*) _id
+-(NSURLSessionTask*) getRelationshipWithId: (NSNumber*) _id
         completionHandler: (void (^)(JSAPIUserRelationshipResource* output, NSError* error)) handler;
 ```
 
 Get a user relationship
 
-<b>Permissions Needed:</b> RELATIONSHIPS_USER or RELATIONSHIPS_ADMIN
+<b>Permissions Needed:</b> RELATIONSHIPS_USER or RELATIONSHIPS_ADMIN<br /><b>Permissions Needed:</b> NONE
 
 ### Example 
 ```objc
@@ -150,13 +150,13 @@ NSNumber* _id = @789; // The id of the relationship
 JSAPIUsersRelationshipsApi*apiInstance = [[JSAPIUsersRelationshipsApi alloc] init];
 
 // Get a user relationship
-[apiInstance getUserRelationshipWithId:_id
+[apiInstance getRelationshipWithId:_id
           completionHandler: ^(JSAPIUserRelationshipResource* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
                         if (error) {
-                            NSLog(@"Error calling JSAPIUsersRelationshipsApi->getUserRelationship: %@", error);
+                            NSLog(@"Error calling JSAPIUsersRelationshipsApi->getRelationship: %@", error);
                         }
                     }];
 ```
@@ -192,7 +192,7 @@ Name | Type | Description  | Notes
 
 Get a list of user relationships
 
-<b>Permissions Needed:</b> RELATIONSHIPS_USER or RELATIONSHIPS_ADMIN
+<b>Permissions Needed:</b> RELATIONSHIPS_USER or RELATIONSHIPS_ADMIN<br /><b>Permissions Needed:</b> NONE
 
 ### Example 
 ```objc
@@ -257,7 +257,7 @@ Name | Type | Description  | Notes
 
 Update a user relationship
 
-<b>Permissions Needed:</b> RELATIONSHIPS_ADMIN
+<b>Permissions Needed:</b> RELATIONSHIPS_ADMIN<br /><b>Permissions Needed:</b> NONE
 
 ### Example 
 ```objc

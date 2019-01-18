@@ -26,7 +26,7 @@ extern NSInteger kJSAPIUsersRelationshipsApiMissingParamErrorCode;
 -(instancetype) initWithApiClient:(JSAPIApiClient *)apiClient NS_DESIGNATED_INITIALIZER;
 
 /// Create a user relationship
-/// <b>Permissions Needed:</b> RELATIONSHIPS_ADMIN
+/// <b>Permissions Needed:</b> RELATIONSHIPS_ADMIN<br /><b>Permissions Needed:</b> NONE
 ///
 /// @param relationship The new relationship (optional)
 /// 
@@ -42,7 +42,7 @@ extern NSInteger kJSAPIUsersRelationshipsApiMissingParamErrorCode;
 
 
 /// Delete a user relationship
-/// <b>Permissions Needed:</b> RELATIONSHIPS_ADMIN
+/// <b>Permissions Needed:</b> RELATIONSHIPS_ADMIN<br /><b>Permissions Needed:</b> NONE
 ///
 /// @param _id The id of the relationship
 /// 
@@ -58,7 +58,7 @@ extern NSInteger kJSAPIUsersRelationshipsApiMissingParamErrorCode;
 
 
 /// Get a user relationship
-/// <b>Permissions Needed:</b> RELATIONSHIPS_USER or RELATIONSHIPS_ADMIN
+/// <b>Permissions Needed:</b> RELATIONSHIPS_USER or RELATIONSHIPS_ADMIN<br /><b>Permissions Needed:</b> NONE
 ///
 /// @param _id The id of the relationship
 /// 
@@ -69,12 +69,12 @@ extern NSInteger kJSAPIUsersRelationshipsApiMissingParamErrorCode;
 ///  code:404 message:"Not Found"
 ///
 /// @return JSAPIUserRelationshipResource*
--(NSURLSessionTask*) getUserRelationshipWithId: (NSNumber*) _id
+-(NSURLSessionTask*) getRelationshipWithId: (NSNumber*) _id
     completionHandler: (void (^)(JSAPIUserRelationshipResource* output, NSError* error)) handler;
 
 
 /// Get a list of user relationships
-/// <b>Permissions Needed:</b> RELATIONSHIPS_USER or RELATIONSHIPS_ADMIN
+/// <b>Permissions Needed:</b> RELATIONSHIPS_USER or RELATIONSHIPS_ADMIN<br /><b>Permissions Needed:</b> NONE
 ///
 /// @param size The number of objects returned per page (optional) (default to 25)
 /// @param page The number of the page returned (optional) (default to 1)
@@ -94,7 +94,7 @@ extern NSInteger kJSAPIUsersRelationshipsApiMissingParamErrorCode;
 
 
 /// Update a user relationship
-/// <b>Permissions Needed:</b> RELATIONSHIPS_ADMIN
+/// <b>Permissions Needed:</b> RELATIONSHIPS_ADMIN<br /><b>Permissions Needed:</b> NONE
 ///
 /// @param _id The id of the relationship
 /// @param relationship The new relationship (optional)

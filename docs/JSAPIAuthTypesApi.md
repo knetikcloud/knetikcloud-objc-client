@@ -1,6 +1,6 @@
 # JSAPIAuthTypesApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -8,8 +8,8 @@ Method | HTTP request | Description
 [**allowedTypeActions**](JSAPIAuthTypesApi.md#allowedtypeactions) | **GET** /access/types/{type}/actions | Get allowed actions on a type
 [**createResource**](JSAPIAuthTypesApi.md#createresource) | **POST** /access/resources/{type} | Create or update resource
 [**createType**](JSAPIAuthTypesApi.md#createtype) | **POST** /access/types | Create a new type
+[**deleteAllOfType**](JSAPIAuthTypesApi.md#deletealloftype) | **DELETE** /access/resources/{type} | Delete all resources of a type
 [**deleteResource**](JSAPIAuthTypesApi.md#deleteresource) | **DELETE** /access/resources/{type}/{id} | Delete a resource
-[**deleteResources**](JSAPIAuthTypesApi.md#deleteresources) | **DELETE** /access/resources/{type} | Delete all resources of a type
 [**deleteType**](JSAPIAuthTypesApi.md#deletetype) | **DELETE** /access/types/{type} | Delete a root type
 [**getResource**](JSAPIAuthTypesApi.md#getresource) | **GET** /access/resources/{type}/{id} | Get a single resource
 [**getResources**](JSAPIAuthTypesApi.md#getresources) | **GET** /access/resources/{type} | List and search resources
@@ -23,7 +23,9 @@ Method | HTTP request | Description
 ```objc
 -(NSURLSessionTask*) allowedResourceActionsWithType: (NSString*) type
     _id: (NSString*) _id
-        completionHandler: (void (^)(NSArray<NSString*>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+        completionHandler: (void (^)(JSAPIPageResourceAccessResultsResource_* output, NSError* error)) handler;
 ```
 
 Get allowed action
@@ -43,13 +45,17 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 NSString* type = @"type_example"; // The type value
 NSString* _id = @"_id_example"; // The resource id
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
 JSAPIAuthTypesApi*apiInstance = [[JSAPIAuthTypesApi alloc] init];
 
 // Get allowed action
 [apiInstance allowedResourceActionsWithType:type
               _id:_id
-          completionHandler: ^(NSArray<NSString*>* output, NSError* error) {
+              size:size
+              page:page
+          completionHandler: ^(JSAPIPageResourceAccessResultsResource_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -65,10 +71,12 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **type** | **NSString***| The type value | 
  **_id** | **NSString***| The resource id | 
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
 ### Return type
 
-**NSArray<NSString*>***
+[**JSAPIPageResourceAccessResultsResource_***](JSAPIPageResourceAccessResultsResource_.md)
 
 ### Authorization
 
@@ -84,7 +92,9 @@ Name | Type | Description  | Notes
 # **allowedTypeActions**
 ```objc
 -(NSURLSessionTask*) allowedTypeActionsWithType: (NSString*) type
-        completionHandler: (void (^)(NSArray<NSString*>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+        completionHandler: (void (^)(JSAPIPageResourceAccessResultsResource_* output, NSError* error)) handler;
 ```
 
 Get allowed actions on a type
@@ -103,12 +113,16 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* type = @"type_example"; // The type value
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
 JSAPIAuthTypesApi*apiInstance = [[JSAPIAuthTypesApi alloc] init];
 
 // Get allowed actions on a type
 [apiInstance allowedTypeActionsWithType:type
-          completionHandler: ^(NSArray<NSString*>* output, NSError* error) {
+              size:size
+              page:page
+          completionHandler: ^(JSAPIPageResourceAccessResultsResource_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -123,10 +137,12 @@ JSAPIAuthTypesApi*apiInstance = [[JSAPIAuthTypesApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **type** | **NSString***| The type value | 
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
 ### Return type
 
-**NSArray<NSString*>***
+[**JSAPIPageResourceAccessResultsResource_***](JSAPIPageResourceAccessResultsResource_.md)
 
 ### Authorization
 
@@ -259,6 +275,61 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **deleteAllOfType**
+```objc
+-(NSURLSessionTask*) deleteAllOfTypeWithType: (NSString*) type
+        completionHandler: (void (^)(NSError* error)) handler;
+```
+
+Delete all resources of a type
+
+<b>Types Needed:</b> ROLE_SUPER_ADMIN
+
+### Example 
+```objc
+JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+
+NSString* type = @"type_example"; // The type value
+
+JSAPIAuthTypesApi*apiInstance = [[JSAPIAuthTypesApi alloc] init];
+
+// Delete all resources of a type
+[apiInstance deleteAllOfTypeWithType:type
+          completionHandler: ^(NSError* error) {
+                        if (error) {
+                            NSLog(@"Error calling JSAPIAuthTypesApi->deleteAllOfType: %@", error);
+                        }
+                    }];
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **type** | **NSString***| The type value | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **deleteResource**
 ```objc
 -(NSURLSessionTask*) deleteResourceWithType: (NSString*) type
@@ -302,61 +373,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **type** | **NSString***| The type value | 
  **_id** | **NSString***| The resource id | 
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **deleteResources**
-```objc
--(NSURLSessionTask*) deleteResourcesWithType: (NSString*) type
-        completionHandler: (void (^)(NSError* error)) handler;
-```
-
-Delete all resources of a type
-
-<b>Types Needed:</b> ROLE_SUPER_ADMIN
-
-### Example 
-```objc
-JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-
-NSString* type = @"type_example"; // The type value
-
-JSAPIAuthTypesApi*apiInstance = [[JSAPIAuthTypesApi alloc] init];
-
-// Delete all resources of a type
-[apiInstance deleteResourcesWithType:type
-          completionHandler: ^(NSError* error) {
-                        if (error) {
-                            NSLog(@"Error calling JSAPIAuthTypesApi->deleteResources: %@", error);
-                        }
-                    }];
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **type** | **NSString***| The type value | 
 
 ### Return type
 

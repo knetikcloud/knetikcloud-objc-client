@@ -2,8 +2,8 @@
 #import "JSAPIQueryParamCollection.h"
 #import "JSAPIApiClient.h"
 #import "JSAPIPageResourceSimpleReferenceResourceObject_.h"
+#import "JSAPIPageResourceVariableTypeResource_.h"
 #import "JSAPIResult.h"
-#import "JSAPIVariableTypeResource.h"
 
 
 @interface JSAPIRuleEngineVariablesApi ()
@@ -54,15 +54,26 @@ NSInteger kJSAPIRuleEngineVariablesApiMissingParamErrorCode = 234513;
 ///
 /// Get a list of variable types available
 /// Types include integer, string, user and invoice. These are used to qualify trigger parameters and action variables with strong typing. <br><br><b>Permissions Needed:</b> BRE_RULE_ENGINE_VARIABLES_USER
-///  @returns NSArray<JSAPIVariableTypeResource>*
+///  @param size The number of objects returned per page (optional, default to 25)
 ///
--(NSURLSessionTask*) getBREVariableTypesWithCompletionHandler: 
-    (void (^)(NSArray<JSAPIVariableTypeResource>* output, NSError* error)) handler {
+///  @param page The number of the page returned, starting with 1 (optional, default to 1)
+///
+///  @returns JSAPIPageResourceVariableTypeResource_*
+///
+-(NSURLSessionTask*) getBREVariableTypesWithSize: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceVariableTypeResource_* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/bre/variable-types"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (size != nil) {
+        queryParams[@"size"] = size;
+    }
+    if (page != nil) {
+        queryParams[@"page"] = page;
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -95,10 +106,10 @@ NSInteger kJSAPIRuleEngineVariablesApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSArray<JSAPIVariableTypeResource>*"
+                              responseType: @"JSAPIPageResourceVariableTypeResource_*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSArray<JSAPIVariableTypeResource>*)data, error);
+                                    handler((JSAPIPageResourceVariableTypeResource_*)data, error);
                                 }
                             }];
 }

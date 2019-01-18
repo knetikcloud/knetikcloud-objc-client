@@ -28,6 +28,9 @@
 /* A map of additional properties, keyed on the property name.  Must match the names and types defined in the template for this item type [optional]
  */
 @property(nonatomic) NSDictionary* additionalProperties;
+/* The date the group was created as a unix timestamp [optional]
+ */
+@property(nonatomic) NSNumber* createdDate;
 /* A description of the group [optional]
  */
 @property(nonatomic) NSString* _description;
@@ -58,6 +61,9 @@
 /* Unique name used in url and references. Uppercase, lowercase, numbers and hyphens only. Max 50 characters. Cannot be altered once created. Default: random UUID [optional]
  */
 @property(nonatomic) NSString* uniqueName;
+/* The date the group's info was last updated as a unix timestamp [optional]
+ */
+@property(nonatomic) NSNumber* updatedDate;
 
 + (NSDictionary *)modalDictionary;
 

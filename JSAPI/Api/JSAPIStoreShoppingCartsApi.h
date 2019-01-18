@@ -99,10 +99,10 @@ extern NSInteger kJSAPIStoreShoppingCartsApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSString*
+/// @return JSAPIStringWrapper*
 -(NSURLSessionTask*) createCartWithOwner: (NSNumber*) owner
     currencyCode: (NSString*) currencyCode
-    completionHandler: (void (^)(NSString* output, NSError* error)) handler;
+    completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler;
 
 
 /// Returns the cart with the given GUID

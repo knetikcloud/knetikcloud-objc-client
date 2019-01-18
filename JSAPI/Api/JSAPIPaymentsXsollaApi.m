@@ -2,6 +2,7 @@
 #import "JSAPIQueryParamCollection.h"
 #import "JSAPIApiClient.h"
 #import "JSAPIResult.h"
+#import "JSAPIStringWrapper.h"
 #import "JSAPIXsollaPaymentRequest.h"
 
 
@@ -55,10 +56,10 @@ NSInteger kJSAPIPaymentsXsollaApiMissingParamErrorCode = 234513;
 /// <b>Permissions Needed:</b> XSOLLA_ADMIN or owner
 ///  @param request The payment request to be sent to XSolla (optional)
 ///
-///  @returns NSString*
+///  @returns JSAPIStringWrapper*
 ///
 -(NSURLSessionTask*) createXsollaTokenUrlWithRequest: (JSAPIXsollaPaymentRequest*) request
-    completionHandler: (void (^)(NSString* output, NSError* error)) handler {
+    completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/payment/provider/xsolla/payment"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
@@ -97,10 +98,10 @@ NSInteger kJSAPIPaymentsXsollaApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSString*"
+                              responseType: @"JSAPIStringWrapper*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSString*)data, error);
+                                    handler((JSAPIStringWrapper*)data, error);
                                 }
                             }];
 }

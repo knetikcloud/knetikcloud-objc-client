@@ -3,6 +3,7 @@
 #import "JSAPIPageResourceCampaignResource_.h"
 #import "JSAPIPageResourceChallengeResource_.h"
 #import "JSAPIPageResourceTemplateResource_.h"
+#import "JSAPIPatchResource.h"
 #import "JSAPIResult.h"
 #import "JSAPITemplateResource.h"
 #import "JSAPIApi.h"
@@ -63,7 +64,7 @@ extern NSInteger kJSAPICampaignsApiMissingParamErrorCode;
 
 
 /// Create a campaign template
-/// Campaign Templates define a type of campaign and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// Campaign Templates define a type of campaign and the properties they have.<br /><b>Permissions Needed:</b> POST
 ///
 /// @param campaignTemplateResource The campaign template resource object (optional)
 /// 
@@ -95,7 +96,7 @@ extern NSInteger kJSAPICampaignsApiMissingParamErrorCode;
 
 
 /// Delete a campaign template
-/// If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// If cascade = 'detach', it will force delete the template even if it's attached to other objects.<br /><b>Permissions Needed:</b> DELETE
 ///
 /// @param _id The id of the template
 /// @param cascade The value needed to delete used templates (optional)
@@ -155,7 +156,7 @@ extern NSInteger kJSAPICampaignsApiMissingParamErrorCode;
 
 
 /// Get a single campaign template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or CAMPAIGNS_ADMIN
+/// <b>Permissions Needed:</b> GET
 ///
 /// @param _id The id of the template
 /// 
@@ -171,7 +172,7 @@ extern NSInteger kJSAPICampaignsApiMissingParamErrorCode;
 
 
 /// List and search campaign templates
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or CAMPAIGNS_ADMIN
+/// <b>Permissions Needed:</b> LIST
 ///
 /// @param size The number of objects returned per page (optional) (default to 25)
 /// @param page The number of the page returned, starting with 1 (optional) (default to 1)
@@ -249,20 +250,20 @@ extern NSInteger kJSAPICampaignsApiMissingParamErrorCode;
 
 
 /// Update an campaign template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> PUT
 ///
 /// @param _id The id of the template
-/// @param campaignTemplateResource The campaign template resource object (optional)
+/// @param templatePatchResource The patch resource object (optional)
+/// @param testValidation If true, this will test validation but not submit the patch request (optional)
 /// 
 ///  code:204 message:"No Content",
-///  code:400 message:"Bad Request",
 ///  code:401 message:"Unauthorized",
-///  code:403 message:"Forbidden",
-///  code:404 message:"Not Found"
+///  code:403 message:"Forbidden"
 ///
 /// @return JSAPITemplateResource*
 -(NSURLSessionTask*) updateCampaignTemplateWithId: (NSString*) _id
-    campaignTemplateResource: (JSAPITemplateResource*) campaignTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
     completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler;
 
 

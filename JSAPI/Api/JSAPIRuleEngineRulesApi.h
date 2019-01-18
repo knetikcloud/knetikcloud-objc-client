@@ -4,6 +4,7 @@
 #import "JSAPIExpressionObject_.h"
 #import "JSAPIPageResourceBreRule_.h"
 #import "JSAPIResult.h"
+#import "JSAPIStringWrapper.h"
 #import "JSAPIApi.h"
 
 /**
@@ -70,9 +71,9 @@ extern NSInteger kJSAPIRuleEngineRulesApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSString*
+/// @return JSAPIStringWrapper*
 -(NSURLSessionTask*) getBREExpressionAsStringWithExpression: (JSAPIExpressionObject_*) expression
-    completionHandler: (void (^)(NSString* output, NSError* error)) handler;
+    completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler;
 
 
 /// Get a single rule

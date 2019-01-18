@@ -1,6 +1,6 @@
 # JSAPIMediaArtistsApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -13,7 +13,7 @@ Method | HTTP request | Description
 [**getArtistTemplates**](JSAPIMediaArtistsApi.md#getartisttemplates) | **GET** /media/artists/templates | List and search artist templates
 [**getArtists**](JSAPIMediaArtistsApi.md#getartists) | **GET** /media/artists | Search for artists
 [**updateArtist**](JSAPIMediaArtistsApi.md#updateartist) | **PUT** /media/artists/{id} | Modifies an artist details
-[**updateArtistTemplate**](JSAPIMediaArtistsApi.md#updateartisttemplate) | **PUT** /media/artists/templates/{id} | Update an artist template
+[**updateArtistTemplate**](JSAPIMediaArtistsApi.md#updateartisttemplate) | **PATCH** /media/artists/templates/{id} | Update an artist template
 
 
 # **addArtist**
@@ -82,7 +82,7 @@ Name | Type | Description  | Notes
 
 Create an artist template
 
-Artist Templates define a type of artist and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+Artist Templates define a type of artist and the properties they have.<br /><b>Permissions Needed:</b> POST
 
 ### Example 
 ```objc
@@ -196,7 +196,7 @@ void (empty response body)
 
 Delete an artist template
 
-If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+If cascade = 'detach', it will force delete the template even if it's attached to other objects.<br /><b>Permissions Needed:</b> DELETE
 
 ### Example 
 ```objc
@@ -316,7 +316,7 @@ Name | Type | Description  | Notes
 
 Get a single artist template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or ARTISTS_ADMIN
+<b>Permissions Needed:</b> GET
 
 ### Example 
 ```objc
@@ -376,7 +376,7 @@ Name | Type | Description  | Notes
 
 List and search artist templates
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or ARTISTS_ADMIN
+<b>Permissions Needed:</b> LIST
 
 ### Example 
 ```objc
@@ -564,13 +564,14 @@ void (empty response body)
 # **updateArtistTemplate**
 ```objc
 -(NSURLSessionTask*) updateArtistTemplateWithId: (NSString*) _id
-    artistTemplateResource: (JSAPITemplateResource*) artistTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
         completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler;
 ```
 
 Update an artist template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN
+<b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -584,13 +585,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* _id = @"_id_example"; // The id of the template
-JSAPITemplateResource* artistTemplateResource = [[JSAPITemplateResource alloc] init]; // The artist template resource object (optional)
+JSAPIPatchResource* templatePatchResource = [[JSAPIPatchResource alloc] init]; // The patch resource object (optional)
+NSNumber* testValidation = @true; // If true, this will test validation but not submit the patch request (optional)
 
 JSAPIMediaArtistsApi*apiInstance = [[JSAPIMediaArtistsApi alloc] init];
 
 // Update an artist template
 [apiInstance updateArtistTemplateWithId:_id
-              artistTemplateResource:artistTemplateResource
+              templatePatchResource:templatePatchResource
+              testValidation:testValidation
           completionHandler: ^(JSAPITemplateResource* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
@@ -606,7 +609,8 @@ JSAPIMediaArtistsApi*apiInstance = [[JSAPIMediaArtistsApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **_id** | **NSString***| The id of the template | 
- **artistTemplateResource** | [**JSAPITemplateResource***](JSAPITemplateResource.md)| The artist template resource object | [optional] 
+ **templatePatchResource** | [**JSAPIPatchResource***](JSAPIPatchResource.md)| The patch resource object | [optional] 
+ **testValidation** | **NSNumber***| If true, this will test validation but not submit the patch request | [optional] 
 
 ### Return type
 

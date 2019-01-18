@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import "JSAPIPageResourcePaymentMethodResource_.h"
 #import "JSAPIPageResourcePaymentMethodTypeResource_.h"
 #import "JSAPIPaymentAuthorizationResource.h"
 #import "JSAPIPaymentMethodResource.h"
@@ -137,7 +138,7 @@ extern NSInteger kJSAPIPaymentsApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSArray<JSAPIPaymentMethodResource>*
+/// @return JSAPIPageResourcePaymentMethodResource_*
 -(NSURLSessionTask*) getPaymentMethodsWithUserId: (NSNumber*) userId
     filterName: (NSString*) filterName
     filterPaymentType: (NSString*) filterPaymentType
@@ -146,7 +147,7 @@ extern NSInteger kJSAPIPaymentsApiMissingParamErrorCode;
     size: (NSNumber*) size
     page: (NSNumber*) page
     order: (NSString*) order
-    completionHandler: (void (^)(NSArray<JSAPIPaymentMethodResource>* output, NSError* error)) handler;
+    completionHandler: (void (^)(JSAPIPageResourcePaymentMethodResource_* output, NSError* error)) handler;
 
 
 /// Authorize payment of an invoice for later capture

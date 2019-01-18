@@ -4,6 +4,7 @@
 #import "JSAPIDeviceResource.h"
 #import "JSAPIPageResourceDeviceResource_.h"
 #import "JSAPIPageResourceTemplateResource_.h"
+#import "JSAPIPatchResource.h"
 #import "JSAPIResult.h"
 #import "JSAPISimpleUserResource.h"
 #import "JSAPITemplateResource.h"
@@ -63,7 +64,7 @@ NSInteger kJSAPIDevicesApiMissingParamErrorCode = 234513;
 ///
 ///  @returns JSAPIDeviceResource*
 ///
--(NSURLSessionTask*) addDeviceUsersWithUserResources: (NSArray<JSAPISimpleUserResource>*) userResources
+-(NSURLSessionTask*) addDeviceUserWithUserResources: (NSArray<JSAPISimpleUserResource>*) userResources
     _id: (NSString*) _id
     completionHandler: (void (^)(JSAPIDeviceResource* output, NSError* error)) handler {
     // verify the required parameter 'userResources' is set
@@ -205,7 +206,7 @@ NSInteger kJSAPIDevicesApiMissingParamErrorCode = 234513;
 
 ///
 /// Create a device template
-/// Device Templates define a type of device and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// Device Templates define a type of device and the properties they have.<br /><b>Permissions Needed:</b> POST
 ///  @param deviceTemplateResource The device template resource object (optional)
 ///
 ///  @returns JSAPITemplateResource*
@@ -328,7 +329,7 @@ NSInteger kJSAPIDevicesApiMissingParamErrorCode = 234513;
 
 ///
 /// Delete an device template
-/// If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// If cascade = 'detach', it will force delete the template even if it's attached to other objects.<br /><b>Permissions Needed:</b> DELETE
 ///  @param _id The id of the template 
 ///
 ///  @param cascade The value needed to delete used templates (optional)
@@ -629,7 +630,7 @@ NSInteger kJSAPIDevicesApiMissingParamErrorCode = 234513;
 
 ///
 /// Get a single device template
-/// <b>Permissions Needed:</b> description
+/// <b>Permissions Needed:</b> GET
 ///  @param _id The id of the template 
 ///
 ///  @returns JSAPITemplateResource*
@@ -697,7 +698,7 @@ NSInteger kJSAPIDevicesApiMissingParamErrorCode = 234513;
 
 ///
 /// List and search device templates
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or DEVICES_ADMIN
+/// <b>Permissions Needed:</b> LIST
 ///  @param size The number of objects returned per page (optional, default to 25)
 ///
 ///  @param page The number of the page returned, starting with 1 (optional, default to 1)
@@ -954,15 +955,18 @@ NSInteger kJSAPIDevicesApiMissingParamErrorCode = 234513;
 
 ///
 /// Update an device template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> PUT
 ///  @param _id The id of the template 
 ///
-///  @param deviceTemplateResource The device template resource object (optional)
+///  @param templatePatchResource The patch resource object (optional)
+///
+///  @param testValidation If true, this will test validation but not submit the patch request (optional)
 ///
 ///  @returns JSAPITemplateResource*
 ///
 -(NSURLSessionTask*) updateDeviceTemplateWithId: (NSString*) _id
-    deviceTemplateResource: (JSAPITemplateResource*) deviceTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
     completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler {
     // verify the required parameter '_id' is set
     if (_id == nil) {
@@ -983,6 +987,9 @@ NSInteger kJSAPIDevicesApiMissingParamErrorCode = 234513;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (testValidation != nil) {
+        queryParams[@"test_validation"] = [testValidation isEqual:@(YES)] ? @"true" : @"false";
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -1003,10 +1010,10 @@ NSInteger kJSAPIDevicesApiMissingParamErrorCode = 234513;
     id bodyParam = nil;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *localVarFiles = [[NSMutableDictionary alloc] init];
-    bodyParam = deviceTemplateResource;
+    bodyParam = templatePatchResource;
 
     return [self.apiClient requestWithPath: resourcePath
-                                    method: @"PUT"
+                                    method: @"PATCH"
                                 pathParams: pathParams
                                queryParams: queryParams
                                 formParams: formParams

@@ -1,6 +1,6 @@
 # JSAPIReportingUsageApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -426,7 +426,7 @@ Name | Type | Description  | Notes
 ```objc
 -(NSURLSessionTask*) getUsageEndpointsWithStartDate: (NSNumber*) startDate
     endDate: (NSNumber*) endDate
-        completionHandler: (void (^)(NSArray<NSString*>* output, NSError* error)) handler;
+        completionHandler: (void (^)(JSAPIPageResourceString_* output, NSError* error)) handler;
 ```
 
 Returns list of endpoints called (method and url)
@@ -452,7 +452,7 @@ JSAPIReportingUsageApi*apiInstance = [[JSAPIReportingUsageApi alloc] init];
 // Returns list of endpoints called (method and url)
 [apiInstance getUsageEndpointsWithStartDate:startDate
               endDate:endDate
-          completionHandler: ^(NSArray<NSString*>* output, NSError* error) {
+          completionHandler: ^(JSAPIPageResourceString_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -471,7 +471,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**NSArray<NSString*>***
+[**JSAPIPageResourceString_***](JSAPIPageResourceString_.md)
 
 ### Authorization
 

@@ -3,6 +3,7 @@
 #import "JSAPIApiClient.h"
 #import "JSAPIApplyPaymentRequest.h"
 #import "JSAPIResult.h"
+#import "JSAPIStringWrapper.h"
 
 
 @interface JSAPIPaymentsAppleApi ()
@@ -55,10 +56,10 @@ NSInteger kJSAPIPaymentsAppleApiMissingParamErrorCode = 234513;
 /// Mark an invoice paid using Apple payment receipt. A receipt will only be accepted once and the details of the transaction must match the invoice, including the product_id matching the sku text of the item in the invoice. Returns the transaction ID if successful. <br><br><b>Permissions Needed:</b> ANY
 ///  @param request The request for paying an invoice through an Apple receipt (optional)
 ///
-///  @returns NSString*
+///  @returns JSAPIStringWrapper*
 ///
 -(NSURLSessionTask*) verifyAppleReceiptWithRequest: (JSAPIApplyPaymentRequest*) request
-    completionHandler: (void (^)(NSString* output, NSError* error)) handler {
+    completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/payment/provider/apple/receipt"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
@@ -97,10 +98,10 @@ NSInteger kJSAPIPaymentsAppleApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSString*"
+                              responseType: @"JSAPIStringWrapper*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSString*)data, error);
+                                    handler((JSAPIStringWrapper*)data, error);
                                 }
                             }];
 }

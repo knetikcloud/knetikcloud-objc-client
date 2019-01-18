@@ -2,6 +2,7 @@
 #import "JSAPIDeviceResource.h"
 #import "JSAPIPageResourceDeviceResource_.h"
 #import "JSAPIPageResourceTemplateResource_.h"
+#import "JSAPIPatchResource.h"
 #import "JSAPIResult.h"
 #import "JSAPISimpleUserResource.h"
 #import "JSAPITemplateResource.h"
@@ -41,7 +42,7 @@ extern NSInteger kJSAPIDevicesApiMissingParamErrorCode;
 ///  code:404 message:"Not Found"
 ///
 /// @return JSAPIDeviceResource*
--(NSURLSessionTask*) addDeviceUsersWithUserResources: (NSArray<JSAPISimpleUserResource>*) userResources
+-(NSURLSessionTask*) addDeviceUserWithUserResources: (NSArray<JSAPISimpleUserResource>*) userResources
     _id: (NSString*) _id
     completionHandler: (void (^)(JSAPIDeviceResource* output, NSError* error)) handler;
 
@@ -63,7 +64,7 @@ extern NSInteger kJSAPIDevicesApiMissingParamErrorCode;
 
 
 /// Create a device template
-/// Device Templates define a type of device and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// Device Templates define a type of device and the properties they have.<br /><b>Permissions Needed:</b> POST
 ///
 /// @param deviceTemplateResource The device template resource object (optional)
 /// 
@@ -95,7 +96,7 @@ extern NSInteger kJSAPIDevicesApiMissingParamErrorCode;
 
 
 /// Delete an device template
-/// If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// If cascade = 'detach', it will force delete the template even if it's attached to other objects.<br /><b>Permissions Needed:</b> DELETE
 ///
 /// @param _id The id of the template
 /// @param cascade The value needed to delete used templates (optional)
@@ -165,7 +166,7 @@ extern NSInteger kJSAPIDevicesApiMissingParamErrorCode;
 
 
 /// Get a single device template
-/// <b>Permissions Needed:</b> description
+/// <b>Permissions Needed:</b> GET
 ///
 /// @param _id The id of the template
 /// 
@@ -181,7 +182,7 @@ extern NSInteger kJSAPIDevicesApiMissingParamErrorCode;
 
 
 /// List and search device templates
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or DEVICES_ADMIN
+/// <b>Permissions Needed:</b> LIST
 ///
 /// @param size The number of objects returned per page (optional) (default to 25)
 /// @param page The number of the page returned, starting with 1 (optional) (default to 1)
@@ -251,20 +252,20 @@ extern NSInteger kJSAPIDevicesApiMissingParamErrorCode;
 
 
 /// Update an device template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> PUT
 ///
 /// @param _id The id of the template
-/// @param deviceTemplateResource The device template resource object (optional)
+/// @param templatePatchResource The patch resource object (optional)
+/// @param testValidation If true, this will test validation but not submit the patch request (optional)
 /// 
 ///  code:204 message:"No Content",
-///  code:400 message:"Bad Request",
 ///  code:401 message:"Unauthorized",
-///  code:403 message:"Forbidden",
-///  code:404 message:"Not Found"
+///  code:403 message:"Forbidden"
 ///
 /// @return JSAPITemplateResource*
 -(NSURLSessionTask*) updateDeviceTemplateWithId: (NSString*) _id
-    deviceTemplateResource: (JSAPITemplateResource*) deviceTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
     completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler;
 
 

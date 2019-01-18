@@ -3,6 +3,7 @@
 #import "JSAPIApiClient.h"
 #import "JSAPIPageResourceSubscriptionResource_.h"
 #import "JSAPIPageResourceSubscriptionTemplateResource_.h"
+#import "JSAPIPatchResource.h"
 #import "JSAPIResult.h"
 #import "JSAPISubscriptionResource.h"
 #import "JSAPISubscriptionTemplateResource.h"
@@ -110,7 +111,7 @@ NSInteger kJSAPIStoreSubscriptionsApiMissingParamErrorCode = 234513;
 
 ///
 /// Create a subscription template
-/// Subscription Templates define a type of subscription and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// Subscription Templates define a type of subscription and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> POST
 ///  @param subscriptionTemplateResource The new subscription template (optional)
 ///
 ///  @returns JSAPISubscriptionTemplateResource*
@@ -250,7 +251,7 @@ NSInteger kJSAPIStoreSubscriptionsApiMissingParamErrorCode = 234513;
 
 ///
 /// Delete a subscription template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> DELETE
 ///  @param _id The id of the template 
 ///
 ///  @param cascade force deleting the template if it's attached to other objects, cascade = detach (optional)
@@ -392,7 +393,7 @@ NSInteger kJSAPIStoreSubscriptionsApiMissingParamErrorCode = 234513;
 
 ///
 /// Get a single subscription template
-/// Subscription Templates define a type of subscription and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// Subscription Templates define a type of subscription and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> GET
 ///  @param _id The id of the template 
 ///
 ///  @returns JSAPISubscriptionTemplateResource*
@@ -460,7 +461,7 @@ NSInteger kJSAPIStoreSubscriptionsApiMissingParamErrorCode = 234513;
 
 ///
 /// List and search subscription templates
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or SUBSCRIPTIONS_ADMIN
+/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or SUBSCRIPTIONS_ADMIN<br /><b>Permissions Needed:</b> LIST
 ///  @param size The number of objects returned per page (optional, default to 25)
 ///
 ///  @param page The number of the page returned, starting with 1 (optional, default to 1)
@@ -722,15 +723,18 @@ NSInteger kJSAPIStoreSubscriptionsApiMissingParamErrorCode = 234513;
 
 ///
 /// Update a subscription template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> PUT
 ///  @param _id The id of the template 
 ///
-///  @param subscriptionTemplateResource The subscription template resource object (optional)
+///  @param templatePatchResource The patch resource object (optional)
+///
+///  @param testValidation If true, this will test validation but not submit the patch request (optional)
 ///
 ///  @returns JSAPISubscriptionTemplateResource*
 ///
 -(NSURLSessionTask*) updateSubscriptionTemplateWithId: (NSString*) _id
-    subscriptionTemplateResource: (JSAPISubscriptionTemplateResource*) subscriptionTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
     completionHandler: (void (^)(JSAPISubscriptionTemplateResource* output, NSError* error)) handler {
     // verify the required parameter '_id' is set
     if (_id == nil) {
@@ -751,6 +755,9 @@ NSInteger kJSAPIStoreSubscriptionsApiMissingParamErrorCode = 234513;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (testValidation != nil) {
+        queryParams[@"test_validation"] = [testValidation isEqual:@(YES)] ? @"true" : @"false";
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -771,10 +778,10 @@ NSInteger kJSAPIStoreSubscriptionsApiMissingParamErrorCode = 234513;
     id bodyParam = nil;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *localVarFiles = [[NSMutableDictionary alloc] init];
-    bodyParam = subscriptionTemplateResource;
+    bodyParam = templatePatchResource;
 
     return [self.apiClient requestWithPath: resourcePath
-                                    method: @"PUT"
+                                    method: @"PATCH"
                                 pathParams: pathParams
                                queryParams: queryParams
                                 formParams: formParams

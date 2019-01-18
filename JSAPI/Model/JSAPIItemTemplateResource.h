@@ -28,9 +28,6 @@
 
 @interface JSAPIItemTemplateResource : JSAPIObject
 
-/* Whether to allow additional properties beyond those specified or not [optional]
- */
-@property(nonatomic) NSNumber* allowAdditional;
 /* The customized behaviors that are required or default for this type of item [optional]
  */
 @property(nonatomic) NSArray<JSAPIItemBehaviorDefinitionResource>* behaviors;

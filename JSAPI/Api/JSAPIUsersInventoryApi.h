@@ -8,6 +8,7 @@
 #import "JSAPIPageResourceItemTemplateResource_.h"
 #import "JSAPIPageResourceUserInventoryResource_.h"
 #import "JSAPIPageResourceUserItemLogResource_.h"
+#import "JSAPIPatchResource.h"
 #import "JSAPIResult.h"
 #import "JSAPIUserInventoryAddRequest.h"
 #import "JSAPIUserInventoryResource.h"
@@ -91,7 +92,7 @@ extern NSInteger kJSAPIUsersInventoryApiMissingParamErrorCode;
 
 
 /// Create an entitlement template
-/// Entitlement templates define a type of entitlement and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// Entitlement templates define a type of entitlement and the properties they have.<br /><b>Permissions Needed:</b> POST
 ///
 /// @param template The entitlement template to be created (optional)
 /// 
@@ -123,7 +124,7 @@ extern NSInteger kJSAPIUsersInventoryApiMissingParamErrorCode;
 
 
 /// Delete an entitlement template
-/// If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// If cascade = 'detach', it will force delete the template even if it's attached to other objects.<br /><b>Permissions Needed:</b> DELETE
 ///
 /// @param _id The id of the template
 /// @param cascade The value needed to delete used templates (optional)
@@ -179,7 +180,7 @@ extern NSInteger kJSAPIUsersInventoryApiMissingParamErrorCode;
 
 
 /// Get a single entitlement template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or ACHIEVEMENTS_ADMIN
+/// <b>Permissions Needed:</b> GET
 ///
 /// @param _id The id of the template
 /// 
@@ -195,7 +196,7 @@ extern NSInteger kJSAPIUsersInventoryApiMissingParamErrorCode;
 
 
 /// List and search entitlement templates
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or ACHIEVEMENTS_ADMIN
+/// <b>Permissions Needed:</b> LIST
 ///
 /// @param size The number of objects returned per page (optional) (default to 25)
 /// @param page The number of the page returned, starting with 1 (optional) (default to 1)
@@ -212,6 +213,36 @@ extern NSInteger kJSAPIUsersInventoryApiMissingParamErrorCode;
     page: (NSNumber*) page
     order: (NSString*) order
     completionHandler: (void (^)(JSAPIPageResourceItemTemplateResource_* output, NSError* error)) handler;
+
+
+/// List the user inventory entries for all users
+/// <b>Permissions Needed:</b> INVENTORY_ADMIN
+///
+/// @param inactive If true, accepts inactive user inventories (optional) (default to false)
+/// @param size The number of objects returned per page (optional) (default to 25)
+/// @param page The number of the page returned, starting with 1 (optional) (default to 1)
+/// @param filterItemName Filter by items whose name starts with a string (optional)
+/// @param filterItemId Filter by item id (optional)
+/// @param filterUsername Filter by entries owned by the user with the specified username (optional)
+/// @param filterGroup Filter by entries owned by the users in a given group, by unique name (optional)
+/// @param filterDate A comma separated string without spaces.  First value is the operator to search on, second value is the log start date, a unix timestamp in seconds. Can be repeated for a range, eg: GT,123,LT,456  Allowed operators: (GT, LT, EQ, GOE, LOE). (optional)
+/// 
+///  code:200 message:"OK",
+///  code:400 message:"Bad Request",
+///  code:401 message:"Unauthorized",
+///  code:403 message:"Forbidden",
+///  code:404 message:"Not Found"
+///
+/// @return JSAPIPageResourceUserInventoryResource_*
+-(NSURLSessionTask*) getInventoryListWithInactive: (NSNumber*) inactive
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    filterItemName: (NSString*) filterItemName
+    filterItemId: (NSNumber*) filterItemId
+    filterUsername: (NSString*) filterUsername
+    filterGroup: (NSString*) filterGroup
+    filterDate: (NSString*) filterDate
+    completionHandler: (void (^)(JSAPIPageResourceUserInventoryResource_* output, NSError* error)) handler;
 
 
 /// List the user inventory entries for a given user
@@ -286,36 +317,6 @@ extern NSInteger kJSAPIUsersInventoryApiMissingParamErrorCode;
     completionHandler: (void (^)(JSAPIPageResourceUserItemLogResource_* output, NSError* error)) handler;
 
 
-/// List the user inventory entries for all users
-/// <b>Permissions Needed:</b> INVENTORY_ADMIN
-///
-/// @param inactive If true, accepts inactive user inventories (optional) (default to false)
-/// @param size The number of objects returned per page (optional) (default to 25)
-/// @param page The number of the page returned, starting with 1 (optional) (default to 1)
-/// @param filterItemName Filter by items whose name starts with a string (optional)
-/// @param filterItemId Filter by item id (optional)
-/// @param filterUsername Filter by entries owned by the user with the specified username (optional)
-/// @param filterGroup Filter by entries owned by the users in a given group, by unique name (optional)
-/// @param filterDate A comma separated string without spaces.  First value is the operator to search on, second value is the log start date, a unix timestamp in seconds. Can be repeated for a range, eg: GT,123,LT,456  Allowed operators: (GT, LT, EQ, GOE, LOE). (optional)
-/// 
-///  code:200 message:"OK",
-///  code:400 message:"Bad Request",
-///  code:401 message:"Unauthorized",
-///  code:403 message:"Forbidden",
-///  code:404 message:"Not Found"
-///
-/// @return JSAPIPageResourceUserInventoryResource_*
--(NSURLSessionTask*) getUsersInventoryWithInactive: (NSNumber*) inactive
-    size: (NSNumber*) size
-    page: (NSNumber*) page
-    filterItemName: (NSString*) filterItemName
-    filterItemId: (NSNumber*) filterItemId
-    filterUsername: (NSString*) filterUsername
-    filterGroup: (NSString*) filterGroup
-    filterDate: (NSString*) filterDate
-    completionHandler: (void (^)(JSAPIPageResourceUserInventoryResource_* output, NSError* error)) handler;
-
-
 /// Grant an entitlement
 /// <b>Permissions Needed:</b> INVENTORY_ADMIN
 ///
@@ -355,20 +356,20 @@ extern NSInteger kJSAPIUsersInventoryApiMissingParamErrorCode;
 
 
 /// Update an entitlement template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> PUT
 ///
 /// @param _id The id of the template
-/// @param template The updated template (optional)
+/// @param templatePatchResource The patch resource object (optional)
+/// @param testValidation If true, this will test validation but not submit the patch request (optional)
 /// 
 ///  code:204 message:"No Content",
-///  code:400 message:"Bad Request",
 ///  code:401 message:"Unauthorized",
-///  code:403 message:"Forbidden",
-///  code:404 message:"Not Found"
+///  code:403 message:"Forbidden"
 ///
 /// @return JSAPIItemTemplateResource*
 -(NSURLSessionTask*) updateEntitlementTemplateWithId: (NSString*) _id
-    template: (JSAPIItemTemplateResource*) template
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
     completionHandler: (void (^)(JSAPIItemTemplateResource* output, NSError* error)) handler;
 
 

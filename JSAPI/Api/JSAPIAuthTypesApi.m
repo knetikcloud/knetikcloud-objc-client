@@ -3,6 +3,7 @@
 #import "JSAPIApiClient.h"
 #import "JSAPIAccessResourceCreateRequest.h"
 #import "JSAPIAccessTypeResource.h"
+#import "JSAPIPageResourceAccessResultsResource_.h"
 #import "JSAPIPageResourceAccessTypeResource_.h"
 #import "JSAPIResult.h"
 
@@ -59,11 +60,17 @@ NSInteger kJSAPIAuthTypesApiMissingParamErrorCode = 234513;
 ///
 ///  @param _id The resource id 
 ///
-///  @returns NSArray<NSString*>*
+///  @param size The number of objects returned per page (optional, default to 25)
+///
+///  @param page The number of the page returned, starting with 1 (optional, default to 1)
+///
+///  @returns JSAPIPageResourceAccessResultsResource_*
 ///
 -(NSURLSessionTask*) allowedResourceActionsWithType: (NSString*) type
     _id: (NSString*) _id
-    completionHandler: (void (^)(NSArray<NSString*>* output, NSError* error)) handler {
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceAccessResultsResource_* output, NSError* error)) handler {
     // verify the required parameter 'type' is set
     if (type == nil) {
         NSParameterAssert(type);
@@ -97,6 +104,12 @@ NSInteger kJSAPIAuthTypesApiMissingParamErrorCode = 234513;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (size != nil) {
+        queryParams[@"size"] = size;
+    }
+    if (page != nil) {
+        queryParams[@"page"] = page;
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -129,10 +142,10 @@ NSInteger kJSAPIAuthTypesApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSArray<NSString*>*"
+                              responseType: @"JSAPIPageResourceAccessResultsResource_*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSArray<NSString*>*)data, error);
+                                    handler((JSAPIPageResourceAccessResultsResource_*)data, error);
                                 }
                             }];
 }
@@ -142,10 +155,16 @@ NSInteger kJSAPIAuthTypesApiMissingParamErrorCode = 234513;
 /// Checks for which actions can be taken against a given type by the caller. <b>Types Needed:</b> any
 ///  @param type The type value 
 ///
-///  @returns NSArray<NSString*>*
+///  @param size The number of objects returned per page (optional, default to 25)
+///
+///  @param page The number of the page returned, starting with 1 (optional, default to 1)
+///
+///  @returns JSAPIPageResourceAccessResultsResource_*
 ///
 -(NSURLSessionTask*) allowedTypeActionsWithType: (NSString*) type
-    completionHandler: (void (^)(NSArray<NSString*>* output, NSError* error)) handler {
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceAccessResultsResource_* output, NSError* error)) handler {
     // verify the required parameter 'type' is set
     if (type == nil) {
         NSParameterAssert(type);
@@ -165,6 +184,12 @@ NSInteger kJSAPIAuthTypesApiMissingParamErrorCode = 234513;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (size != nil) {
+        queryParams[@"size"] = size;
+    }
+    if (page != nil) {
+        queryParams[@"page"] = page;
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -197,10 +222,10 @@ NSInteger kJSAPIAuthTypesApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSArray<NSString*>*"
+                              responseType: @"JSAPIPageResourceAccessResultsResource_*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSArray<NSString*>*)data, error);
+                                    handler((JSAPIPageResourceAccessResultsResource_*)data, error);
                                 }
                             }];
 }
@@ -333,16 +358,13 @@ NSInteger kJSAPIAuthTypesApiMissingParamErrorCode = 234513;
 }
 
 ///
-/// Delete a resource
-/// Deletes a non-root level type<br /><b>Types Needed:</b> ROLE_SUPER_ADMIN
+/// Delete all resources of a type
+/// <b>Types Needed:</b> ROLE_SUPER_ADMIN
 ///  @param type The type value 
-///
-///  @param _id The resource id 
 ///
 ///  @returns void
 ///
--(NSURLSessionTask*) deleteResourceWithType: (NSString*) type
-    _id: (NSString*) _id
+-(NSURLSessionTask*) deleteAllOfTypeWithType: (NSString*) type
     completionHandler: (void (^)(NSError* error)) handler {
     // verify the required parameter 'type' is set
     if (type == nil) {
@@ -355,25 +377,11 @@ NSInteger kJSAPIAuthTypesApiMissingParamErrorCode = 234513;
         return nil;
     }
 
-    // verify the required parameter '_id' is set
-    if (_id == nil) {
-        NSParameterAssert(_id);
-        if(handler) {
-            NSDictionary * userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Missing required parameter '%@'", nil),@"_id"] };
-            NSError* error = [NSError errorWithDomain:kJSAPIAuthTypesApiErrorDomain code:kJSAPIAuthTypesApiMissingParamErrorCode userInfo:userInfo];
-            handler(error);
-        }
-        return nil;
-    }
-
-    NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/access/resources/{type}/{id}"];
+    NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/access/resources/{type}"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
     if (type != nil) {
         pathParams[@"type"] = type;
-    }
-    if (_id != nil) {
-        pathParams[@"id"] = _id;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
@@ -418,13 +426,16 @@ NSInteger kJSAPIAuthTypesApiMissingParamErrorCode = 234513;
 }
 
 ///
-/// Delete all resources of a type
-/// <b>Types Needed:</b> ROLE_SUPER_ADMIN
+/// Delete a resource
+/// Deletes a non-root level type<br /><b>Types Needed:</b> ROLE_SUPER_ADMIN
 ///  @param type The type value 
+///
+///  @param _id The resource id 
 ///
 ///  @returns void
 ///
--(NSURLSessionTask*) deleteResourcesWithType: (NSString*) type
+-(NSURLSessionTask*) deleteResourceWithType: (NSString*) type
+    _id: (NSString*) _id
     completionHandler: (void (^)(NSError* error)) handler {
     // verify the required parameter 'type' is set
     if (type == nil) {
@@ -437,11 +448,25 @@ NSInteger kJSAPIAuthTypesApiMissingParamErrorCode = 234513;
         return nil;
     }
 
-    NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/access/resources/{type}"];
+    // verify the required parameter '_id' is set
+    if (_id == nil) {
+        NSParameterAssert(_id);
+        if(handler) {
+            NSDictionary * userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Missing required parameter '%@'", nil),@"_id"] };
+            NSError* error = [NSError errorWithDomain:kJSAPIAuthTypesApiErrorDomain code:kJSAPIAuthTypesApiMissingParamErrorCode userInfo:userInfo];
+            handler(error);
+        }
+        return nil;
+    }
+
+    NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/access/resources/{type}/{id}"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
     if (type != nil) {
         pathParams[@"type"] = type;
+    }
+    if (_id != nil) {
+        pathParams[@"id"] = _id;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];

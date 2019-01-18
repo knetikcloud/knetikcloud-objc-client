@@ -2,11 +2,15 @@
 #import "JSAPIQueryParamCollection.h"
 #import "JSAPIApiClient.h"
 #import "JSAPIAnswerResource.h"
-#import "JSAPIDeltaResource.h"
 #import "JSAPIImportJobResource.h"
+#import "JSAPILongWrapper.h"
+#import "JSAPIPageResourceAnswerResource_.h"
+#import "JSAPIPageResourceDeltaResource_.h"
 #import "JSAPIPageResourceImportJobResource_.h"
 #import "JSAPIPageResourceQuestionResource_.h"
 #import "JSAPIPageResourceQuestionTemplateResource_.h"
+#import "JSAPIPageResourceString_.h"
+#import "JSAPIPatchResource.h"
 #import "JSAPIQuestionResource.h"
 #import "JSAPIQuestionTemplateResource.h"
 #import "JSAPIResult.h"
@@ -417,7 +421,7 @@ NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode = 234513;
 
 ///
 /// Create a question template
-/// Question templates define a type of question and the properties they have. <br><br><b>Permissions Needed:</b> TRIVIA_ADMIN
+/// Question templates define a type of question and the properties they have. <br><br><b>Permissions Needed:</b> TRIVIA_ADMIN<br /><b>Permissions Needed:</b> POST
 ///  @param questionTemplateResource The question template resource object (optional)
 ///
 ///  @returns JSAPIQuestionTemplateResource*
@@ -693,7 +697,7 @@ NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode = 234513;
 
 ///
 /// Delete a question template
-/// If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> DELETE
 ///  @param _id The id of the template 
 ///
 ///  @param cascade The value needed to delete used templates (optional)
@@ -1084,10 +1088,16 @@ NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode = 234513;
 /// <b>Permissions Needed:</b> TRIVIA_ADMIN
 ///  @param questionId The id of the question 
 ///
-///  @returns NSArray<JSAPIAnswerResource>*
+///  @param size The number of objects returned per page (optional, default to 25)
+///
+///  @param page The number of the page returned, starting with 1 (optional, default to 1)
+///
+///  @returns JSAPIPageResourceAnswerResource_*
 ///
 -(NSURLSessionTask*) getQuestionAnswersWithQuestionId: (NSString*) questionId
-    completionHandler: (void (^)(NSArray<JSAPIAnswerResource>* output, NSError* error)) handler {
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceAnswerResource_* output, NSError* error)) handler {
     // verify the required parameter 'questionId' is set
     if (questionId == nil) {
         NSParameterAssert(questionId);
@@ -1107,6 +1117,12 @@ NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode = 234513;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (size != nil) {
+        queryParams[@"size"] = size;
+    }
+    if (page != nil) {
+        queryParams[@"page"] = page;
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -1139,10 +1155,10 @@ NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSArray<JSAPIAnswerResource>*"
+                              responseType: @"JSAPIPageResourceAnswerResource_*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSArray<JSAPIAnswerResource>*)data, error);
+                                    handler((JSAPIPageResourceAnswerResource_*)data, error);
                                 }
                             }];
 }
@@ -1152,10 +1168,16 @@ NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode = 234513;
 /// The 'since' parameter is important to avoid getting a full list of all questions. Implementors should make sure they pass the updated date of the last resource loaded, not the date of the last request, in order to avoid gaps. <br><br><b>Permissions Needed:</b> TRIVIA_ADMIN
 ///  @param since Timestamp in seconds (optional)
 ///
-///  @returns NSArray<JSAPIDeltaResource>*
+///  @param size The number of objects returned per page (optional, default to 25)
+///
+///  @param page The number of the page returned, starting with 1 (optional, default to 1)
+///
+///  @returns JSAPIPageResourceDeltaResource_*
 ///
 -(NSURLSessionTask*) getQuestionDeltasWithSince: (NSNumber*) since
-    completionHandler: (void (^)(NSArray<JSAPIDeltaResource>* output, NSError* error)) handler {
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceDeltaResource_* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/trivia/questions/delta"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
@@ -1163,6 +1185,12 @@ NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode = 234513;
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     if (since != nil) {
         queryParams[@"since"] = since;
+    }
+    if (size != nil) {
+        queryParams[@"size"] = size;
+    }
+    if (page != nil) {
+        queryParams[@"page"] = page;
     }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
@@ -1196,10 +1224,10 @@ NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSArray<JSAPIDeltaResource>*"
+                              responseType: @"JSAPIPageResourceDeltaResource_*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSArray<JSAPIDeltaResource>*)data, error);
+                                    handler((JSAPIPageResourceDeltaResource_*)data, error);
                                 }
                             }];
 }
@@ -1209,10 +1237,16 @@ NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode = 234513;
 /// <b>Permissions Needed:</b> TRIVIA_ADMIN
 ///  @param _id The id of the question 
 ///
-///  @returns NSArray<NSString*>*
+///  @param size The number of objects returned per page (optional, default to 25)
+///
+///  @param page The number of the page returned, starting with 1 (optional, default to 1)
+///
+///  @returns JSAPIPageResourceString_*
 ///
 -(NSURLSessionTask*) getQuestionTagsWithId: (NSString*) _id
-    completionHandler: (void (^)(NSArray<NSString*>* output, NSError* error)) handler {
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceString_* output, NSError* error)) handler {
     // verify the required parameter '_id' is set
     if (_id == nil) {
         NSParameterAssert(_id);
@@ -1232,6 +1266,12 @@ NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode = 234513;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (size != nil) {
+        queryParams[@"size"] = size;
+    }
+    if (page != nil) {
+        queryParams[@"page"] = page;
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -1264,17 +1304,17 @@ NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSArray<NSString*>*"
+                              responseType: @"JSAPIPageResourceString_*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSArray<NSString*>*)data, error);
+                                    handler((JSAPIPageResourceString_*)data, error);
                                 }
                             }];
 }
 
 ///
 /// Get a single question template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or TRIVIA_ADMIN
+/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or TRIVIA_ADMIN<br /><b>Permissions Needed:</b> GET
 ///  @param _id The id of the template 
 ///
 ///  @returns JSAPIQuestionTemplateResource*
@@ -1342,7 +1382,7 @@ NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode = 234513;
 
 ///
 /// List and search question templates
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or TRIVIA_ADMIN
+/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or TRIVIA_ADMIN<br /><b>Permissions Needed:</b> LIST
 ///  @param size The number of objects returned per page (optional, default to 25)
 ///
 ///  @param page The number of the page returned, starting with 1 (optional, default to 1)
@@ -1543,7 +1583,7 @@ NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode = 234513;
 ///
 ///  @param filterPublished Filter for questions currenctly published or not (optional)
 ///
-///  @returns NSNumber*
+///  @returns JSAPILongWrapper*
 ///
 -(NSURLSessionTask*) getQuestionsCountWithFilterSearch: (NSString*) filterSearch
     filterIdset: (NSString*) filterIdset
@@ -1552,7 +1592,7 @@ NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode = 234513;
     filterTagset: (NSString*) filterTagset
     filterType: (NSString*) filterType
     filterPublished: (NSNumber*) filterPublished
-    completionHandler: (void (^)(NSNumber* output, NSError* error)) handler {
+    completionHandler: (void (^)(JSAPILongWrapper* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/trivia/questions/count"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
@@ -1611,10 +1651,10 @@ NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSNumber*"
+                              responseType: @"JSAPILongWrapper*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSNumber*)data, error);
+                                    handler((JSAPILongWrapper*)data, error);
                                 }
                             }];
 }
@@ -1914,12 +1954,18 @@ NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode = 234513;
 ///
 ///  @param filterImportId Filter for tags on questions from a specific import job (optional)
 ///
-///  @returns NSArray<NSString*>*
+///  @param size The number of objects returned per page (optional, default to 25)
+///
+///  @param page The number of the page returned, starting with 1 (optional, default to 1)
+///
+///  @returns JSAPIPageResourceString_*
 ///
 -(NSURLSessionTask*) searchQuestionTagsWithFilterSearch: (NSString*) filterSearch
     filterCategory: (NSString*) filterCategory
     filterImportId: (NSNumber*) filterImportId
-    completionHandler: (void (^)(NSArray<NSString*>* output, NSError* error)) handler {
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceString_* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/trivia/tags"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
@@ -1933,6 +1979,12 @@ NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode = 234513;
     }
     if (filterImportId != nil) {
         queryParams[@"filter_import_id"] = filterImportId;
+    }
+    if (size != nil) {
+        queryParams[@"size"] = size;
+    }
+    if (page != nil) {
+        queryParams[@"page"] = page;
     }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
@@ -1966,10 +2018,10 @@ NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSArray<NSString*>*"
+                              responseType: @"JSAPIPageResourceString_*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSArray<NSString*>*)data, error);
+                                    handler((JSAPIPageResourceString_*)data, error);
                                 }
                             }];
 }
@@ -2209,15 +2261,18 @@ NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode = 234513;
 
 ///
 /// Update a question template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> PUT
 ///  @param _id The id of the template 
 ///
-///  @param questionTemplateResource The question template resource object (optional)
+///  @param templatePatchResource The patch resource object (optional)
+///
+///  @param testValidation If true, this will test validation but not submit the patch request (optional)
 ///
 ///  @returns JSAPIQuestionTemplateResource*
 ///
 -(NSURLSessionTask*) updateQuestionTemplateWithId: (NSString*) _id
-    questionTemplateResource: (JSAPIQuestionTemplateResource*) questionTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
     completionHandler: (void (^)(JSAPIQuestionTemplateResource* output, NSError* error)) handler {
     // verify the required parameter '_id' is set
     if (_id == nil) {
@@ -2238,6 +2293,9 @@ NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode = 234513;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (testValidation != nil) {
+        queryParams[@"test_validation"] = [testValidation isEqual:@(YES)] ? @"true" : @"false";
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -2258,10 +2316,10 @@ NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode = 234513;
     id bodyParam = nil;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *localVarFiles = [[NSMutableDictionary alloc] init];
-    bodyParam = questionTemplateResource;
+    bodyParam = templatePatchResource;
 
     return [self.apiClient requestWithPath: resourcePath
-                                    method: @"PUT"
+                                    method: @"PATCH"
                                 pathParams: pathParams
                                queryParams: queryParams
                                 formParams: formParams

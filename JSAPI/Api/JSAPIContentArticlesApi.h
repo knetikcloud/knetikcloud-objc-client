@@ -1,8 +1,8 @@
 #import <Foundation/Foundation.h>
 #import "JSAPIArticleResource.h"
-#import "JSAPIBasicTemplatedResource.h"
 #import "JSAPIPageResourceArticleResource_.h"
 #import "JSAPIPageResourceTemplateResource_.h"
+#import "JSAPIPatchResource.h"
 #import "JSAPIResult.h"
 #import "JSAPITemplateResource.h"
 #import "JSAPIApi.h"
@@ -29,7 +29,7 @@ extern NSInteger kJSAPIContentArticlesApiMissingParamErrorCode;
 -(instancetype) initWithApiClient:(JSAPIApiClient *)apiClient NS_DESIGNATED_INITIALIZER;
 
 /// Create a new article
-/// Articles are blobs of text with titles, a category and assets. Formatting and display of the text is in the hands of the front end.<br><br><b>Permissions:</b> POST
+/// Articles are blobs of text with titles, a category and assets. Formatting and display of the text is in the hands of the front end.<br /><b>Permissions Needed:</b> POST
 ///
 /// @param articleResource The new article (optional)
 /// 
@@ -45,7 +45,7 @@ extern NSInteger kJSAPIContentArticlesApiMissingParamErrorCode;
 
 
 /// Create an article template
-/// Article Templates define a type of article and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// Article Templates define a type of article and the properties they have.<br /><b>Permissions Needed:</b> POST
 ///
 /// @param articleTemplateResource The article template resource object (optional)
 /// 
@@ -57,24 +57,6 @@ extern NSInteger kJSAPIContentArticlesApiMissingParamErrorCode;
 ///
 /// @return JSAPITemplateResource*
 -(NSURLSessionTask*) createArticleTemplateWithArticleTemplateResource: (JSAPITemplateResource*) articleTemplateResource
-    completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler;
-
-
-/// Create a template
-/// <b>Permissions Needed:</b> TEMPLATES_ADMIN
-///
-/// @param typeHint The type for the resource this template applies to
-/// @param template The template (optional)
-/// 
-///  code:201 message:"Created",
-///  code:400 message:"Bad Request",
-///  code:401 message:"Unauthorized",
-///  code:403 message:"Forbidden",
-///  code:404 message:"Not Found"
-///
-/// @return JSAPITemplateResource*
--(NSURLSessionTask*) createTemplateWithTypeHint: (NSString*) typeHint
-    template: (JSAPITemplateResource*) template
     completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler;
 
 
@@ -95,7 +77,7 @@ extern NSInteger kJSAPIContentArticlesApiMissingParamErrorCode;
 
 
 /// Delete an article template
-/// If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// If cascade = 'detach', it will force delete the template even if it's attached to other objects.<br /><b>Permissions Needed:</b> DELETE
 ///
 /// @param _id The id of the template
 /// @param cascade The value needed to delete used templates (optional)
@@ -108,26 +90,6 @@ extern NSInteger kJSAPIContentArticlesApiMissingParamErrorCode;
 ///
 /// @return void
 -(NSURLSessionTask*) deleteArticleTemplateWithId: (NSString*) _id
-    cascade: (NSString*) cascade
-    completionHandler: (void (^)(NSError* error)) handler;
-
-
-/// Delete a template
-/// <b>Permissions Needed:</b> TEMPLATES_ADMIN
-///
-/// @param typeHint The type for the resource this template applies to
-/// @param _id The id of the template
-/// @param cascade How to cascade the delete (optional)
-/// 
-///  code:204 message:"No Content",
-///  code:400 message:"Bad Request",
-///  code:401 message:"Unauthorized",
-///  code:403 message:"Forbidden",
-///  code:404 message:"Not Found"
-///
-/// @return void
--(NSURLSessionTask*) deleteTemplateWithTypeHint: (NSString*) typeHint
-    _id: (NSString*) _id
     cascade: (NSString*) cascade
     completionHandler: (void (^)(NSError* error)) handler;
 
@@ -149,7 +111,7 @@ extern NSInteger kJSAPIContentArticlesApiMissingParamErrorCode;
 
 
 /// Get a single article template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or ARTICLES_ADMIN
+/// <b>Permissions Needed:</b> GET
 ///
 /// @param _id The id of the template
 /// 
@@ -165,7 +127,7 @@ extern NSInteger kJSAPIContentArticlesApiMissingParamErrorCode;
 
 
 /// List and search article templates
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or ARTICLES_ADMIN
+/// <b>Permissions Needed:</b> LIST
 ///
 /// @param size The number of objects returned per page (optional) (default to 25)
 /// @param page The number of the page returned, starting with 1 (optional) (default to 1)
@@ -185,7 +147,7 @@ extern NSInteger kJSAPIContentArticlesApiMissingParamErrorCode;
 
 
 /// List and search articles
-/// Get a list of articles with optional filtering. Assets will not be filled in on the resources returned. Use 'Get a single article' to retrieve the full resource with assets for a given item as needed. <br><br><b>Permissions Needed:</b> LIST
+/// Get a list of articles with optional filtering. Assets will not be filled in on the resources returned. Use 'Get a single article' to retrieve the full resource with assets for a given item as needed.<br /><b>Permissions Needed:</b> LIST
 ///
 /// @param filterActiveOnly Filter for articles that are active (true) or inactive (false) (optional)
 /// @param filterCategory Filter for articles from a specific category by id (optional)
@@ -216,53 +178,13 @@ extern NSInteger kJSAPIContentArticlesApiMissingParamErrorCode;
     completionHandler: (void (^)(JSAPIPageResourceArticleResource_* output, NSError* error)) handler;
 
 
-/// Get a template
-/// <b>Permissions Needed:</b> TEMPLATES_ADMIN
-///
-/// @param typeHint The type for the resource this template applies to
-/// @param _id The id of the template
-/// 
-///  code:200 message:"OK",
-///  code:400 message:"Bad Request",
-///  code:401 message:"Unauthorized",
-///  code:403 message:"Forbidden",
-///  code:404 message:"Not Found"
-///
-/// @return JSAPITemplateResource*
--(NSURLSessionTask*) getTemplateWithTypeHint: (NSString*) typeHint
-    _id: (NSString*) _id
-    completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler;
-
-
-/// List and search templates
-/// <b>Permissions Needed:</b> TEMPLATES_ADMIN
-///
-/// @param typeHint The type for the resource this template applies to
-/// @param size The number of objects returned per page (optional) (default to 25)
-/// @param page The number of the page returned, starting with 1 (optional) (default to 1)
-/// @param order A comma separated list of sorting requirements in priority order, each entry matching PROPERTY_NAME:[ASC|DESC] (optional) (default to id:ASC)
-/// 
-///  code:200 message:"OK",
-///  code:400 message:"Bad Request",
-///  code:401 message:"Unauthorized",
-///  code:403 message:"Forbidden",
-///  code:404 message:"Not Found"
-///
-/// @return JSAPIPageResourceTemplateResource_*
--(NSURLSessionTask*) getTemplatesWithTypeHint: (NSString*) typeHint
-    size: (NSNumber*) size
-    page: (NSNumber*) page
-    order: (NSString*) order
-    completionHandler: (void (^)(JSAPIPageResourceTemplateResource_* output, NSError* error)) handler;
-
-
 /// Update an existing article
 /// <b>Permissions Needed:</b> PUT
 ///
 /// @param _id The article id
 /// @param articleResource The article object (optional)
 /// 
-///  code:204 message:"No Content",
+///  code:200 message:"OK",
 ///  code:400 message:"Bad Request",
 ///  code:401 message:"Unauthorized",
 ///  code:403 message:"Forbidden",
@@ -275,59 +197,21 @@ extern NSInteger kJSAPIContentArticlesApiMissingParamErrorCode;
 
 
 /// Update an article template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> PUT
 ///
 /// @param _id The id of the template
-/// @param articleTemplateResource The article template resource object (optional)
+/// @param templatePatchResource The patch resource object (optional)
+/// @param testValidation If true, this will test validation but not submit the patch request (optional)
 /// 
 ///  code:204 message:"No Content",
-///  code:400 message:"Bad Request",
 ///  code:401 message:"Unauthorized",
-///  code:403 message:"Forbidden",
-///  code:404 message:"Not Found"
+///  code:403 message:"Forbidden"
 ///
 /// @return JSAPITemplateResource*
 -(NSURLSessionTask*) updateArticleTemplateWithId: (NSString*) _id
-    articleTemplateResource: (JSAPITemplateResource*) articleTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
     completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler;
-
-
-/// Update a template
-/// <b>Permissions Needed:</b> TEMPLATES_ADMIN
-///
-/// @param typeHint The type for the resource this template applies to
-/// @param _id The id of the template
-/// @param template The template (optional)
-/// 
-///  code:200 message:"OK",
-///  code:400 message:"Bad Request",
-///  code:401 message:"Unauthorized",
-///  code:403 message:"Forbidden",
-///  code:404 message:"Not Found"
-///
-/// @return JSAPITemplateResource*
--(NSURLSessionTask*) updateTemplateWithTypeHint: (NSString*) typeHint
-    _id: (NSString*) _id
-    template: (JSAPITemplateResource*) template
-    completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler;
-
-
-/// Validate a templated resource
-/// Error code thrown if invalid.<br><br><b>Permissions Needed:</b> TEMPLATES_ADMIN
-///
-/// @param typeHint The type for the resource this template applies to
-/// @param resource The resource to validate (optional)
-/// 
-///  code:200 message:"OK",
-///  code:400 message:"Bad Request",
-///  code:401 message:"Unauthorized",
-///  code:403 message:"Forbidden",
-///  code:404 message:"Not Found"
-///
-/// @return void
--(NSURLSessionTask*) validateWithTypeHint: (NSString*) typeHint
-    resource: (JSAPIBasicTemplatedResource*) resource
-    completionHandler: (void (^)(NSError* error)) handler;
 
 
 

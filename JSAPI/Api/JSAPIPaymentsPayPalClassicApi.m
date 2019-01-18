@@ -5,7 +5,9 @@
 #import "JSAPICreatePayPalPaymentRequest.h"
 #import "JSAPIFinalizeBillingAgreementRequest.h"
 #import "JSAPIFinalizePayPalPaymentRequest.h"
+#import "JSAPIIntWrapper.h"
 #import "JSAPIResult.h"
+#import "JSAPIStringWrapper.h"
 
 
 @interface JSAPIPaymentsPayPalClassicApi ()
@@ -58,10 +60,10 @@ NSInteger kJSAPIPaymentsPayPalClassicApiMissingParamErrorCode = 234513;
 /// Returns the token that should be used to forward the user to PayPal so they can accept the agreement. <br><br><b>Permissions Needed:</b> PAYPAL_CLASSIC_ADMIN or owner
 ///  @param request The request to create a PayPal billing agreement (optional)
 ///
-///  @returns NSString*
+///  @returns JSAPIStringWrapper*
 ///
 -(NSURLSessionTask*) createPayPalBillingAgreementUrlWithRequest: (JSAPICreateBillingAgreementRequest*) request
-    completionHandler: (void (^)(NSString* output, NSError* error)) handler {
+    completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/payment/provider/paypal/classic/agreements/start"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
@@ -100,10 +102,10 @@ NSInteger kJSAPIPaymentsPayPalClassicApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSString*"
+                              responseType: @"JSAPIStringWrapper*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSString*)data, error);
+                                    handler((JSAPIStringWrapper*)data, error);
                                 }
                             }];
 }
@@ -113,10 +115,10 @@ NSInteger kJSAPIPaymentsPayPalClassicApiMissingParamErrorCode = 234513;
 /// Returns the token that should be used to forward the user to PayPal so they can complete the checkout. <br><br><b>Permissions Needed:</b> PAYPAL_CLASSIC_ADMIN or owner
 ///  @param request The request to create a PayPal payment token (optional)
 ///
-///  @returns NSString*
+///  @returns JSAPIStringWrapper*
 ///
 -(NSURLSessionTask*) createPayPalExpressCheckoutWithRequest: (JSAPICreatePayPalPaymentRequest*) request
-    completionHandler: (void (^)(NSString* output, NSError* error)) handler {
+    completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/payment/provider/paypal/classic/checkout/start"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
@@ -155,10 +157,10 @@ NSInteger kJSAPIPaymentsPayPalClassicApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSString*"
+                              responseType: @"JSAPIStringWrapper*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSString*)data, error);
+                                    handler((JSAPIStringWrapper*)data, error);
                                 }
                             }];
 }
@@ -168,10 +170,10 @@ NSInteger kJSAPIPaymentsPayPalClassicApiMissingParamErrorCode = 234513;
 /// Returns the ID of the new payment method created for the user for the billing agreement. <br><br><b>Permissions Needed:</b> PAYPAL_CLASSIC_ADMIN or owner
 ///  @param request The request to finalize a PayPal billing agreement (optional)
 ///
-///  @returns NSNumber*
+///  @returns JSAPIIntWrapper*
 ///
 -(NSURLSessionTask*) finalizePayPalBillingAgreementWithRequest: (JSAPIFinalizeBillingAgreementRequest*) request
-    completionHandler: (void (^)(NSNumber* output, NSError* error)) handler {
+    completionHandler: (void (^)(JSAPIIntWrapper* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/payment/provider/paypal/classic/agreements/finish"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
@@ -210,10 +212,10 @@ NSInteger kJSAPIPaymentsPayPalClassicApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSNumber*"
+                              responseType: @"JSAPIIntWrapper*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSNumber*)data, error);
+                                    handler((JSAPIIntWrapper*)data, error);
                                 }
                             }];
 }

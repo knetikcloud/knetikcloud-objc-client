@@ -67,7 +67,7 @@ NSInteger kJSAPIMessagingApiMissingParamErrorCode = 234513;
 ///
 ///  @returns NSDictionary<NSString*, NSString*>*
 ///
--(NSURLSessionTask*) compileMessageTemplateWithRequest: (JSAPIMessageTemplateBulkRequest*) request
+-(NSURLSessionTask*) compileMessageTemplatesWithRequest: (JSAPIMessageTemplateBulkRequest*) request
     completionHandler: (void (^)(NSDictionary<NSString*, NSString*>* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/messaging/templates/compilations"];
 

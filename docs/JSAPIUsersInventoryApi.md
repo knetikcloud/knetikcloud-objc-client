@@ -1,6 +1,6 @@
 # JSAPIUsersInventoryApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -14,13 +14,13 @@ Method | HTTP request | Description
 [**getEntitlementItems**](JSAPIUsersInventoryApi.md#getentitlementitems) | **GET** /entitlements | List and search entitlement items
 [**getEntitlementTemplate**](JSAPIUsersInventoryApi.md#getentitlementtemplate) | **GET** /entitlements/templates/{id} | Get a single entitlement template
 [**getEntitlementTemplates**](JSAPIUsersInventoryApi.md#getentitlementtemplates) | **GET** /entitlements/templates | List and search entitlement templates
+[**getInventoryList**](JSAPIUsersInventoryApi.md#getinventorylist) | **GET** /inventories | List the user inventory entries for all users
 [**getUserInventories**](JSAPIUsersInventoryApi.md#getuserinventories) | **GET** /users/{id}/inventory | List the user inventory entries for a given user
 [**getUserInventory**](JSAPIUsersInventoryApi.md#getuserinventory) | **GET** /users/{user_id}/inventory/{id} | Get an inventory entry
 [**getUserInventoryLog**](JSAPIUsersInventoryApi.md#getuserinventorylog) | **GET** /users/{user_id}/inventory/{id}/log | List the log entries for this inventory entry
-[**getUsersInventory**](JSAPIUsersInventoryApi.md#getusersinventory) | **GET** /inventories | List the user inventory entries for all users
 [**grantUserEntitlement**](JSAPIUsersInventoryApi.md#grantuserentitlement) | **POST** /users/{user_id}/entitlements | Grant an entitlement
 [**updateEntitlementItem**](JSAPIUsersInventoryApi.md#updateentitlementitem) | **PUT** /entitlements/{entitlement_id} | Update an entitlement item
-[**updateEntitlementTemplate**](JSAPIUsersInventoryApi.md#updateentitlementtemplate) | **PUT** /entitlements/templates/{id} | Update an entitlement template
+[**updateEntitlementTemplate**](JSAPIUsersInventoryApi.md#updateentitlementtemplate) | **PATCH** /entitlements/templates/{id} | Update an entitlement template
 [**updateUserInventoryBehaviorData**](JSAPIUsersInventoryApi.md#updateuserinventorybehaviordata) | **PUT** /users/{user_id}/inventory/{id}/behavior-data | Set the behavior data for an inventory entry
 [**updateUserInventoryExpires**](JSAPIUsersInventoryApi.md#updateuserinventoryexpires) | **PUT** /users/{user_id}/inventory/{id}/expires | Set the expiration date
 [**updateUserInventoryStatus**](JSAPIUsersInventoryApi.md#updateuserinventorystatus) | **PUT** /users/{user_id}/inventory/{id}/status | Set the status for an inventory entry
@@ -222,7 +222,7 @@ Name | Type | Description  | Notes
 
 Create an entitlement template
 
-Entitlement templates define a type of entitlement and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+Entitlement templates define a type of entitlement and the properties they have.<br /><b>Permissions Needed:</b> POST
 
 ### Example 
 ```objc
@@ -336,7 +336,7 @@ void (empty response body)
 
 Delete an entitlement template
 
-If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+If cascade = 'detach', it will force delete the template even if it's attached to other objects.<br /><b>Permissions Needed:</b> DELETE
 
 ### Example 
 ```objc
@@ -522,7 +522,7 @@ Name | Type | Description  | Notes
 
 Get a single entitlement template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or ACHIEVEMENTS_ADMIN
+<b>Permissions Needed:</b> GET
 
 ### Example 
 ```objc
@@ -582,7 +582,7 @@ Name | Type | Description  | Notes
 
 List and search entitlement templates
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or ACHIEVEMENTS_ADMIN
+<b>Permissions Needed:</b> LIST
 
 ### Example 
 ```objc
@@ -626,6 +626,92 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**JSAPIPageResourceItemTemplateResource_***](JSAPIPageResourceItemTemplateResource_.md)
+
+### Authorization
+
+[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getInventoryList**
+```objc
+-(NSURLSessionTask*) getInventoryListWithInactive: (NSNumber*) inactive
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    filterItemName: (NSString*) filterItemName
+    filterItemId: (NSNumber*) filterItemId
+    filterUsername: (NSString*) filterUsername
+    filterGroup: (NSString*) filterGroup
+    filterDate: (NSString*) filterDate
+        completionHandler: (void (^)(JSAPIPageResourceUserInventoryResource_* output, NSError* error)) handler;
+```
+
+List the user inventory entries for all users
+
+<b>Permissions Needed:</b> INVENTORY_ADMIN
+
+### Example 
+```objc
+JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+
+NSNumber* inactive = @false; // If true, accepts inactive user inventories (optional) (default to false)
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
+NSString* filterItemName = @"filterItemName_example"; // Filter by items whose name starts with a string (optional)
+NSNumber* filterItemId = @56; // Filter by item id (optional)
+NSString* filterUsername = @"filterUsername_example"; // Filter by entries owned by the user with the specified username (optional)
+NSString* filterGroup = @"filterGroup_example"; // Filter by entries owned by the users in a given group, by unique name (optional)
+NSString* filterDate = @"filterDate_example"; // A comma separated string without spaces.  First value is the operator to search on, second value is the log start date, a unix timestamp in seconds. Can be repeated for a range, eg: GT,123,LT,456  Allowed operators: (GT, LT, EQ, GOE, LOE). (optional)
+
+JSAPIUsersInventoryApi*apiInstance = [[JSAPIUsersInventoryApi alloc] init];
+
+// List the user inventory entries for all users
+[apiInstance getInventoryListWithInactive:inactive
+              size:size
+              page:page
+              filterItemName:filterItemName
+              filterItemId:filterItemId
+              filterUsername:filterUsername
+              filterGroup:filterGroup
+              filterDate:filterDate
+          completionHandler: ^(JSAPIPageResourceUserInventoryResource_* output, NSError* error) {
+                        if (output) {
+                            NSLog(@"%@", output);
+                        }
+                        if (error) {
+                            NSLog(@"Error calling JSAPIUsersInventoryApi->getInventoryList: %@", error);
+                        }
+                    }];
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **inactive** | **NSNumber***| If true, accepts inactive user inventories | [optional] [default to false]
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
+ **filterItemName** | **NSString***| Filter by items whose name starts with a string | [optional] 
+ **filterItemId** | **NSNumber***| Filter by item id | [optional] 
+ **filterUsername** | **NSString***| Filter by entries owned by the user with the specified username | [optional] 
+ **filterGroup** | **NSString***| Filter by entries owned by the users in a given group, by unique name | [optional] 
+ **filterDate** | **NSString***| A comma separated string without spaces.  First value is the operator to search on, second value is the log start date, a unix timestamp in seconds. Can be repeated for a range, eg: GT,123,LT,456  Allowed operators: (GT, LT, EQ, GOE, LOE). | [optional] 
+
+### Return type
+
+[**JSAPIPageResourceUserInventoryResource_***](JSAPIPageResourceUserInventoryResource_.md)
 
 ### Authorization
 
@@ -860,92 +946,6 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **getUsersInventory**
-```objc
--(NSURLSessionTask*) getUsersInventoryWithInactive: (NSNumber*) inactive
-    size: (NSNumber*) size
-    page: (NSNumber*) page
-    filterItemName: (NSString*) filterItemName
-    filterItemId: (NSNumber*) filterItemId
-    filterUsername: (NSString*) filterUsername
-    filterGroup: (NSString*) filterGroup
-    filterDate: (NSString*) filterDate
-        completionHandler: (void (^)(JSAPIPageResourceUserInventoryResource_* output, NSError* error)) handler;
-```
-
-List the user inventory entries for all users
-
-<b>Permissions Needed:</b> INVENTORY_ADMIN
-
-### Example 
-```objc
-JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-
-NSNumber* inactive = @false; // If true, accepts inactive user inventories (optional) (default to false)
-NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
-NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
-NSString* filterItemName = @"filterItemName_example"; // Filter by items whose name starts with a string (optional)
-NSNumber* filterItemId = @56; // Filter by item id (optional)
-NSString* filterUsername = @"filterUsername_example"; // Filter by entries owned by the user with the specified username (optional)
-NSString* filterGroup = @"filterGroup_example"; // Filter by entries owned by the users in a given group, by unique name (optional)
-NSString* filterDate = @"filterDate_example"; // A comma separated string without spaces.  First value is the operator to search on, second value is the log start date, a unix timestamp in seconds. Can be repeated for a range, eg: GT,123,LT,456  Allowed operators: (GT, LT, EQ, GOE, LOE). (optional)
-
-JSAPIUsersInventoryApi*apiInstance = [[JSAPIUsersInventoryApi alloc] init];
-
-// List the user inventory entries for all users
-[apiInstance getUsersInventoryWithInactive:inactive
-              size:size
-              page:page
-              filterItemName:filterItemName
-              filterItemId:filterItemId
-              filterUsername:filterUsername
-              filterGroup:filterGroup
-              filterDate:filterDate
-          completionHandler: ^(JSAPIPageResourceUserInventoryResource_* output, NSError* error) {
-                        if (output) {
-                            NSLog(@"%@", output);
-                        }
-                        if (error) {
-                            NSLog(@"Error calling JSAPIUsersInventoryApi->getUsersInventory: %@", error);
-                        }
-                    }];
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **inactive** | **NSNumber***| If true, accepts inactive user inventories | [optional] [default to false]
- **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
- **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
- **filterItemName** | **NSString***| Filter by items whose name starts with a string | [optional] 
- **filterItemId** | **NSNumber***| Filter by item id | [optional] 
- **filterUsername** | **NSString***| Filter by entries owned by the user with the specified username | [optional] 
- **filterGroup** | **NSString***| Filter by entries owned by the users in a given group, by unique name | [optional] 
- **filterDate** | **NSString***| A comma separated string without spaces.  First value is the operator to search on, second value is the log start date, a unix timestamp in seconds. Can be repeated for a range, eg: GT,123,LT,456  Allowed operators: (GT, LT, EQ, GOE, LOE). | [optional] 
-
-### Return type
-
-[**JSAPIPageResourceUserInventoryResource_***](JSAPIPageResourceUserInventoryResource_.md)
-
-### Authorization
-
-[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **grantUserEntitlement**
 ```objc
 -(NSURLSessionTask*) grantUserEntitlementWithUserId: (NSNumber*) userId
@@ -1071,13 +1071,14 @@ void (empty response body)
 # **updateEntitlementTemplate**
 ```objc
 -(NSURLSessionTask*) updateEntitlementTemplateWithId: (NSString*) _id
-    template: (JSAPIItemTemplateResource*) template
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
         completionHandler: (void (^)(JSAPIItemTemplateResource* output, NSError* error)) handler;
 ```
 
 Update an entitlement template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN
+<b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -1091,13 +1092,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* _id = @"_id_example"; // The id of the template
-JSAPIItemTemplateResource* template = [[JSAPIItemTemplateResource alloc] init]; // The updated template (optional)
+JSAPIPatchResource* templatePatchResource = [[JSAPIPatchResource alloc] init]; // The patch resource object (optional)
+NSNumber* testValidation = @true; // If true, this will test validation but not submit the patch request (optional)
 
 JSAPIUsersInventoryApi*apiInstance = [[JSAPIUsersInventoryApi alloc] init];
 
 // Update an entitlement template
 [apiInstance updateEntitlementTemplateWithId:_id
-              template:template
+              templatePatchResource:templatePatchResource
+              testValidation:testValidation
           completionHandler: ^(JSAPIItemTemplateResource* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
@@ -1113,7 +1116,8 @@ JSAPIUsersInventoryApi*apiInstance = [[JSAPIUsersInventoryApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **_id** | **NSString***| The id of the template | 
- **template** | [**JSAPIItemTemplateResource***](JSAPIItemTemplateResource.md)| The updated template | [optional] 
+ **templatePatchResource** | [**JSAPIPatchResource***](JSAPIPatchResource.md)| The patch resource object | [optional] 
+ **testValidation** | **NSNumber***| If true, this will test validation but not submit the patch request | [optional] 
 
 ### Return type
 

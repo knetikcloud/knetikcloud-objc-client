@@ -187,10 +187,16 @@ NSInteger kJSAPIAuthRolesApiMissingParamErrorCode = 234513;
 /// <b>Permissions Needed:</b> ROLES_ADMIN
 ///  @param clientKey The client key 
 ///
-///  @returns NSArray<JSAPIRoleResource>*
+///  @param size The number of objects returned per page (optional, default to 25)
+///
+///  @param page The number of the page returned, starting with 1 (optional, default to 1)
+///
+///  @returns JSAPIPageResourceRoleResource_*
 ///
 -(NSURLSessionTask*) getClientRolesWithClientKey: (NSString*) clientKey
-    completionHandler: (void (^)(NSArray<JSAPIRoleResource>* output, NSError* error)) handler {
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceRoleResource_* output, NSError* error)) handler {
     // verify the required parameter 'clientKey' is set
     if (clientKey == nil) {
         NSParameterAssert(clientKey);
@@ -210,6 +216,12 @@ NSInteger kJSAPIAuthRolesApiMissingParamErrorCode = 234513;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (size != nil) {
+        queryParams[@"size"] = size;
+    }
+    if (page != nil) {
+        queryParams[@"page"] = page;
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -242,10 +254,10 @@ NSInteger kJSAPIAuthRolesApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSArray<JSAPIRoleResource>*"
+                              responseType: @"JSAPIPageResourceRoleResource_*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSArray<JSAPIRoleResource>*)data, error);
+                                    handler((JSAPIPageResourceRoleResource_*)data, error);
                                 }
                             }];
 }
@@ -404,10 +416,16 @@ NSInteger kJSAPIAuthRolesApiMissingParamErrorCode = 234513;
 /// <b>Permissions Needed:</b> ROLES_ADMIN
 ///  @param userId The user's id 
 ///
-///  @returns NSArray<JSAPIRoleResource>*
+///  @param size The number of objects returned per page (optional, default to 25)
+///
+///  @param page The number of the page returned, starting with 1 (optional, default to 1)
+///
+///  @returns JSAPIPageResourceRoleResource_*
 ///
 -(NSURLSessionTask*) getUserRolesWithUserId: (NSNumber*) userId
-    completionHandler: (void (^)(NSArray<JSAPIRoleResource>* output, NSError* error)) handler {
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceRoleResource_* output, NSError* error)) handler {
     // verify the required parameter 'userId' is set
     if (userId == nil) {
         NSParameterAssert(userId);
@@ -427,6 +445,12 @@ NSInteger kJSAPIAuthRolesApiMissingParamErrorCode = 234513;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (size != nil) {
+        queryParams[@"size"] = size;
+    }
+    if (page != nil) {
+        queryParams[@"page"] = page;
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -459,10 +483,10 @@ NSInteger kJSAPIAuthRolesApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSArray<JSAPIRoleResource>*"
+                              responseType: @"JSAPIPageResourceRoleResource_*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSArray<JSAPIRoleResource>*)data, error);
+                                    handler((JSAPIPageResourceRoleResource_*)data, error);
                                 }
                             }];
 }

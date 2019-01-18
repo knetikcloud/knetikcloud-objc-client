@@ -3,6 +3,7 @@
 #import "JSAPIApiClient.h"
 #import "JSAPIPageResourcePollResource_.h"
 #import "JSAPIPageResourceTemplateResource_.h"
+#import "JSAPIPatchResource.h"
 #import "JSAPIPollResource.h"
 #import "JSAPIPollResponseResource.h"
 #import "JSAPIResult.h"
@@ -184,7 +185,7 @@ NSInteger kJSAPIMediaPollsApiMissingParamErrorCode = 234513;
 
 ///
 /// Create a poll template
-/// Poll templates define a type of poll and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// Poll templates define a type of poll and the properties they have.<br /><b>Permissions Needed:</b> POST
 ///  @param pollTemplateResource The poll template resource object (optional)
 ///
 ///  @returns JSAPITemplateResource*
@@ -307,7 +308,7 @@ NSInteger kJSAPIMediaPollsApiMissingParamErrorCode = 234513;
 
 ///
 /// Delete a poll template
-/// If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// If cascade = 'detach', it will force delete the template even if it's attached to other objects.<br /><b>Permissions Needed:</b> DELETE
 ///  @param _id The id of the template 
 ///
 ///  @param cascade The value needed to delete used templates (optional)
@@ -517,7 +518,7 @@ NSInteger kJSAPIMediaPollsApiMissingParamErrorCode = 234513;
 
 ///
 /// Get a single poll template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or POLLS_ADMIN
+/// <b>Permissions Needed:</b> GET
 ///  @param _id The id of the template 
 ///
 ///  @returns JSAPITemplateResource*
@@ -585,7 +586,7 @@ NSInteger kJSAPIMediaPollsApiMissingParamErrorCode = 234513;
 
 ///
 /// List and search poll templates
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or POLLS_ADMIN
+/// <b>Permissions Needed:</b> LIST
 ///  @param size The number of objects returned per page (optional, default to 25)
 ///
 ///  @param page The number of the page returned, starting with 1 (optional, default to 1)
@@ -813,15 +814,18 @@ NSInteger kJSAPIMediaPollsApiMissingParamErrorCode = 234513;
 
 ///
 /// Update a poll template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> PUT
 ///  @param _id The id of the template 
 ///
-///  @param pollTemplateResource The poll template resource object (optional)
+///  @param templatePatchResource The patch resource object (optional)
+///
+///  @param testValidation If true, this will test validation but not submit the patch request (optional)
 ///
 ///  @returns JSAPITemplateResource*
 ///
 -(NSURLSessionTask*) updatePollTemplateWithId: (NSString*) _id
-    pollTemplateResource: (JSAPITemplateResource*) pollTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
     completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler {
     // verify the required parameter '_id' is set
     if (_id == nil) {
@@ -842,6 +846,9 @@ NSInteger kJSAPIMediaPollsApiMissingParamErrorCode = 234513;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (testValidation != nil) {
+        queryParams[@"test_validation"] = [testValidation isEqual:@(YES)] ? @"true" : @"false";
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -862,10 +869,10 @@ NSInteger kJSAPIMediaPollsApiMissingParamErrorCode = 234513;
     id bodyParam = nil;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *localVarFiles = [[NSMutableDictionary alloc] init];
-    bodyParam = pollTemplateResource;
+    bodyParam = templatePatchResource;
 
     return [self.apiClient requestWithPath: resourcePath
-                                    method: @"PUT"
+                                    method: @"PATCH"
                                 pathParams: pathParams
                                queryParams: queryParams
                                 formParams: formParams

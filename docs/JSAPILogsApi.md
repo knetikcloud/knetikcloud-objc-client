@@ -1,6 +1,6 @@
 # JSAPILogsApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -8,8 +8,8 @@ Method | HTTP request | Description
 [**getBREEventLogs**](JSAPILogsApi.md#getbreeventlogs) | **GET** /bre/logs/event-log | Returns a list of BRE event log entries
 [**getBREForwardLog**](JSAPILogsApi.md#getbreforwardlog) | **GET** /bre/logs/forward-log/{id} | Get an existing forward log entry by id
 [**getBREForwardLogs**](JSAPILogsApi.md#getbreforwardlogs) | **GET** /bre/logs/forward-log | Returns a list of forward log entries
-[**getUserLog**](JSAPILogsApi.md#getuserlog) | **GET** /audit/logs/{id} | Returns a user log entry by id
-[**getUserLogs**](JSAPILogsApi.md#getuserlogs) | **GET** /audit/logs | Returns a page of user logs entries
+[**getUserLogs**](JSAPILogsApi.md#getuserlogs) | **GET** /audit/logs/{id} | Returns a user log entry by id
+[**getUserLogs1**](JSAPILogsApi.md#getuserlogs1) | **GET** /audit/logs | Returns a page of user logs entries
 
 
 # **getBREEventLog**
@@ -84,7 +84,7 @@ Name | Type | Description  | Notes
 
 Returns a list of BRE event log entries
 
-<b>Permissions Needed:</b> BRE_RULE_ENGINE_EVENTS_ADMIN
+Logs are kept for 24 hours. <b>Permissions Needed:</b> BRE_RULE_ENGINE_EVENTS_ADMIN
 
 ### Example 
 ```objc
@@ -224,7 +224,7 @@ Name | Type | Description  | Notes
 
 Returns a list of forward log entries
 
-<b>Permissions Needed:</b> BRE_RULE_ENGINE_EVENTS_ADMIN
+Logs are kept for 24 hours. <b>Permissions Needed:</b> BRE_RULE_ENGINE_EVENTS_ADMIN
 
 ### Example 
 ```objc
@@ -292,9 +292,9 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **getUserLog**
+# **getUserLogs**
 ```objc
--(NSURLSessionTask*) getUserLogWithId: (NSString*) _id
+-(NSURLSessionTask*) getUserLogsWithId: (NSString*) _id
         completionHandler: (void (^)(JSAPIUserActionLog* output, NSError* error)) handler;
 ```
 
@@ -318,13 +318,13 @@ NSString* _id = @"_id_example"; // The user log entry id
 JSAPILogsApi*apiInstance = [[JSAPILogsApi alloc] init];
 
 // Returns a user log entry by id
-[apiInstance getUserLogWithId:_id
+[apiInstance getUserLogsWithId:_id
           completionHandler: ^(JSAPIUserActionLog* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
                         if (error) {
-                            NSLog(@"Error calling JSAPILogsApi->getUserLog: %@", error);
+                            NSLog(@"Error calling JSAPILogsApi->getUserLogs: %@", error);
                         }
                     }];
 ```
@@ -350,9 +350,9 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **getUserLogs**
+# **getUserLogs1**
 ```objc
--(NSURLSessionTask*) getUserLogsWithFilterUser: (NSNumber*) filterUser
+-(NSURLSessionTask*) getUserLogs1WithFilterUser: (NSNumber*) filterUser
     filterActionName: (NSString*) filterActionName
     size: (NSNumber*) size
     page: (NSNumber*) page
@@ -384,7 +384,7 @@ NSString* order = @"timestamp:DESC"; // A comma separated list of sorting requir
 JSAPILogsApi*apiInstance = [[JSAPILogsApi alloc] init];
 
 // Returns a page of user logs entries
-[apiInstance getUserLogsWithFilterUser:filterUser
+[apiInstance getUserLogs1WithFilterUser:filterUser
               filterActionName:filterActionName
               size:size
               page:page
@@ -394,7 +394,7 @@ JSAPILogsApi*apiInstance = [[JSAPILogsApi alloc] init];
                             NSLog(@"%@", output);
                         }
                         if (error) {
-                            NSLog(@"Error calling JSAPILogsApi->getUserLogs: %@", error);
+                            NSLog(@"Error calling JSAPILogsApi->getUserLogs1: %@", error);
                         }
                     }];
 ```

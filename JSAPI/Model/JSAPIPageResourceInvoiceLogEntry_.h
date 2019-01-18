@@ -15,11 +15,8 @@
 
 
 #import "JSAPIInvoiceLogEntry.h"
-#import "JSAPIOrder.h"
 @protocol JSAPIInvoiceLogEntry;
 @class JSAPIInvoiceLogEntry;
-@protocol JSAPIOrder;
-@class JSAPIOrder;
 
 
 
@@ -40,8 +37,6 @@
 @property(nonatomic) NSNumber* numberOfElements;
 
 @property(nonatomic) NSNumber* size;
-
-@property(nonatomic) NSArray<JSAPIOrder>* sort;
 
 @property(nonatomic) NSNumber* totalElements;
 

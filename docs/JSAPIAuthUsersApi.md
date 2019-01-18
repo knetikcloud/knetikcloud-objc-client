@@ -1,12 +1,12 @@
 # JSAPIAuthUsersApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**addSid**](JSAPIAuthUsersApi.md#addsid) | **POST** /access/users/{user_id}/sids | Add a sid to a user
+[**getResources1**](JSAPIAuthUsersApi.md#getresources1) | **GET** /access/users/{user_id}/sids | List and search user sids
 [**getSid**](JSAPIAuthUsersApi.md#getsid) | **GET** /access/users/{user_id}/sids/{sid} | Get a user sid
-[**getSids**](JSAPIAuthUsersApi.md#getsids) | **GET** /access/users/{user_id}/sids | List and search user sids
 [**removeSid**](JSAPIAuthUsersApi.md#removesid) | **DELETE** /access/users/{user_id}/sids/{sid} | Remove a sid from a user
 
 
@@ -32,7 +32,7 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 [apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
 
 
-NSNumber* userId = @56; // The resource type
+NSNumber* userId = @56; // The user id
 JSAPIUserSidResource* sid = [[JSAPIUserSidResource alloc] init]; // The new sid for the user (optional)
 
 JSAPIAuthUsersApi*apiInstance = [[JSAPIAuthUsersApi alloc] init];
@@ -54,7 +54,7 @@ JSAPIAuthUsersApi*apiInstance = [[JSAPIAuthUsersApi alloc] init];
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **userId** | **NSNumber***| The resource type | 
+ **userId** | **NSNumber***| The user id | 
  **sid** | [**JSAPIUserSidResource***](JSAPIUserSidResource.md)| The new sid for the user | [optional] 
 
 ### Return type
@@ -72,71 +72,9 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **getSid**
+# **getResources1**
 ```objc
--(NSURLSessionTask*) getSidWithUserId: (NSNumber*) userId
-    sid: (NSString*) sid
-        completionHandler: (void (^)(JSAPIUserSidResource* output, NSError* error)) handler;
-```
-
-Get a user sid
-
-Http error 404 means the user does not have the sid<b>Resources Needed:</b> VIEW_ACCESS
-
-### Example 
-```objc
-JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-
-NSNumber* userId = @56; // The resource type
-NSString* sid = @"sid_example"; // The resource id
-
-JSAPIAuthUsersApi*apiInstance = [[JSAPIAuthUsersApi alloc] init];
-
-// Get a user sid
-[apiInstance getSidWithUserId:userId
-              sid:sid
-          completionHandler: ^(JSAPIUserSidResource* output, NSError* error) {
-                        if (output) {
-                            NSLog(@"%@", output);
-                        }
-                        if (error) {
-                            NSLog(@"Error calling JSAPIAuthUsersApi->getSid: %@", error);
-                        }
-                    }];
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **userId** | **NSNumber***| The resource type | 
- **sid** | **NSString***| The resource id | 
-
-### Return type
-
-[**JSAPIUserSidResource***](JSAPIUserSidResource.md)
-
-### Authorization
-
-[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **getSids**
-```objc
--(NSURLSessionTask*) getSidsWithUserId: (NSNumber*) userId
+-(NSURLSessionTask*) getResources1WithUserId: (NSNumber*) userId
     size: (NSNumber*) size
     page: (NSNumber*) page
     order: (NSString*) order
@@ -166,7 +104,7 @@ NSString* order = @"resource:ASC"; // A comma separated list of sorting requirem
 JSAPIAuthUsersApi*apiInstance = [[JSAPIAuthUsersApi alloc] init];
 
 // List and search user sids
-[apiInstance getSidsWithUserId:userId
+[apiInstance getResources1WithUserId:userId
               size:size
               page:page
               order:order
@@ -175,7 +113,7 @@ JSAPIAuthUsersApi*apiInstance = [[JSAPIAuthUsersApi alloc] init];
                             NSLog(@"%@", output);
                         }
                         if (error) {
-                            NSLog(@"Error calling JSAPIAuthUsersApi->getSids: %@", error);
+                            NSLog(@"Error calling JSAPIAuthUsersApi->getResources1: %@", error);
                         }
                     }];
 ```
@@ -192,6 +130,68 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**JSAPIPageResourceUserSidResource_***](JSAPIPageResourceUserSidResource_.md)
+
+### Authorization
+
+[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getSid**
+```objc
+-(NSURLSessionTask*) getSidWithUserId: (NSNumber*) userId
+    sid: (NSString*) sid
+        completionHandler: (void (^)(JSAPIUserSidResource* output, NSError* error)) handler;
+```
+
+Get a user sid
+
+Http error 404 means the user does not have the sid<b>Resources Needed:</b> VIEW_ACCESS
+
+### Example 
+```objc
+JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+
+NSNumber* userId = @56; // The user id
+NSString* sid = @"sid_example"; // The security id
+
+JSAPIAuthUsersApi*apiInstance = [[JSAPIAuthUsersApi alloc] init];
+
+// Get a user sid
+[apiInstance getSidWithUserId:userId
+              sid:sid
+          completionHandler: ^(JSAPIUserSidResource* output, NSError* error) {
+                        if (output) {
+                            NSLog(@"%@", output);
+                        }
+                        if (error) {
+                            NSLog(@"Error calling JSAPIAuthUsersApi->getSid: %@", error);
+                        }
+                    }];
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **userId** | **NSNumber***| The user id | 
+ **sid** | **NSString***| The security id | 
+
+### Return type
+
+[**JSAPIUserSidResource***](JSAPIUserSidResource.md)
 
 ### Authorization
 

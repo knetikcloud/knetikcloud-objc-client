@@ -1,6 +1,6 @@
 # JSAPIPaymentsOptimalApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -10,7 +10,7 @@ Method | HTTP request | Description
 # **silentPostOptimal**
 ```objc
 -(NSURLSessionTask*) silentPostOptimalWithRequest: (JSAPIOptimalPaymentRequest*) request
-        completionHandler: (void (^)(NSString* output, NSError* error)) handler;
+        completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler;
 ```
 
 Initiate silent post with Optimal
@@ -34,7 +34,7 @@ JSAPIPaymentsOptimalApi*apiInstance = [[JSAPIPaymentsOptimalApi alloc] init];
 
 // Initiate silent post with Optimal
 [apiInstance silentPostOptimalWithRequest:request
-          completionHandler: ^(NSString* output, NSError* error) {
+          completionHandler: ^(JSAPIStringWrapper* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -52,7 +52,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**NSString***
+[**JSAPIStringWrapper***](JSAPIStringWrapper.md)
 
 ### Authorization
 

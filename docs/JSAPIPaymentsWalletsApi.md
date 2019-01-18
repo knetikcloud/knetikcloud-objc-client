@@ -1,6 +1,6 @@
 # JSAPIPaymentsWalletsApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -168,7 +168,9 @@ Name | Type | Description  | Notes
 # **getUserWallets**
 ```objc
 -(NSURLSessionTask*) getUserWalletsWithUserId: (NSNumber*) userId
-        completionHandler: (void (^)(NSArray<JSAPISimpleWallet>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+        completionHandler: (void (^)(JSAPIPageResourceSimpleWallet_* output, NSError* error)) handler;
 ```
 
 List all of a user's wallets
@@ -187,12 +189,16 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSNumber* userId = @56; // The ID of the user for whom wallets are being retrieved
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
 JSAPIPaymentsWalletsApi*apiInstance = [[JSAPIPaymentsWalletsApi alloc] init];
 
 // List all of a user's wallets
 [apiInstance getUserWalletsWithUserId:userId
-          completionHandler: ^(NSArray<JSAPISimpleWallet>* output, NSError* error) {
+              size:size
+              page:page
+          completionHandler: ^(JSAPIPageResourceSimpleWallet_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -207,10 +213,12 @@ JSAPIPaymentsWalletsApi*apiInstance = [[JSAPIPaymentsWalletsApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **userId** | **NSNumber***| The ID of the user for whom wallets are being retrieved | 
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
 ### Return type
 
-[**NSArray<JSAPISimpleWallet>***](JSAPISimpleWallet.md)
+[**JSAPIPageResourceSimpleWallet_***](JSAPIPageResourceSimpleWallet_.md)
 
 ### Authorization
 

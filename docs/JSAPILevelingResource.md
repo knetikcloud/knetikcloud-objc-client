@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **createdDate** | **NSNumber*** | The date the leveling schema was created | [optional] 
 **_description** | **NSString*** | The description of the leveling schema | [optional] 
 **name** | **NSString*** | The name of the leveling schema.  IMMUTABLE | 
+**template** | **NSString*** | The template being used | [optional] 
 **tiers** | [**NSArray&lt;JSAPITierResource&gt;***](JSAPITierResource.md) | A set of tiers that contain experience boundaries | [optional] 
 **triggerEventName** | **NSString*** | The name of an event that will add one progress to this level when fired | [optional] 
 **updatedDate** | **NSNumber*** | The date the leveling schema was updated | [optional] 

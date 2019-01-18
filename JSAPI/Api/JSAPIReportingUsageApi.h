@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import "JSAPIPageResourceString_.h"
 #import "JSAPIPageResourceUsageInfo_.h"
 #import "JSAPIResult.h"
 #import "JSAPIApi.h"
@@ -176,10 +177,10 @@ extern NSInteger kJSAPIReportingUsageApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSArray<NSString*>*
+/// @return JSAPIPageResourceString_*
 -(NSURLSessionTask*) getUsageEndpointsWithStartDate: (NSNumber*) startDate
     endDate: (NSNumber*) endDate
-    completionHandler: (void (^)(NSArray<NSString*>* output, NSError* error)) handler;
+    completionHandler: (void (^)(JSAPIPageResourceString_* output, NSError* error)) handler;
 
 
 

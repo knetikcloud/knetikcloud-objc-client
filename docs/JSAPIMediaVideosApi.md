@@ -1,6 +1,6 @@
 # JSAPIMediaVideosApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -31,7 +31,7 @@ Method | HTTP request | Description
 [**updateVideo**](JSAPIMediaVideosApi.md#updatevideo) | **PUT** /media/videos/{id} | Modifies a video&#39;s details
 [**updateVideoComment**](JSAPIMediaVideosApi.md#updatevideocomment) | **PUT** /media/videos/{video_id}/comments/{id}/content | Update a video comment
 [**updateVideoRelationship**](JSAPIMediaVideosApi.md#updatevideorelationship) | **PUT** /media/videos/{video_id}/related/{id}/relationship_details | Update a video&#39;s relationship details
-[**updateVideoTemplate**](JSAPIMediaVideosApi.md#updatevideotemplate) | **PUT** /media/videos/templates/{id} | Update a video template
+[**updateVideoTemplate**](JSAPIMediaVideosApi.md#updatevideotemplate) | **PATCH** /media/videos/templates/{id} | Update a video template
 [**viewVideo**](JSAPIMediaVideosApi.md#viewvideo) | **POST** /media/videos/{id}/views | Increment a video&#39;s view count
 
 
@@ -467,7 +467,7 @@ Name | Type | Description  | Notes
 
 Create a video template
 
-Video Templates define a type of video and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+Video Templates define a type of video and the properties they have.<br /><b>Permissions Needed:</b> POST
 
 ### Example 
 ```objc
@@ -813,7 +813,7 @@ void (empty response body)
 
 Delete a video template
 
-If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+If cascade = 'detach', it will force delete the template even if it's attached to other objects.<br /><b>Permissions Needed:</b> DELETE
 
 ### Example 
 ```objc
@@ -1201,7 +1201,7 @@ Name | Type | Description  | Notes
 
 Get a single video template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or VIDEOS_ADMIN
+<b>Permissions Needed:</b> GET
 
 ### Example 
 ```objc
@@ -1261,7 +1261,7 @@ Name | Type | Description  | Notes
 
 List and search video templates
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or VIDEOS_ADMIN
+<b>Permissions Needed:</b> LIST
 
 ### Example 
 ```objc
@@ -1737,13 +1737,14 @@ void (empty response body)
 # **updateVideoTemplate**
 ```objc
 -(NSURLSessionTask*) updateVideoTemplateWithId: (NSString*) _id
-    videoTemplateResource: (JSAPITemplateResource*) videoTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
         completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler;
 ```
 
 Update a video template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN
+<b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -1757,13 +1758,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* _id = @"_id_example"; // The id of the template
-JSAPITemplateResource* videoTemplateResource = [[JSAPITemplateResource alloc] init]; // The video template resource object (optional)
+JSAPIPatchResource* templatePatchResource = [[JSAPIPatchResource alloc] init]; // The patch resource object (optional)
+NSNumber* testValidation = @true; // If true, this will test validation but not submit the patch request (optional)
 
 JSAPIMediaVideosApi*apiInstance = [[JSAPIMediaVideosApi alloc] init];
 
 // Update a video template
 [apiInstance updateVideoTemplateWithId:_id
-              videoTemplateResource:videoTemplateResource
+              templatePatchResource:templatePatchResource
+              testValidation:testValidation
           completionHandler: ^(JSAPITemplateResource* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
@@ -1779,7 +1782,8 @@ JSAPIMediaVideosApi*apiInstance = [[JSAPIMediaVideosApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **_id** | **NSString***| The id of the template | 
- **videoTemplateResource** | [**JSAPITemplateResource***](JSAPITemplateResource.md)| The video template resource object | [optional] 
+ **templatePatchResource** | [**JSAPIPatchResource***](JSAPIPatchResource.md)| The patch resource object | [optional] 
+ **testValidation** | **NSNumber***| If true, this will test validation but not submit the patch request | [optional] 
 
 ### Return type
 

@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "JSAPIExpressionResource.h"
+#import "JSAPIPageResourceExpressionResource_.h"
 #import "JSAPIResult.h"
 #import "JSAPIStringWrapper.h"
 #import "JSAPIApi.h"
@@ -45,6 +46,8 @@ extern NSInteger kJSAPIRuleEngineExpressionsApiMissingParamErrorCode;
 /// Each resource contains a type and a definition that are read-only, all the other fields must be provided when using the expression in a rule. <br><br><b>Permissions Needed:</b> BRE_RULE_ENGINE_EXPRESSIONS_USER
 ///
 /// @param filterTypeGroup Filter for expressions by type group (optional)
+/// @param size The number of objects returned per page (optional) (default to 25)
+/// @param page The number of the page returned, starting with 1 (optional) (default to 1)
 /// 
 ///  code:200 message:"OK",
 ///  code:400 message:"Bad Request",
@@ -52,9 +55,11 @@ extern NSInteger kJSAPIRuleEngineExpressionsApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSArray<JSAPIExpressionResource>*
+/// @return JSAPIPageResourceExpressionResource_*
 -(NSURLSessionTask*) getBREExpressionsWithFilterTypeGroup: (NSString*) filterTypeGroup
-    completionHandler: (void (^)(NSArray<JSAPIExpressionResource>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceExpressionResource_* output, NSError* error)) handler;
 
 
 /// Returns the textual representation of an expression

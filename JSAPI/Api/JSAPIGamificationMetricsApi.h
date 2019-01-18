@@ -29,7 +29,7 @@ extern NSInteger kJSAPIGamificationMetricsApiMissingParamErrorCode;
 ///
 /// @param metric The new metric (optional)
 /// 
-///  code:201 message:"Metric added",
+///  code:201 message:"Created",
 ///  code:400 message:"Bad Request",
 ///  code:401 message:"Unauthorized",
 ///  code:403 message:"Forbidden",

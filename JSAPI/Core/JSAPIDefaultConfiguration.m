@@ -28,7 +28,7 @@
 - (instancetype) init {
     self = [super init];
     if (self) {
-        _host = @"https://jsapi-integration.us-east-1.elasticbeanstalk.com";
+        _host = @"https://devsandbox.knetikcloud.com";
         _username = @"";
         _password = @"";
         _accessToken= @"";
@@ -105,6 +105,13 @@
 - (NSDictionary *) authSettings {
     return @{
                @"oauth2_client_credentials_grant":
+                   @{
+                       @"type": @"oauth",
+                       @"in": @"header",
+                       @"key": @"Authorization",
+                       @"value": [self getAccessToken]
+                   },
+               @"oauth2_implicit_grant":
                    @{
                        @"type": @"oauth",
                        @"in": @"header",

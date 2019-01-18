@@ -1,6 +1,6 @@
 # JSAPIStoreCouponsApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -13,7 +13,7 @@ Method | HTTP request | Description
 [**getCouponTemplate**](JSAPIStoreCouponsApi.md#getcoupontemplate) | **GET** /store/coupons/templates/{id} | Get a single coupon template
 [**getCouponTemplates**](JSAPIStoreCouponsApi.md#getcoupontemplates) | **GET** /store/coupons/templates | List and search coupon templates
 [**updateCouponItem**](JSAPIStoreCouponsApi.md#updatecouponitem) | **PUT** /store/coupons/{id} | Update a coupon item
-[**updateCouponTemplate**](JSAPIStoreCouponsApi.md#updatecoupontemplate) | **PUT** /store/coupons/templates/{id} | Update a coupon template
+[**updateCouponTemplate**](JSAPIStoreCouponsApi.md#updatecoupontemplate) | **PATCH** /store/coupons/templates/{id} | Update a coupon template
 
 
 # **createCouponItem**
@@ -86,7 +86,7 @@ Name | Type | Description  | Notes
 
 Create a coupon template
 
-Coupon Templates define a type of coupon and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+Coupon Templates define a type of coupon and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> POST
 
 ### Example 
 ```objc
@@ -200,7 +200,7 @@ void (empty response body)
 
 Delete a coupon template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN
+<b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> DELETE
 
 ### Example 
 ```objc
@@ -374,7 +374,7 @@ Name | Type | Description  | Notes
 
 Get a single coupon template
 
-Coupon Templates define a type of coupon and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN or COUPONS_ADMIN
+Coupon Templates define a type of coupon and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN or COUPONS_ADMIN<br /><b>Permissions Needed:</b> GET
 
 ### Example 
 ```objc
@@ -434,7 +434,7 @@ Name | Type | Description  | Notes
 
 List and search coupon templates
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or COUPONS_ADMIN
+<b>Permissions Needed:</b> TEMPLATE_ADMIN or COUPONS_ADMIN<br /><b>Permissions Needed:</b> LIST
 
 ### Example 
 ```objc
@@ -559,13 +559,14 @@ Name | Type | Description  | Notes
 # **updateCouponTemplate**
 ```objc
 -(NSURLSessionTask*) updateCouponTemplateWithId: (NSString*) _id
-    couponTemplateResource: (JSAPIItemTemplateResource*) couponTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
         completionHandler: (void (^)(JSAPIItemTemplateResource* output, NSError* error)) handler;
 ```
 
 Update a coupon template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN
+<b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -579,13 +580,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* _id = @"_id_example"; // The id of the template
-JSAPIItemTemplateResource* couponTemplateResource = [[JSAPIItemTemplateResource alloc] init]; // The coupon template resource object (optional)
+JSAPIPatchResource* templatePatchResource = [[JSAPIPatchResource alloc] init]; // The patch resource object (optional)
+NSNumber* testValidation = @true; // If true, this will test validation but not submit the patch request (optional)
 
 JSAPIStoreCouponsApi*apiInstance = [[JSAPIStoreCouponsApi alloc] init];
 
 // Update a coupon template
 [apiInstance updateCouponTemplateWithId:_id
-              couponTemplateResource:couponTemplateResource
+              templatePatchResource:templatePatchResource
+              testValidation:testValidation
           completionHandler: ^(JSAPIItemTemplateResource* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
@@ -601,7 +604,8 @@ JSAPIStoreCouponsApi*apiInstance = [[JSAPIStoreCouponsApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **_id** | **NSString***| The id of the template | 
- **couponTemplateResource** | [**JSAPIItemTemplateResource***](JSAPIItemTemplateResource.md)| The coupon template resource object | [optional] 
+ **templatePatchResource** | [**JSAPIPatchResource***](JSAPIPatchResource.md)| The patch resource object | [optional] 
+ **testValidation** | **NSNumber***| If true, this will test validation but not submit the patch request | [optional] 
 
 ### Return type
 

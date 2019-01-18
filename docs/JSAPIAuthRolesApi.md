@@ -1,6 +1,6 @@
 # JSAPIAuthRolesApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -136,7 +136,9 @@ void (empty response body)
 # **getClientRoles**
 ```objc
 -(NSURLSessionTask*) getClientRolesWithClientKey: (NSString*) clientKey
-        completionHandler: (void (^)(NSArray<JSAPIRoleResource>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+        completionHandler: (void (^)(JSAPIPageResourceRoleResource_* output, NSError* error)) handler;
 ```
 
 Get roles for a client
@@ -155,12 +157,16 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* clientKey = @"clientKey_example"; // The client key
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
 JSAPIAuthRolesApi*apiInstance = [[JSAPIAuthRolesApi alloc] init];
 
 // Get roles for a client
 [apiInstance getClientRolesWithClientKey:clientKey
-          completionHandler: ^(NSArray<JSAPIRoleResource>* output, NSError* error) {
+              size:size
+              page:page
+          completionHandler: ^(JSAPIPageResourceRoleResource_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -175,10 +181,12 @@ JSAPIAuthRolesApi*apiInstance = [[JSAPIAuthRolesApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **clientKey** | **NSString***| The client key | 
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
 ### Return type
 
-[**NSArray<JSAPIRoleResource>***](JSAPIRoleResource.md)
+[**JSAPIPageResourceRoleResource_***](JSAPIPageResourceRoleResource_.md)
 
 ### Authorization
 
@@ -326,7 +334,9 @@ Name | Type | Description  | Notes
 # **getUserRoles**
 ```objc
 -(NSURLSessionTask*) getUserRolesWithUserId: (NSNumber*) userId
-        completionHandler: (void (^)(NSArray<JSAPIRoleResource>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+        completionHandler: (void (^)(JSAPIPageResourceRoleResource_* output, NSError* error)) handler;
 ```
 
 Get roles for a user
@@ -345,12 +355,16 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSNumber* userId = @56; // The user's id
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
 JSAPIAuthRolesApi*apiInstance = [[JSAPIAuthRolesApi alloc] init];
 
 // Get roles for a user
 [apiInstance getUserRolesWithUserId:userId
-          completionHandler: ^(NSArray<JSAPIRoleResource>* output, NSError* error) {
+              size:size
+              page:page
+          completionHandler: ^(JSAPIPageResourceRoleResource_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -365,10 +379,12 @@ JSAPIAuthRolesApi*apiInstance = [[JSAPIAuthRolesApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **userId** | **NSNumber***| The user&#39;s id | 
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
 ### Return type
 
-[**NSArray<JSAPIRoleResource>***](JSAPIRoleResource.md)
+[**JSAPIPageResourceRoleResource_***](JSAPIPageResourceRoleResource_.md)
 
 ### Authorization
 

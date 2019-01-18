@@ -2,6 +2,7 @@
 #import "JSAPIIntWrapper.h"
 #import "JSAPIInventorySubscriptionResource.h"
 #import "JSAPIInvoiceResource.h"
+#import "JSAPIPageResourceInventorySubscriptionResource_.h"
 #import "JSAPIReactivateSubscriptionRequest.h"
 #import "JSAPIResult.h"
 #import "JSAPIStringWrapper.h"
@@ -52,6 +53,8 @@ extern NSInteger kJSAPIUsersSubscriptionsApiMissingParamErrorCode;
 /// <b>Permissions Needed:</b> USERS_SUBSCRIPTIONS_ADMIN or owner
 ///
 /// @param userId The id of the user
+/// @param size The number of objects returned per page (optional) (default to 25)
+/// @param page The number of the page returned, starting with 1 (optional) (default to 1)
 /// 
 ///  code:200 message:"OK",
 ///  code:400 message:"Bad Request",
@@ -59,9 +62,11 @@ extern NSInteger kJSAPIUsersSubscriptionsApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSArray<JSAPIInventorySubscriptionResource>*
+/// @return JSAPIPageResourceInventorySubscriptionResource_*
 -(NSURLSessionTask*) getUsersSubscriptionDetailsWithUserId: (NSNumber*) userId
-    completionHandler: (void (^)(NSArray<JSAPIInventorySubscriptionResource>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceInventorySubscriptionResource_* output, NSError* error)) handler;
 
 
 /// Reactivate a subscription and charge fee

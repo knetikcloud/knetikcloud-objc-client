@@ -27,10 +27,6 @@
 
 @property(nonatomic) NSString* _id;
 
-@property(nonatomic) NSString* template;
-
-@property(nonatomic) NSObject* templateVersionData;
-
 @property(nonatomic) NSString* type;
 
 + (NSDictionary *)modalDictionary;

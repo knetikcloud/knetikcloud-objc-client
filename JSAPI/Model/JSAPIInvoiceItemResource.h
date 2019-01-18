@@ -14,6 +14,9 @@
 */
 
 
+#import "JSAPIDiscount.h"
+@protocol JSAPIDiscount;
+@class JSAPIDiscount;
 
 
 
@@ -26,6 +29,8 @@
 @property(nonatomic) NSString* bundleSku;
 
 @property(nonatomic) NSString* currentFulfillmentStatus;
+
+@property(nonatomic) JSAPIDiscount* discount;
 
 @property(nonatomic) NSNumber* _id;
 

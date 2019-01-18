@@ -15,11 +15,8 @@
 
 
 #import "JSAPIBareChallengeActivityResource.h"
-#import "JSAPIOrder.h"
 @protocol JSAPIBareChallengeActivityResource;
 @class JSAPIBareChallengeActivityResource;
-@protocol JSAPIOrder;
-@class JSAPIOrder;
 
 
 
@@ -40,8 +37,6 @@
 @property(nonatomic) NSNumber* numberOfElements;
 
 @property(nonatomic) NSNumber* size;
-
-@property(nonatomic) NSArray<JSAPIOrder>* sort;
 
 @property(nonatomic) NSNumber* totalElements;
 

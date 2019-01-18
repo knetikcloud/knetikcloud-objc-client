@@ -3,6 +3,7 @@
 #import "JSAPIApiClient.h"
 #import "JSAPIAmazonS3Activity.h"
 #import "JSAPIResult.h"
+#import "JSAPIStringWrapper.h"
 
 
 @interface JSAPIAmazonWebServicesS3Api ()
@@ -55,17 +56,17 @@ NSInteger kJSAPIAmazonWebServicesS3ApiMissingParamErrorCode = 234513;
 /// To give access to files in your own S3 account, you will need to grant KnetikcCloud access to the file by adjusting your bucket policy accordingly. See S3 documentation for details. <br><br><b>Permissions Needed:</b> S3_ADMIN
 ///  @param bucket S3 bucket name (optional)
 ///
-///  @param path The path to the file relative to the bucket (the s3 object key) (optional)
+///  @param path The path to the file relative the bucket (the s3 object key) (optional)
 ///
 ///  @param expiration The number of seconds this URL will be valid. Default to 60 (optional, default to 60)
 ///
-///  @returns NSString*
+///  @returns JSAPIStringWrapper*
 ///
 -(NSURLSessionTask*) getDownloadURLWithBucket: (NSString*) bucket
     path: (NSString*) path
     expiration: (NSNumber*) expiration
-    completionHandler: (void (^)(NSString* output, NSError* error)) handler {
-    NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/amazon/s3/downloadurl"];
+    completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler {
+    NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/amazon/s3/download-url"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
 
@@ -111,10 +112,10 @@ NSInteger kJSAPIAmazonWebServicesS3ApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSString*"
+                              responseType: @"JSAPIStringWrapper*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSString*)data, error);
+                                    handler((JSAPIStringWrapper*)data, error);
                                 }
                             }];
 }
@@ -131,7 +132,7 @@ NSInteger kJSAPIAmazonWebServicesS3ApiMissingParamErrorCode = 234513;
 -(NSURLSessionTask*) getSignedS3URLWithFilename: (NSString*) filename
     contentType: (NSString*) contentType
     completionHandler: (void (^)(JSAPIAmazonS3Activity* output, NSError* error)) handler {
-    NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/amazon/s3/signedposturl"];
+    NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/amazon/s3/signed-post-url"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
 

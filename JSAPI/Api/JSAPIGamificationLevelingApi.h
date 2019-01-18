@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
-#import "JSAPIBreTriggerResource.h"
 #import "JSAPIIntWrapper.h"
 #import "JSAPILevelingResource.h"
+#import "JSAPIPageResourceBreTriggerResource_.h"
 #import "JSAPIPageResourceLevelingResource_.h"
 #import "JSAPIPageResourceUserLevelingResource_.h"
 #import "JSAPIResult.h"
@@ -80,6 +80,8 @@ extern NSInteger kJSAPIGamificationLevelingApiMissingParamErrorCode;
 /// Get the list of triggers that can be used to trigger a leveling progress update
 /// <b>Permissions Needed:</b> LEVELING_ADMIN
 ///
+/// @param size The number of objects returned per page (optional) (default to 25)
+/// @param page The number of the page returned, starting with 1 (optional) (default to 1)
 /// 
 ///  code:200 message:"OK",
 ///  code:400 message:"Bad Request",
@@ -87,9 +89,10 @@ extern NSInteger kJSAPIGamificationLevelingApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSArray<JSAPIBreTriggerResource>*
--(NSURLSessionTask*) getLevelTriggersWithCompletionHandler: 
-    (void (^)(NSArray<JSAPIBreTriggerResource>* output, NSError* error)) handler;
+/// @return JSAPIPageResourceBreTriggerResource_*
+-(NSURLSessionTask*) getLevelTriggersWithSize: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceBreTriggerResource_* output, NSError* error)) handler;
 
 
 /// List and search levels
@@ -208,10 +211,10 @@ extern NSInteger kJSAPIGamificationLevelingApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return JSAPILevelingResource*
+/// @return void
 -(NSURLSessionTask*) updateLevelWithName: (NSString*) name
     varNewLevel: (JSAPILevelingResource*) varNewLevel
-    completionHandler: (void (^)(JSAPILevelingResource* output, NSError* error)) handler;
+    completionHandler: (void (^)(NSError* error)) handler;
 
 
 

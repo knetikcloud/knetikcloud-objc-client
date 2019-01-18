@@ -233,10 +233,10 @@ NSInteger kJSAPIUsersFriendshipsApiMissingParamErrorCode = 234513;
 /// This is a unique invite token that allows direct connection to the request user.  Exposing that token presents privacy issues if the token is leaked. Use friend request flow instead if confirmation is required. <br><br><b>Permissions Needed:</b> FRIENDSHIPS_ADMIN or (FRIENDSHIPS_USER and owner)
 ///  @param userId The id of the user or 'me' if logged in 
 ///
-///  @returns NSString*
+///  @returns JSAPIStringWrapper*
 ///
 -(NSURLSessionTask*) getInviteTokenWithUserId: (NSString*) userId
-    completionHandler: (void (^)(NSString* output, NSError* error)) handler {
+    completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler {
     // verify the required parameter 'userId' is set
     if (userId == nil) {
         NSParameterAssert(userId);
@@ -288,10 +288,10 @@ NSInteger kJSAPIUsersFriendshipsApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSString*"
+                              responseType: @"JSAPIStringWrapper*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSString*)data, error);
+                                    handler((JSAPIStringWrapper*)data, error);
                                 }
                             }];
 }

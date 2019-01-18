@@ -1,10 +1,11 @@
 #import <Foundation/Foundation.h>
 #import "JSAPIAchievementDefinitionResource.h"
-#import "JSAPIBreTriggerResource.h"
 #import "JSAPIIntWrapper.h"
 #import "JSAPIPageResourceAchievementDefinitionResource_.h"
+#import "JSAPIPageResourceBreTriggerResource_.h"
 #import "JSAPIPageResourceTemplateResource_.h"
 #import "JSAPIPageResourceUserAchievementGroupResource_.h"
+#import "JSAPIPatchResource.h"
 #import "JSAPIResult.h"
 #import "JSAPITemplateResource.h"
 #import "JSAPIUserAchievementGroupResource.h"
@@ -48,7 +49,7 @@ extern NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode;
 
 
 /// Create an achievement template
-/// Achievement templates define a type of achievement and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// Achievement templates define a type of achievement and the properties they have.<br /><b>Permissions Needed:</b> POST
 ///
 /// @param template The achievement template to be created (optional)
 /// 
@@ -80,7 +81,7 @@ extern NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode;
 
 
 /// Delete an achievement template
-/// If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// If cascade = 'detach', it will force delete the template even if it's attached to other objects.<br /><b>Permissions Needed:</b> DELETE
 ///
 /// @param _id The id of the template
 /// @param cascade The value needed to delete used templates (optional)
@@ -114,7 +115,7 @@ extern NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode;
 
 
 /// Get a single achievement template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or ACHIEVEMENTS_ADMIN
+/// <b>Permissions Needed:</b> GET
 ///
 /// @param _id The id of the template
 /// 
@@ -130,7 +131,7 @@ extern NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode;
 
 
 /// List and search achievement templates
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or ACHIEVEMENTS_ADMIN
+/// <b>Permissions Needed:</b> LIST
 ///
 /// @param size The number of objects returned per page (optional) (default to 25)
 /// @param page The number of the page returned, starting with 1 (optional) (default to 1)
@@ -152,6 +153,8 @@ extern NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode;
 /// Get the list of triggers that can be used to trigger an achievement progress update
 /// <b>Permissions Needed:</b> ACHIEVEMENTS_ADMIN
 ///
+/// @param size The number of objects returned per page (optional) (default to 25)
+/// @param page The number of the page returned, starting with 1 (optional) (default to 1)
 /// 
 ///  code:200 message:"OK",
 ///  code:400 message:"Bad Request",
@@ -159,9 +162,10 @@ extern NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSArray<JSAPIBreTriggerResource>*
--(NSURLSessionTask*) getAchievementTriggersWithCompletionHandler: 
-    (void (^)(NSArray<JSAPIBreTriggerResource>* output, NSError* error)) handler;
+/// @return JSAPIPageResourceBreTriggerResource_*
+-(NSURLSessionTask*) getAchievementTriggersWithSize: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceBreTriggerResource_* output, NSError* error)) handler;
 
 
 /// Get all achievement definitions in the system
@@ -196,6 +200,8 @@ extern NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode;
 /// Used by other services that depend on achievements.  <br><br><b>Permissions Needed:</b> ACHIEVEMENTS_ADMIN
 ///
 /// @param name The name of the derived achievement
+/// @param size The number of objects returned per page (optional) (default to 25)
+/// @param page The number of the page returned, starting with 1 (optional) (default to 1)
 /// 
 ///  code:200 message:"OK",
 ///  code:400 message:"Bad Request",
@@ -203,9 +209,11 @@ extern NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSArray<JSAPIAchievementDefinitionResource>*
+/// @return JSAPIPageResourceAchievementDefinitionResource_*
 -(NSURLSessionTask*) getDerivedAchievementsWithName: (NSString*) name
-    completionHandler: (void (^)(NSArray<JSAPIAchievementDefinitionResource>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceAchievementDefinitionResource_* output, NSError* error)) handler;
 
 
 /// Retrieve progress on a given achievement for a given user
@@ -232,7 +240,7 @@ extern NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode;
 /// @param userId The user&#39;s id
 /// @param filterAchievementDerived Filter for achievements that are derived from other services (optional)
 /// @param filterAchievementTagset Filter for achievements with specified tags (separated by comma) (optional)
-/// @param filterAchievementName Filter for achievements whose name contains a string (optional)
+/// @param filterGroupName Filter for achievements whose group/level name contains a string (optional)
 /// @param size The number of objects returned per page (optional) (default to 25)
 /// @param page The number of the page returned, starting with 1 (optional) (default to 1)
 /// 
@@ -246,19 +254,19 @@ extern NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode;
 -(NSURLSessionTask*) getUserAchievementsProgressWithUserId: (NSNumber*) userId
     filterAchievementDerived: (NSNumber*) filterAchievementDerived
     filterAchievementTagset: (NSString*) filterAchievementTagset
-    filterAchievementName: (NSString*) filterAchievementName
+    filterGroupName: (NSString*) filterGroupName
     size: (NSNumber*) size
     page: (NSNumber*) page
     completionHandler: (void (^)(JSAPIPageResourceUserAchievementGroupResource_* output, NSError* error)) handler;
 
 
 /// Retrieve progress on a given achievement for all users
-/// Assets will not be filled in on the resources returned. Use 'Get single achievement progress for user' to retrieve the full resource with assets for a given user as needed. <br><br><b>Permissions Needed:</b> ACHIEVEMENTS_ADMIN
+/// Assets will not be filled in on the resources returned. Use 'Get single achievement progress for user' to retrieve the full resource with assets for a given user as needed. <br><br><b>Permissions Needed:</b> ACHIEVEMENTS_ADMIN<br /><b>Permissions Needed:</b> NONE
 ///
 /// @param achievementName The achievement&#39;s name
 /// @param filterAchievementDerived Filter for achievements that are derived from other services (optional)
 /// @param filterAchievementTagset Filter for achievements with specified tags (separated by comma) (optional)
-/// @param filterAchievementName Filter for achievements whose name contains a string (optional)
+/// @param filterGroupName Filter for achievements whose group/level name contains a string (optional)
 /// @param size The number of objects returned per page (optional) (default to 25)
 /// @param page The number of the page returned, starting with 1 (optional) (default to 1)
 /// 
@@ -272,18 +280,18 @@ extern NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode;
 -(NSURLSessionTask*) getUsersAchievementProgressWithAchievementName: (NSString*) achievementName
     filterAchievementDerived: (NSNumber*) filterAchievementDerived
     filterAchievementTagset: (NSString*) filterAchievementTagset
-    filterAchievementName: (NSString*) filterAchievementName
+    filterGroupName: (NSString*) filterGroupName
     size: (NSNumber*) size
     page: (NSNumber*) page
     completionHandler: (void (^)(JSAPIPageResourceUserAchievementGroupResource_* output, NSError* error)) handler;
 
 
 /// Retrieve progress on achievements for all users
-/// Assets will not be filled in on the resources returned. Use 'Get single achievement progress for user' to retrieve the full resource with assets for a given user as needed. <br><br><b>Permissions Needed:</b> ACHIEVEMENTS_ADMIN
+/// Assets will not be filled in on the resources returned. Use 'Get single achievement progress for user' to retrieve the full resource with assets for a given user as needed. <br><br><b>Permissions Needed:</b> ACHIEVEMENTS_ADMIN<br /><b>Permissions Needed:</b> LIST
 ///
 /// @param filterAchievementDerived Filter for achievements that are derived from other services (optional)
 /// @param filterAchievementTagset Filter for achievements with specified tags (separated by comma) (optional)
-/// @param filterAchievementName Filter for achievements whose name contains a string (optional)
+/// @param filterGroupName Filter for achievements whose group/level name contains a string (optional)
 /// @param size The number of objects returned per page (optional) (default to 25)
 /// @param page The number of the page returned, starting with 1 (optional) (default to 1)
 /// 
@@ -296,7 +304,7 @@ extern NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode;
 /// @return JSAPIPageResourceUserAchievementGroupResource_*
 -(NSURLSessionTask*) getUsersAchievementsProgressWithFilterAchievementDerived: (NSNumber*) filterAchievementDerived
     filterAchievementTagset: (NSString*) filterAchievementTagset
-    filterAchievementName: (NSString*) filterAchievementName
+    filterGroupName: (NSString*) filterGroupName
     size: (NSNumber*) size
     page: (NSNumber*) page
     completionHandler: (void (^)(JSAPIPageResourceUserAchievementGroupResource_* output, NSError* error)) handler;
@@ -361,20 +369,20 @@ extern NSInteger kJSAPIGamificationAchievementsApiMissingParamErrorCode;
 
 
 /// Update an achievement template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> PUT
 ///
 /// @param _id The id of the template
-/// @param template The updated template (optional)
+/// @param templatePatchResource The patch resource object (optional)
+/// @param testValidation If true, this will test validation but not submit the patch request (optional)
 /// 
 ///  code:204 message:"No Content",
-///  code:400 message:"Bad Request",
 ///  code:401 message:"Unauthorized",
-///  code:403 message:"Forbidden",
-///  code:404 message:"Not Found"
+///  code:403 message:"Forbidden"
 ///
 /// @return JSAPITemplateResource*
 -(NSURLSessionTask*) updateAchievementTemplateWithId: (NSString*) _id
-    template: (JSAPITemplateResource*) template
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
     completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler;
 
 

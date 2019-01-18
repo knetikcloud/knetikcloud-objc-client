@@ -10,6 +10,7 @@
 #import "JSAPIPageResourceItemTemplateResource_.h"
 #import "JSAPIPageResourceUserInventoryResource_.h"
 #import "JSAPIPageResourceUserItemLogResource_.h"
+#import "JSAPIPatchResource.h"
 #import "JSAPIResult.h"
 #import "JSAPIUserInventoryAddRequest.h"
 #import "JSAPIUserInventoryResource.h"
@@ -286,7 +287,7 @@ NSInteger kJSAPIUsersInventoryApiMissingParamErrorCode = 234513;
 
 ///
 /// Create an entitlement template
-/// Entitlement templates define a type of entitlement and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// Entitlement templates define a type of entitlement and the properties they have.<br /><b>Permissions Needed:</b> POST
 ///  @param template The entitlement template to be created (optional)
 ///
 ///  @returns JSAPIItemTemplateResource*
@@ -409,7 +410,7 @@ NSInteger kJSAPIUsersInventoryApiMissingParamErrorCode = 234513;
 
 ///
 /// Delete an entitlement template
-/// If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// If cascade = 'detach', it will force delete the template even if it's attached to other objects.<br /><b>Permissions Needed:</b> DELETE
 ///  @param _id The id of the template 
 ///
 ///  @param cascade The value needed to delete used templates (optional)
@@ -626,7 +627,7 @@ NSInteger kJSAPIUsersInventoryApiMissingParamErrorCode = 234513;
 
 ///
 /// Get a single entitlement template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or ACHIEVEMENTS_ADMIN
+/// <b>Permissions Needed:</b> GET
 ///  @param _id The id of the template 
 ///
 ///  @returns JSAPIItemTemplateResource*
@@ -694,7 +695,7 @@ NSInteger kJSAPIUsersInventoryApiMissingParamErrorCode = 234513;
 
 ///
 /// List and search entitlement templates
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or ACHIEVEMENTS_ADMIN
+/// <b>Permissions Needed:</b> LIST
 ///  @param size The number of objects returned per page (optional, default to 25)
 ///
 ///  @param page The number of the page returned, starting with 1 (optional, default to 1)
@@ -757,6 +758,105 @@ NSInteger kJSAPIUsersInventoryApiMissingParamErrorCode = 234513;
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
                                     handler((JSAPIPageResourceItemTemplateResource_*)data, error);
+                                }
+                            }];
+}
+
+///
+/// List the user inventory entries for all users
+/// <b>Permissions Needed:</b> INVENTORY_ADMIN
+///  @param inactive If true, accepts inactive user inventories (optional, default to false)
+///
+///  @param size The number of objects returned per page (optional, default to 25)
+///
+///  @param page The number of the page returned, starting with 1 (optional, default to 1)
+///
+///  @param filterItemName Filter by items whose name starts with a string (optional)
+///
+///  @param filterItemId Filter by item id (optional)
+///
+///  @param filterUsername Filter by entries owned by the user with the specified username (optional)
+///
+///  @param filterGroup Filter by entries owned by the users in a given group, by unique name (optional)
+///
+///  @param filterDate A comma separated string without spaces.  First value is the operator to search on, second value is the log start date, a unix timestamp in seconds. Can be repeated for a range, eg: GT,123,LT,456  Allowed operators: (GT, LT, EQ, GOE, LOE). (optional)
+///
+///  @returns JSAPIPageResourceUserInventoryResource_*
+///
+-(NSURLSessionTask*) getInventoryListWithInactive: (NSNumber*) inactive
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    filterItemName: (NSString*) filterItemName
+    filterItemId: (NSNumber*) filterItemId
+    filterUsername: (NSString*) filterUsername
+    filterGroup: (NSString*) filterGroup
+    filterDate: (NSString*) filterDate
+    completionHandler: (void (^)(JSAPIPageResourceUserInventoryResource_* output, NSError* error)) handler {
+    NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/inventories"];
+
+    NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
+
+    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (inactive != nil) {
+        queryParams[@"inactive"] = [inactive isEqual:@(YES)] ? @"true" : @"false";
+    }
+    if (size != nil) {
+        queryParams[@"size"] = size;
+    }
+    if (page != nil) {
+        queryParams[@"page"] = page;
+    }
+    if (filterItemName != nil) {
+        queryParams[@"filter_item_name"] = filterItemName;
+    }
+    if (filterItemId != nil) {
+        queryParams[@"filter_item_id"] = filterItemId;
+    }
+    if (filterUsername != nil) {
+        queryParams[@"filter_username"] = filterUsername;
+    }
+    if (filterGroup != nil) {
+        queryParams[@"filter_group"] = filterGroup;
+    }
+    if (filterDate != nil) {
+        queryParams[@"filter_date"] = filterDate;
+    }
+    NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
+    [headerParams addEntriesFromDictionary:self.defaultHeaders];
+    // HTTP header `Accept`
+    NSString *acceptHeader = [self.apiClient.sanitizer selectHeaderAccept:@[@"application/json"]];
+    if(acceptHeader.length > 0) {
+        headerParams[@"Accept"] = acceptHeader;
+    }
+
+    // response content type
+    NSString *responseContentType = [[acceptHeader componentsSeparatedByString:@", "] firstObject] ?: @"";
+
+    // request content type
+    NSString *requestContentType = [self.apiClient.sanitizer selectHeaderContentType:@[]];
+
+    // Authentication setting
+    NSArray *authSettings = @[@"oauth2_client_credentials_grant", @"oauth2_password_grant"];
+
+    id bodyParam = nil;
+    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *localVarFiles = [[NSMutableDictionary alloc] init];
+
+    return [self.apiClient requestWithPath: resourcePath
+                                    method: @"GET"
+                                pathParams: pathParams
+                               queryParams: queryParams
+                                formParams: formParams
+                                     files: localVarFiles
+                                      body: bodyParam
+                              headerParams: headerParams
+                              authSettings: authSettings
+                        requestContentType: requestContentType
+                       responseContentType: responseContentType
+                              responseType: @"JSAPIPageResourceUserInventoryResource_*"
+                           completionBlock: ^(id data, NSError *error) {
+                                if(handler) {
+                                    handler((JSAPIPageResourceUserInventoryResource_*)data, error);
                                 }
                             }];
 }
@@ -1060,105 +1160,6 @@ NSInteger kJSAPIUsersInventoryApiMissingParamErrorCode = 234513;
 }
 
 ///
-/// List the user inventory entries for all users
-/// <b>Permissions Needed:</b> INVENTORY_ADMIN
-///  @param inactive If true, accepts inactive user inventories (optional, default to false)
-///
-///  @param size The number of objects returned per page (optional, default to 25)
-///
-///  @param page The number of the page returned, starting with 1 (optional, default to 1)
-///
-///  @param filterItemName Filter by items whose name starts with a string (optional)
-///
-///  @param filterItemId Filter by item id (optional)
-///
-///  @param filterUsername Filter by entries owned by the user with the specified username (optional)
-///
-///  @param filterGroup Filter by entries owned by the users in a given group, by unique name (optional)
-///
-///  @param filterDate A comma separated string without spaces.  First value is the operator to search on, second value is the log start date, a unix timestamp in seconds. Can be repeated for a range, eg: GT,123,LT,456  Allowed operators: (GT, LT, EQ, GOE, LOE). (optional)
-///
-///  @returns JSAPIPageResourceUserInventoryResource_*
-///
--(NSURLSessionTask*) getUsersInventoryWithInactive: (NSNumber*) inactive
-    size: (NSNumber*) size
-    page: (NSNumber*) page
-    filterItemName: (NSString*) filterItemName
-    filterItemId: (NSNumber*) filterItemId
-    filterUsername: (NSString*) filterUsername
-    filterGroup: (NSString*) filterGroup
-    filterDate: (NSString*) filterDate
-    completionHandler: (void (^)(JSAPIPageResourceUserInventoryResource_* output, NSError* error)) handler {
-    NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/inventories"];
-
-    NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
-
-    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
-    if (inactive != nil) {
-        queryParams[@"inactive"] = [inactive isEqual:@(YES)] ? @"true" : @"false";
-    }
-    if (size != nil) {
-        queryParams[@"size"] = size;
-    }
-    if (page != nil) {
-        queryParams[@"page"] = page;
-    }
-    if (filterItemName != nil) {
-        queryParams[@"filter_item_name"] = filterItemName;
-    }
-    if (filterItemId != nil) {
-        queryParams[@"filter_item_id"] = filterItemId;
-    }
-    if (filterUsername != nil) {
-        queryParams[@"filter_username"] = filterUsername;
-    }
-    if (filterGroup != nil) {
-        queryParams[@"filter_group"] = filterGroup;
-    }
-    if (filterDate != nil) {
-        queryParams[@"filter_date"] = filterDate;
-    }
-    NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
-    [headerParams addEntriesFromDictionary:self.defaultHeaders];
-    // HTTP header `Accept`
-    NSString *acceptHeader = [self.apiClient.sanitizer selectHeaderAccept:@[@"application/json"]];
-    if(acceptHeader.length > 0) {
-        headerParams[@"Accept"] = acceptHeader;
-    }
-
-    // response content type
-    NSString *responseContentType = [[acceptHeader componentsSeparatedByString:@", "] firstObject] ?: @"";
-
-    // request content type
-    NSString *requestContentType = [self.apiClient.sanitizer selectHeaderContentType:@[]];
-
-    // Authentication setting
-    NSArray *authSettings = @[@"oauth2_client_credentials_grant", @"oauth2_password_grant"];
-
-    id bodyParam = nil;
-    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
-    NSMutableDictionary *localVarFiles = [[NSMutableDictionary alloc] init];
-
-    return [self.apiClient requestWithPath: resourcePath
-                                    method: @"GET"
-                                pathParams: pathParams
-                               queryParams: queryParams
-                                formParams: formParams
-                                     files: localVarFiles
-                                      body: bodyParam
-                              headerParams: headerParams
-                              authSettings: authSettings
-                        requestContentType: requestContentType
-                       responseContentType: responseContentType
-                              responseType: @"JSAPIPageResourceUserInventoryResource_*"
-                           completionBlock: ^(id data, NSError *error) {
-                                if(handler) {
-                                    handler((JSAPIPageResourceUserInventoryResource_*)data, error);
-                                }
-                            }];
-}
-
-///
 /// Grant an entitlement
 /// <b>Permissions Needed:</b> INVENTORY_ADMIN
 ///  @param userId The id of the user to grant the entitlement to 
@@ -1321,15 +1322,18 @@ NSInteger kJSAPIUsersInventoryApiMissingParamErrorCode = 234513;
 
 ///
 /// Update an entitlement template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> PUT
 ///  @param _id The id of the template 
 ///
-///  @param template The updated template (optional)
+///  @param templatePatchResource The patch resource object (optional)
+///
+///  @param testValidation If true, this will test validation but not submit the patch request (optional)
 ///
 ///  @returns JSAPIItemTemplateResource*
 ///
 -(NSURLSessionTask*) updateEntitlementTemplateWithId: (NSString*) _id
-    template: (JSAPIItemTemplateResource*) template
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
     completionHandler: (void (^)(JSAPIItemTemplateResource* output, NSError* error)) handler {
     // verify the required parameter '_id' is set
     if (_id == nil) {
@@ -1350,6 +1354,9 @@ NSInteger kJSAPIUsersInventoryApiMissingParamErrorCode = 234513;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (testValidation != nil) {
+        queryParams[@"test_validation"] = [testValidation isEqual:@(YES)] ? @"true" : @"false";
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -1370,10 +1377,10 @@ NSInteger kJSAPIUsersInventoryApiMissingParamErrorCode = 234513;
     id bodyParam = nil;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *localVarFiles = [[NSMutableDictionary alloc] init];
-    bodyParam = template;
+    bodyParam = templatePatchResource;
 
     return [self.apiClient requestWithPath: resourcePath
-                                    method: @"PUT"
+                                    method: @"PATCH"
                                 pathParams: pathParams
                                queryParams: queryParams
                                 formParams: formParams

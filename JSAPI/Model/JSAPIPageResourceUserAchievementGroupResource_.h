@@ -14,10 +14,7 @@
 */
 
 
-#import "JSAPIOrder.h"
 #import "JSAPIUserAchievementGroupResource.h"
-@protocol JSAPIOrder;
-@class JSAPIOrder;
 @protocol JSAPIUserAchievementGroupResource;
 @class JSAPIUserAchievementGroupResource;
 
@@ -40,8 +37,6 @@
 @property(nonatomic) NSNumber* numberOfElements;
 
 @property(nonatomic) NSNumber* size;
-
-@property(nonatomic) NSArray<JSAPIOrder>* sort;
 
 @property(nonatomic) NSNumber* totalElements;
 

@@ -1,6 +1,6 @@
 # JSAPIObjectsApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -13,7 +13,7 @@ Method | HTTP request | Description
 [**getObjectTemplate**](JSAPIObjectsApi.md#getobjecttemplate) | **GET** /objects/templates/{id} | Get a single entitlement template
 [**getObjectTemplates**](JSAPIObjectsApi.md#getobjecttemplates) | **GET** /objects/templates | List and search entitlement templates
 [**updateObjectItem**](JSAPIObjectsApi.md#updateobjectitem) | **PUT** /objects/{template_id}/{object_id} | Update an object
-[**updateObjectTemplate**](JSAPIObjectsApi.md#updateobjecttemplate) | **PUT** /objects/templates/{id} | Update an entitlement template
+[**updateObjectTemplate**](JSAPIObjectsApi.md#updateobjecttemplate) | **PATCH** /objects/templates/{id} | Update an entitlement template
 
 
 # **createObjectItem**
@@ -90,7 +90,7 @@ Name | Type | Description  | Notes
 
 Create an object template
 
-Object templates define a type of entitlement and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+Object templates define a type of entitlement and the properties they have.<br /><b>Permissions Needed:</b> POST
 
 ### Example 
 ```objc
@@ -208,7 +208,7 @@ void (empty response body)
 
 Delete an entitlement template
 
-If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+If cascade = 'detach', it will force delete the template even if it's attached to other objects.<br /><b>Permissions Needed:</b> DELETE
 
 ### Example 
 ```objc
@@ -398,7 +398,7 @@ Name | Type | Description  | Notes
 
 Get a single entitlement template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or ACHIEVEMENTS_ADMIN
+<b>Permissions Needed:</b> GET
 
 ### Example 
 ```objc
@@ -458,7 +458,7 @@ Name | Type | Description  | Notes
 
 List and search entitlement templates
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or ACHIEVEMENTS_ADMIN
+<b>Permissions Needed:</b> LIST
 
 ### Example 
 ```objc
@@ -584,13 +584,14 @@ void (empty response body)
 # **updateObjectTemplate**
 ```objc
 -(NSURLSessionTask*) updateObjectTemplateWithId: (NSString*) _id
-    template: (JSAPIItemTemplateResource*) template
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
         completionHandler: (void (^)(JSAPIItemTemplateResource* output, NSError* error)) handler;
 ```
 
 Update an entitlement template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN
+<b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -604,13 +605,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* _id = @"_id_example"; // The id of the template
-JSAPIItemTemplateResource* template = [[JSAPIItemTemplateResource alloc] init]; // The updated template (optional)
+JSAPIPatchResource* templatePatchResource = [[JSAPIPatchResource alloc] init]; // The patch resource object (optional)
+NSNumber* testValidation = @true; // If true, this will test validation but not submit the patch request (optional)
 
 JSAPIObjectsApi*apiInstance = [[JSAPIObjectsApi alloc] init];
 
 // Update an entitlement template
 [apiInstance updateObjectTemplateWithId:_id
-              template:template
+              templatePatchResource:templatePatchResource
+              testValidation:testValidation
           completionHandler: ^(JSAPIItemTemplateResource* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
@@ -626,7 +629,8 @@ JSAPIObjectsApi*apiInstance = [[JSAPIObjectsApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **_id** | **NSString***| The id of the template | 
- **template** | [**JSAPIItemTemplateResource***](JSAPIItemTemplateResource.md)| The updated template | [optional] 
+ **templatePatchResource** | [**JSAPIPatchResource***](JSAPIPatchResource.md)| The patch resource object | [optional] 
+ **testValidation** | **NSNumber***| If true, this will test validation but not submit the patch request | [optional] 
 
 ### Return type
 

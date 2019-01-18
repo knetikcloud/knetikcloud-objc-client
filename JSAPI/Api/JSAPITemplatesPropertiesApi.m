@@ -1,6 +1,7 @@
 #import "JSAPITemplatesPropertiesApi.h"
 #import "JSAPIQueryParamCollection.h"
 #import "JSAPIApiClient.h"
+#import "JSAPIPageResourcePropertyFieldListResource_.h"
 #import "JSAPIPropertyFieldListResource.h"
 #import "JSAPIResult.h"
 
@@ -52,12 +53,18 @@ NSInteger kJSAPITemplatesPropertiesApiMissingParamErrorCode = 234513;
 
 ///
 /// Get details for a template property type
-/// <b>Permissions Needed:</b> ANY
+/// <b>Permissions Needed:</b> ANY<br /><b>Permissions Needed:</b> NONE
 ///  @param type type 
+///
+///  @param size The number of objects returned per page (optional, default to 25)
+///
+///  @param page The number of the page returned, starting with 1 (optional, default to 1)
 ///
 ///  @returns JSAPIPropertyFieldListResource*
 ///
 -(NSURLSessionTask*) getTemplatePropertyTypeWithType: (NSString*) type
+    size: (NSNumber*) size
+    page: (NSNumber*) page
     completionHandler: (void (^)(JSAPIPropertyFieldListResource* output, NSError* error)) handler {
     // verify the required parameter 'type' is set
     if (type == nil) {
@@ -78,6 +85,12 @@ NSInteger kJSAPITemplatesPropertiesApiMissingParamErrorCode = 234513;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (size != nil) {
+        queryParams[@"size"] = size;
+    }
+    if (page != nil) {
+        queryParams[@"page"] = page;
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -120,11 +133,11 @@ NSInteger kJSAPITemplatesPropertiesApiMissingParamErrorCode = 234513;
 
 ///
 /// List template property types
-/// <b>Permissions Needed:</b> ANY
-///  @returns NSArray<JSAPIPropertyFieldListResource>*
+/// <b>Permissions Needed:</b> ANY<br /><b>Permissions Needed:</b> NONE
+///  @returns JSAPIPageResourcePropertyFieldListResource_*
 ///
 -(NSURLSessionTask*) getTemplatePropertyTypesWithCompletionHandler: 
-    (void (^)(NSArray<JSAPIPropertyFieldListResource>* output, NSError* error)) handler {
+    (void (^)(JSAPIPageResourcePropertyFieldListResource_* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/templates/properties"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
@@ -162,10 +175,10 @@ NSInteger kJSAPITemplatesPropertiesApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSArray<JSAPIPropertyFieldListResource>*"
+                              responseType: @"JSAPIPageResourcePropertyFieldListResource_*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSArray<JSAPIPropertyFieldListResource>*)data, error);
+                                    handler((JSAPIPageResourcePropertyFieldListResource_*)data, error);
                                 }
                             }];
 }

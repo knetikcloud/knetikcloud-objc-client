@@ -40,6 +40,9 @@
 /* The name of the leveling schema.  IMMUTABLE 
  */
 @property(nonatomic) NSString* name;
+/* The template being used [optional]
+ */
+@property(nonatomic) NSString* template;
 /* A set of tiers that contain experience boundaries [optional]
  */
 @property(nonatomic) NSArray<JSAPITierResource>* tiers;

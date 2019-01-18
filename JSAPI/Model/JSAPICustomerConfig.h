@@ -33,9 +33,13 @@
 
 @property(nonatomic) JSAPIDatabaseConfig* database;
 
+@property(nonatomic) NSNumber* forceTemplates;
+
 @property(nonatomic) NSString* name;
 
 @property(nonatomic) JSAPIS3Config* s3Config;
+
+@property(nonatomic) NSNumber* searchEnabled;
 
 + (NSDictionary *)modalDictionary;
 

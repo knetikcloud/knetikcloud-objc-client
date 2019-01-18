@@ -25,9 +25,6 @@
 
 @interface JSAPIQuestionTemplateResource : JSAPIObject
 
-/* Whether to allow additional properties beyond those specified or not [optional]
- */
-@property(nonatomic) NSNumber* allowAdditional;
 /* A property definition for all answers. If included each answer must match this definition's type and be valid [optional]
  */
 @property(nonatomic) JSAPIPropertyDefinitionResource* answerProperty;

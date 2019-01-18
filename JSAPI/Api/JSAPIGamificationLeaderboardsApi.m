@@ -3,6 +3,7 @@
 #import "JSAPIApiClient.h"
 #import "JSAPILeaderboardEntryResource.h"
 #import "JSAPILeaderboardResource.h"
+#import "JSAPIPageResourceString_.h"
 #import "JSAPIResult.h"
 
 
@@ -259,15 +260,26 @@ NSInteger kJSAPIGamificationLeaderboardsApiMissingParamErrorCode = 234513;
 ///
 /// Get a list of available leaderboard strategy names
 /// <b>Permissions Needed:</b> ANY
-///  @returns NSArray<NSString*>*
+///  @param size The number of objects returned per page (optional, default to 25)
 ///
--(NSURLSessionTask*) getLeaderboardStrategiesWithCompletionHandler: 
-    (void (^)(NSArray<NSString*>* output, NSError* error)) handler {
+///  @param page The number of the page returned, starting with 1 (optional, default to 1)
+///
+///  @returns JSAPIPageResourceString_*
+///
+-(NSURLSessionTask*) getLeaderboardStrategiesWithSize: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceString_* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/leaderboards/strategies"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (size != nil) {
+        queryParams[@"size"] = size;
+    }
+    if (page != nil) {
+        queryParams[@"page"] = page;
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -300,10 +312,10 @@ NSInteger kJSAPIGamificationLeaderboardsApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSArray<NSString*>*"
+                              responseType: @"JSAPIPageResourceString_*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSArray<NSString*>*)data, error);
+                                    handler((JSAPIPageResourceString_*)data, error);
                                 }
                             }];
 }

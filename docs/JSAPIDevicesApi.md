@@ -1,10 +1,10 @@
 # JSAPIDevicesApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**addDeviceUsers**](JSAPIDevicesApi.md#adddeviceusers) | **POST** /devices/{id}/users | Add device users
+[**addDeviceUser**](JSAPIDevicesApi.md#adddeviceuser) | **POST** /devices/{id}/users | Add device users
 [**createDevice**](JSAPIDevicesApi.md#createdevice) | **POST** /devices | Create a device
 [**createDeviceTemplate**](JSAPIDevicesApi.md#createdevicetemplate) | **POST** /devices/templates | Create a device template
 [**deleteDevice**](JSAPIDevicesApi.md#deletedevice) | **DELETE** /devices/{id} | Delete a device
@@ -16,12 +16,12 @@ Method | HTTP request | Description
 [**getDeviceTemplates**](JSAPIDevicesApi.md#getdevicetemplates) | **GET** /devices/templates | List and search device templates
 [**getDevices**](JSAPIDevicesApi.md#getdevices) | **GET** /devices | List and search devices
 [**updateDevice**](JSAPIDevicesApi.md#updatedevice) | **PUT** /devices/{id} | Update a device
-[**updateDeviceTemplate**](JSAPIDevicesApi.md#updatedevicetemplate) | **PUT** /devices/templates/{id} | Update an device template
+[**updateDeviceTemplate**](JSAPIDevicesApi.md#updatedevicetemplate) | **PATCH** /devices/templates/{id} | Update an device template
 
 
-# **addDeviceUsers**
+# **addDeviceUser**
 ```objc
--(NSURLSessionTask*) addDeviceUsersWithUserResources: (NSArray<JSAPISimpleUserResource>*) userResources
+-(NSURLSessionTask*) addDeviceUserWithUserResources: (NSArray<JSAPISimpleUserResource>*) userResources
     _id: (NSString*) _id
         completionHandler: (void (^)(JSAPIDeviceResource* output, NSError* error)) handler;
 ```
@@ -47,14 +47,14 @@ NSString* _id = @"_id_example"; // id
 JSAPIDevicesApi*apiInstance = [[JSAPIDevicesApi alloc] init];
 
 // Add device users
-[apiInstance addDeviceUsersWithUserResources:userResources
+[apiInstance addDeviceUserWithUserResources:userResources
               _id:_id
           completionHandler: ^(JSAPIDeviceResource* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
                         if (error) {
-                            NSLog(@"Error calling JSAPIDevicesApi->addDeviceUsers: %@", error);
+                            NSLog(@"Error calling JSAPIDevicesApi->addDeviceUser: %@", error);
                         }
                     }];
 ```
@@ -147,7 +147,7 @@ Name | Type | Description  | Notes
 
 Create a device template
 
-Device Templates define a type of device and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+Device Templates define a type of device and the properties they have.<br /><b>Permissions Needed:</b> POST
 
 ### Example 
 ```objc
@@ -261,7 +261,7 @@ void (empty response body)
 
 Delete an device template
 
-If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+If cascade = 'detach', it will force delete the template even if it's attached to other objects.<br /><b>Permissions Needed:</b> DELETE
 
 ### Example 
 ```objc
@@ -495,7 +495,7 @@ Name | Type | Description  | Notes
 
 Get a single device template
 
-<b>Permissions Needed:</b> description
+<b>Permissions Needed:</b> GET
 
 ### Example 
 ```objc
@@ -555,7 +555,7 @@ Name | Type | Description  | Notes
 
 List and search device templates
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or DEVICES_ADMIN
+<b>Permissions Needed:</b> LIST
 
 ### Example 
 ```objc
@@ -766,13 +766,14 @@ Name | Type | Description  | Notes
 # **updateDeviceTemplate**
 ```objc
 -(NSURLSessionTask*) updateDeviceTemplateWithId: (NSString*) _id
-    deviceTemplateResource: (JSAPITemplateResource*) deviceTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
         completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler;
 ```
 
 Update an device template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN
+<b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -786,13 +787,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* _id = @"_id_example"; // The id of the template
-JSAPITemplateResource* deviceTemplateResource = [[JSAPITemplateResource alloc] init]; // The device template resource object (optional)
+JSAPIPatchResource* templatePatchResource = [[JSAPIPatchResource alloc] init]; // The patch resource object (optional)
+NSNumber* testValidation = @true; // If true, this will test validation but not submit the patch request (optional)
 
 JSAPIDevicesApi*apiInstance = [[JSAPIDevicesApi alloc] init];
 
 // Update an device template
 [apiInstance updateDeviceTemplateWithId:_id
-              deviceTemplateResource:deviceTemplateResource
+              templatePatchResource:templatePatchResource
+              testValidation:testValidation
           completionHandler: ^(JSAPITemplateResource* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
@@ -808,7 +811,8 @@ JSAPIDevicesApi*apiInstance = [[JSAPIDevicesApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **_id** | **NSString***| The id of the template | 
- **deviceTemplateResource** | [**JSAPITemplateResource***](JSAPITemplateResource.md)| The device template resource object | [optional] 
+ **templatePatchResource** | [**JSAPIPatchResource***](JSAPIPatchResource.md)| The patch resource object | [optional] 
+ **testValidation** | **NSNumber***| If true, this will test validation but not submit the patch request | [optional] 
 
 ### Return type
 

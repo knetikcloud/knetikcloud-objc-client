@@ -1,6 +1,6 @@
 # JSAPIStoreVendorsApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -13,7 +13,7 @@ Method | HTTP request | Description
 [**getVendorTemplates**](JSAPIStoreVendorsApi.md#getvendortemplates) | **GET** /vendors/templates | List and search vendor templates
 [**getVendors**](JSAPIStoreVendorsApi.md#getvendors) | **GET** /vendors | List and search vendors
 [**updateVendor**](JSAPIStoreVendorsApi.md#updatevendor) | **PUT** /vendors/{id} | Update a vendor
-[**updateVendorTemplate**](JSAPIStoreVendorsApi.md#updatevendortemplate) | **PUT** /vendors/templates/{id} | Update a vendor template
+[**updateVendorTemplate**](JSAPIStoreVendorsApi.md#updatevendortemplate) | **PATCH** /vendors/templates/{id} | Update a vendor template
 
 
 # **createVendor**
@@ -82,7 +82,7 @@ Name | Type | Description  | Notes
 
 Create a vendor template
 
-Vendor Templates define a type of vendor and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+Vendor Templates define a type of vendor and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> POST
 
 ### Example 
 ```objc
@@ -196,7 +196,7 @@ void (empty response body)
 
 Delete a vendor template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN
+<b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> DELETE
 
 ### Example 
 ```objc
@@ -312,7 +312,7 @@ Name | Type | Description  | Notes
 
 Get a single vendor template
 
-Vendor Templates define a type of vendor and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+Vendor Templates define a type of vendor and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> GET
 
 ### Example 
 ```objc
@@ -372,7 +372,7 @@ Name | Type | Description  | Notes
 
 List and search vendor templates
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN
+<b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> LIST
 
 ### Example 
 ```objc
@@ -563,13 +563,14 @@ Name | Type | Description  | Notes
 # **updateVendorTemplate**
 ```objc
 -(NSURLSessionTask*) updateVendorTemplateWithId: (NSString*) _id
-    vendorTemplateResource: (JSAPIItemTemplateResource*) vendorTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
         completionHandler: (void (^)(JSAPIItemTemplateResource* output, NSError* error)) handler;
 ```
 
 Update a vendor template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN
+<b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -583,13 +584,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* _id = @"_id_example"; // The id of the template
-JSAPIItemTemplateResource* vendorTemplateResource = [[JSAPIItemTemplateResource alloc] init]; // The vendor template resource object (optional)
+JSAPIPatchResource* templatePatchResource = [[JSAPIPatchResource alloc] init]; // The patch resource object (optional)
+NSNumber* testValidation = @true; // If true, this will test validation but not submit the patch request (optional)
 
 JSAPIStoreVendorsApi*apiInstance = [[JSAPIStoreVendorsApi alloc] init];
 
 // Update a vendor template
 [apiInstance updateVendorTemplateWithId:_id
-              vendorTemplateResource:vendorTemplateResource
+              templatePatchResource:templatePatchResource
+              testValidation:testValidation
           completionHandler: ^(JSAPIItemTemplateResource* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
@@ -605,7 +608,8 @@ JSAPIStoreVendorsApi*apiInstance = [[JSAPIStoreVendorsApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **_id** | **NSString***| The id of the template | 
- **vendorTemplateResource** | [**JSAPIItemTemplateResource***](JSAPIItemTemplateResource.md)| The vendor template resource object | [optional] 
+ **templatePatchResource** | [**JSAPIPatchResource***](JSAPIPatchResource.md)| The patch resource object | [optional] 
+ **testValidation** | **NSNumber***| If true, this will test validation but not submit the patch request | [optional] 
 
 ### Return type
 

@@ -1,6 +1,6 @@
 # JSAPIGamificationAchievementsApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -21,7 +21,7 @@ Method | HTTP request | Description
 [**incrementAchievementProgress**](JSAPIGamificationAchievementsApi.md#incrementachievementprogress) | **POST** /users/{user_id}/achievements/{achievement_name}/progress | Increment an achievement progress record for a user
 [**setAchievementProgress**](JSAPIGamificationAchievementsApi.md#setachievementprogress) | **PUT** /users/{user_id}/achievements/{achievement_name}/progress | Set an achievement progress record for a user
 [**updateAchievement**](JSAPIGamificationAchievementsApi.md#updateachievement) | **PUT** /achievements/{name} | Update an achievement definition
-[**updateAchievementTemplate**](JSAPIGamificationAchievementsApi.md#updateachievementtemplate) | **PUT** /achievements/templates/{id} | Update an achievement template
+[**updateAchievementTemplate**](JSAPIGamificationAchievementsApi.md#updateachievementtemplate) | **PATCH** /achievements/templates/{id} | Update an achievement template
 
 
 # **createAchievement**
@@ -90,7 +90,7 @@ Name | Type | Description  | Notes
 
 Create an achievement template
 
-Achievement templates define a type of achievement and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+Achievement templates define a type of achievement and the properties they have.<br /><b>Permissions Needed:</b> POST
 
 ### Example 
 ```objc
@@ -204,7 +204,7 @@ void (empty response body)
 
 Delete an achievement template
 
-If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+If cascade = 'detach', it will force delete the template even if it's attached to other objects.<br /><b>Permissions Needed:</b> DELETE
 
 ### Example 
 ```objc
@@ -320,7 +320,7 @@ Name | Type | Description  | Notes
 
 Get a single achievement template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or ACHIEVEMENTS_ADMIN
+<b>Permissions Needed:</b> GET
 
 ### Example 
 ```objc
@@ -380,7 +380,7 @@ Name | Type | Description  | Notes
 
 List and search achievement templates
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or ACHIEVEMENTS_ADMIN
+<b>Permissions Needed:</b> LIST
 
 ### Example 
 ```objc
@@ -438,8 +438,9 @@ Name | Type | Description  | Notes
 
 # **getAchievementTriggers**
 ```objc
--(NSURLSessionTask*) getAchievementTriggersWithCompletionHandler: 
-        (void (^)(NSArray<JSAPIBreTriggerResource>* output, NSError* error)) handler;
+-(NSURLSessionTask*) getAchievementTriggersWithSize: (NSNumber*) size
+    page: (NSNumber*) page
+        completionHandler: (void (^)(JSAPIPageResourceBreTriggerResource_* output, NSError* error)) handler;
 ```
 
 Get the list of triggers that can be used to trigger an achievement progress update
@@ -457,12 +458,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 [apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
 
 
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
 JSAPIGamificationAchievementsApi*apiInstance = [[JSAPIGamificationAchievementsApi alloc] init];
 
 // Get the list of triggers that can be used to trigger an achievement progress update
-[apiInstance getAchievementTriggersWithCompletionHandler: 
-          ^(NSArray<JSAPIBreTriggerResource>* output, NSError* error) {
+[apiInstance getAchievementTriggersWithSize:size
+              page:page
+          completionHandler: ^(JSAPIPageResourceBreTriggerResource_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -473,11 +477,15 @@ JSAPIGamificationAchievementsApi*apiInstance = [[JSAPIGamificationAchievementsAp
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
 ### Return type
 
-[**NSArray<JSAPIBreTriggerResource>***](JSAPIBreTriggerResource.md)
+[**JSAPIPageResourceBreTriggerResource_***](JSAPIPageResourceBreTriggerResource_.md)
 
 ### Authorization
 
@@ -575,7 +583,9 @@ Name | Type | Description  | Notes
 # **getDerivedAchievements**
 ```objc
 -(NSURLSessionTask*) getDerivedAchievementsWithName: (NSString*) name
-        completionHandler: (void (^)(NSArray<JSAPIAchievementDefinitionResource>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+        completionHandler: (void (^)(JSAPIPageResourceAchievementDefinitionResource_* output, NSError* error)) handler;
 ```
 
 Get a list of derived achievements
@@ -594,12 +604,16 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* name = @"name_example"; // The name of the derived achievement
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
 JSAPIGamificationAchievementsApi*apiInstance = [[JSAPIGamificationAchievementsApi alloc] init];
 
 // Get a list of derived achievements
 [apiInstance getDerivedAchievementsWithName:name
-          completionHandler: ^(NSArray<JSAPIAchievementDefinitionResource>* output, NSError* error) {
+              size:size
+              page:page
+          completionHandler: ^(JSAPIPageResourceAchievementDefinitionResource_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -614,10 +628,12 @@ JSAPIGamificationAchievementsApi*apiInstance = [[JSAPIGamificationAchievementsAp
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **name** | **NSString***| The name of the derived achievement | 
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
 ### Return type
 
-[**NSArray<JSAPIAchievementDefinitionResource>***](JSAPIAchievementDefinitionResource.md)
+[**JSAPIPageResourceAchievementDefinitionResource_***](JSAPIPageResourceAchievementDefinitionResource_.md)
 
 ### Authorization
 
@@ -697,7 +713,7 @@ Name | Type | Description  | Notes
 -(NSURLSessionTask*) getUserAchievementsProgressWithUserId: (NSNumber*) userId
     filterAchievementDerived: (NSNumber*) filterAchievementDerived
     filterAchievementTagset: (NSString*) filterAchievementTagset
-    filterAchievementName: (NSString*) filterAchievementName
+    filterGroupName: (NSString*) filterGroupName
     size: (NSNumber*) size
     page: (NSNumber*) page
         completionHandler: (void (^)(JSAPIPageResourceUserAchievementGroupResource_* output, NSError* error)) handler;
@@ -721,7 +737,7 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 NSNumber* userId = @56; // The user's id
 NSNumber* filterAchievementDerived = @true; // Filter for achievements that are derived from other services (optional)
 NSString* filterAchievementTagset = @"filterAchievementTagset_example"; // Filter for achievements with specified tags (separated by comma) (optional)
-NSString* filterAchievementName = @"filterAchievementName_example"; // Filter for achievements whose name contains a string (optional)
+NSString* filterGroupName = @"filterGroupName_example"; // Filter for achievements whose group/level name contains a string (optional)
 NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
 NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
@@ -731,7 +747,7 @@ JSAPIGamificationAchievementsApi*apiInstance = [[JSAPIGamificationAchievementsAp
 [apiInstance getUserAchievementsProgressWithUserId:userId
               filterAchievementDerived:filterAchievementDerived
               filterAchievementTagset:filterAchievementTagset
-              filterAchievementName:filterAchievementName
+              filterGroupName:filterGroupName
               size:size
               page:page
           completionHandler: ^(JSAPIPageResourceUserAchievementGroupResource_* output, NSError* error) {
@@ -751,7 +767,7 @@ Name | Type | Description  | Notes
  **userId** | **NSNumber***| The user&#39;s id | 
  **filterAchievementDerived** | **NSNumber***| Filter for achievements that are derived from other services | [optional] 
  **filterAchievementTagset** | **NSString***| Filter for achievements with specified tags (separated by comma) | [optional] 
- **filterAchievementName** | **NSString***| Filter for achievements whose name contains a string | [optional] 
+ **filterGroupName** | **NSString***| Filter for achievements whose group/level name contains a string | [optional] 
  **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
  **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
@@ -775,7 +791,7 @@ Name | Type | Description  | Notes
 -(NSURLSessionTask*) getUsersAchievementProgressWithAchievementName: (NSString*) achievementName
     filterAchievementDerived: (NSNumber*) filterAchievementDerived
     filterAchievementTagset: (NSString*) filterAchievementTagset
-    filterAchievementName: (NSString*) filterAchievementName
+    filterGroupName: (NSString*) filterGroupName
     size: (NSNumber*) size
     page: (NSNumber*) page
         completionHandler: (void (^)(JSAPIPageResourceUserAchievementGroupResource_* output, NSError* error)) handler;
@@ -783,7 +799,7 @@ Name | Type | Description  | Notes
 
 Retrieve progress on a given achievement for all users
 
-Assets will not be filled in on the resources returned. Use 'Get single achievement progress for user' to retrieve the full resource with assets for a given user as needed. <br><br><b>Permissions Needed:</b> ACHIEVEMENTS_ADMIN
+Assets will not be filled in on the resources returned. Use 'Get single achievement progress for user' to retrieve the full resource with assets for a given user as needed. <br><br><b>Permissions Needed:</b> ACHIEVEMENTS_ADMIN<br /><b>Permissions Needed:</b> NONE
 
 ### Example 
 ```objc
@@ -799,7 +815,7 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 NSString* achievementName = @"achievementName_example"; // The achievement's name
 NSNumber* filterAchievementDerived = @true; // Filter for achievements that are derived from other services (optional)
 NSString* filterAchievementTagset = @"filterAchievementTagset_example"; // Filter for achievements with specified tags (separated by comma) (optional)
-NSString* filterAchievementName = @"filterAchievementName_example"; // Filter for achievements whose name contains a string (optional)
+NSString* filterGroupName = @"filterGroupName_example"; // Filter for achievements whose group/level name contains a string (optional)
 NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
 NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
@@ -809,7 +825,7 @@ JSAPIGamificationAchievementsApi*apiInstance = [[JSAPIGamificationAchievementsAp
 [apiInstance getUsersAchievementProgressWithAchievementName:achievementName
               filterAchievementDerived:filterAchievementDerived
               filterAchievementTagset:filterAchievementTagset
-              filterAchievementName:filterAchievementName
+              filterGroupName:filterGroupName
               size:size
               page:page
           completionHandler: ^(JSAPIPageResourceUserAchievementGroupResource_* output, NSError* error) {
@@ -829,7 +845,7 @@ Name | Type | Description  | Notes
  **achievementName** | **NSString***| The achievement&#39;s name | 
  **filterAchievementDerived** | **NSNumber***| Filter for achievements that are derived from other services | [optional] 
  **filterAchievementTagset** | **NSString***| Filter for achievements with specified tags (separated by comma) | [optional] 
- **filterAchievementName** | **NSString***| Filter for achievements whose name contains a string | [optional] 
+ **filterGroupName** | **NSString***| Filter for achievements whose group/level name contains a string | [optional] 
  **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
  **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
@@ -852,7 +868,7 @@ Name | Type | Description  | Notes
 ```objc
 -(NSURLSessionTask*) getUsersAchievementsProgressWithFilterAchievementDerived: (NSNumber*) filterAchievementDerived
     filterAchievementTagset: (NSString*) filterAchievementTagset
-    filterAchievementName: (NSString*) filterAchievementName
+    filterGroupName: (NSString*) filterGroupName
     size: (NSNumber*) size
     page: (NSNumber*) page
         completionHandler: (void (^)(JSAPIPageResourceUserAchievementGroupResource_* output, NSError* error)) handler;
@@ -860,7 +876,7 @@ Name | Type | Description  | Notes
 
 Retrieve progress on achievements for all users
 
-Assets will not be filled in on the resources returned. Use 'Get single achievement progress for user' to retrieve the full resource with assets for a given user as needed. <br><br><b>Permissions Needed:</b> ACHIEVEMENTS_ADMIN
+Assets will not be filled in on the resources returned. Use 'Get single achievement progress for user' to retrieve the full resource with assets for a given user as needed. <br><br><b>Permissions Needed:</b> ACHIEVEMENTS_ADMIN<br /><b>Permissions Needed:</b> LIST
 
 ### Example 
 ```objc
@@ -875,7 +891,7 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 NSNumber* filterAchievementDerived = @true; // Filter for achievements that are derived from other services (optional)
 NSString* filterAchievementTagset = @"filterAchievementTagset_example"; // Filter for achievements with specified tags (separated by comma) (optional)
-NSString* filterAchievementName = @"filterAchievementName_example"; // Filter for achievements whose name contains a string (optional)
+NSString* filterGroupName = @"filterGroupName_example"; // Filter for achievements whose group/level name contains a string (optional)
 NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
 NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
@@ -884,7 +900,7 @@ JSAPIGamificationAchievementsApi*apiInstance = [[JSAPIGamificationAchievementsAp
 // Retrieve progress on achievements for all users
 [apiInstance getUsersAchievementsProgressWithFilterAchievementDerived:filterAchievementDerived
               filterAchievementTagset:filterAchievementTagset
-              filterAchievementName:filterAchievementName
+              filterGroupName:filterGroupName
               size:size
               page:page
           completionHandler: ^(JSAPIPageResourceUserAchievementGroupResource_* output, NSError* error) {
@@ -903,7 +919,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **filterAchievementDerived** | **NSNumber***| Filter for achievements that are derived from other services | [optional] 
  **filterAchievementTagset** | **NSString***| Filter for achievements with specified tags (separated by comma) | [optional] 
- **filterAchievementName** | **NSString***| Filter for achievements whose name contains a string | [optional] 
+ **filterGroupName** | **NSString***| Filter for achievements whose group/level name contains a string | [optional] 
  **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
  **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
@@ -1119,13 +1135,14 @@ Name | Type | Description  | Notes
 # **updateAchievementTemplate**
 ```objc
 -(NSURLSessionTask*) updateAchievementTemplateWithId: (NSString*) _id
-    template: (JSAPITemplateResource*) template
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
         completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler;
 ```
 
 Update an achievement template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN
+<b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -1139,13 +1156,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* _id = @"_id_example"; // The id of the template
-JSAPITemplateResource* template = [[JSAPITemplateResource alloc] init]; // The updated template (optional)
+JSAPIPatchResource* templatePatchResource = [[JSAPIPatchResource alloc] init]; // The patch resource object (optional)
+NSNumber* testValidation = @true; // If true, this will test validation but not submit the patch request (optional)
 
 JSAPIGamificationAchievementsApi*apiInstance = [[JSAPIGamificationAchievementsApi alloc] init];
 
 // Update an achievement template
 [apiInstance updateAchievementTemplateWithId:_id
-              template:template
+              templatePatchResource:templatePatchResource
+              testValidation:testValidation
           completionHandler: ^(JSAPITemplateResource* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
@@ -1161,7 +1180,8 @@ JSAPIGamificationAchievementsApi*apiInstance = [[JSAPIGamificationAchievementsAp
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **_id** | **NSString***| The id of the template | 
- **template** | [**JSAPITemplateResource***](JSAPITemplateResource.md)| The updated template | [optional] 
+ **templatePatchResource** | [**JSAPIPatchResource***](JSAPIPatchResource.md)| The patch resource object | [optional] 
+ **testValidation** | **NSNumber***| If true, this will test validation but not submit the patch request | [optional] 
 
 ### Return type
 

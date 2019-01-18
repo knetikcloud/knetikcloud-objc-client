@@ -3,7 +3,9 @@
 #import "JSAPICreatePayPalPaymentRequest.h"
 #import "JSAPIFinalizeBillingAgreementRequest.h"
 #import "JSAPIFinalizePayPalPaymentRequest.h"
+#import "JSAPIIntWrapper.h"
 #import "JSAPIResult.h"
+#import "JSAPIStringWrapper.h"
 #import "JSAPIApi.h"
 
 /**
@@ -38,9 +40,9 @@ extern NSInteger kJSAPIPaymentsPayPalClassicApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSString*
+/// @return JSAPIStringWrapper*
 -(NSURLSessionTask*) createPayPalBillingAgreementUrlWithRequest: (JSAPICreateBillingAgreementRequest*) request
-    completionHandler: (void (^)(NSString* output, NSError* error)) handler;
+    completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler;
 
 
 /// Create a payment token for PayPal express checkout
@@ -54,9 +56,9 @@ extern NSInteger kJSAPIPaymentsPayPalClassicApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSString*
+/// @return JSAPIStringWrapper*
 -(NSURLSessionTask*) createPayPalExpressCheckoutWithRequest: (JSAPICreatePayPalPaymentRequest*) request
-    completionHandler: (void (^)(NSString* output, NSError* error)) handler;
+    completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler;
 
 
 /// Finalizes a billing agreement after the user has accepted through PayPal
@@ -70,9 +72,9 @@ extern NSInteger kJSAPIPaymentsPayPalClassicApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSNumber*
+/// @return JSAPIIntWrapper*
 -(NSURLSessionTask*) finalizePayPalBillingAgreementWithRequest: (JSAPIFinalizeBillingAgreementRequest*) request
-    completionHandler: (void (^)(NSNumber* output, NSError* error)) handler;
+    completionHandler: (void (^)(JSAPIIntWrapper* output, NSError* error)) handler;
 
 
 /// Finalizes a payment after the user has completed checkout with PayPal

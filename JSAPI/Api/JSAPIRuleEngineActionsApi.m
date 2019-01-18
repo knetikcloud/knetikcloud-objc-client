@@ -1,7 +1,7 @@
 #import "JSAPIRuleEngineActionsApi.h"
 #import "JSAPIQueryParamCollection.h"
 #import "JSAPIApiClient.h"
-#import "JSAPIActionResource.h"
+#import "JSAPIPageResourceActionResource_.h"
 #import "JSAPIResult.h"
 
 
@@ -61,13 +61,19 @@ NSInteger kJSAPIRuleEngineActionsApiMissingParamErrorCode = 234513;
 ///
 ///  @param filterSearch Filter for actions containing the given words somewhere within name, description and tags (optional)
 ///
-///  @returns NSArray<JSAPIActionResource>*
+///  @param size The number of objects returned per page (optional, default to 25)
+///
+///  @param page The number of the page returned, starting with 1 (optional, default to 1)
+///
+///  @returns JSAPIPageResourceActionResource_*
 ///
 -(NSURLSessionTask*) getBREActionsWithFilterCategory: (NSString*) filterCategory
     filterName: (NSString*) filterName
     filterTags: (NSString*) filterTags
     filterSearch: (NSString*) filterSearch
-    completionHandler: (void (^)(NSArray<JSAPIActionResource>* output, NSError* error)) handler {
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceActionResource_* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/bre/actions"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
@@ -84,6 +90,12 @@ NSInteger kJSAPIRuleEngineActionsApiMissingParamErrorCode = 234513;
     }
     if (filterSearch != nil) {
         queryParams[@"filter_search"] = filterSearch;
+    }
+    if (size != nil) {
+        queryParams[@"size"] = size;
+    }
+    if (page != nil) {
+        queryParams[@"page"] = page;
     }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
@@ -117,10 +129,10 @@ NSInteger kJSAPIRuleEngineActionsApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSArray<JSAPIActionResource>*"
+                              responseType: @"JSAPIPageResourceActionResource_*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSArray<JSAPIActionResource>*)data, error);
+                                    handler((JSAPIPageResourceActionResource_*)data, error);
                                 }
                             }];
 }

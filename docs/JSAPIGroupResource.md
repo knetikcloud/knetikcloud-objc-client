@@ -4,6 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **additionalProperties** | [**NSDictionary***](JSAPIProperty.md) | A map of additional properties, keyed on the property name.  Must match the names and types defined in the template for this item type | [optional] 
+**createdDate** | **NSNumber*** | The date the group was created as a unix timestamp | [optional] 
 **_description** | **NSString*** | A description of the group | [optional] 
 **memberCount** | **NSNumber*** | The number of users in the group | [optional] 
 **messageOfTheDay** | **NSString*** | A message of the day for members of the group | [optional] 
@@ -14,6 +15,7 @@ Name | Type | Description | Notes
 **tags** | **NSArray&lt;NSString*&gt;*** | Tags for search | [optional] 
 **template** | **NSString*** | A group template this group is validated against. May be null and no validation of additional_properties will be done | [optional] 
 **uniqueName** | **NSString*** | Unique name used in url and references. Uppercase, lowercase, numbers and hyphens only. Max 50 characters. Cannot be altered once created. Default: random UUID | [optional] 
+**updatedDate** | **NSNumber*** | The date the group&#39;s info was last updated as a unix timestamp | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

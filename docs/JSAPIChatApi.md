@@ -1,6 +1,6 @@
 # JSAPIChatApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -311,7 +311,9 @@ Name | Type | Description  | Notes
 # **getChatMessageBlacklist**
 ```objc
 -(NSURLSessionTask*) getChatMessageBlacklistWithId: (NSString*) _id
-        completionHandler: (void (^)(NSArray<JSAPIChatBlacklistResource>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+        completionHandler: (void (^)(JSAPIPageResourceChatBlacklistResource_* output, NSError* error)) handler;
 ```
 
 Get a list of blocked users for chat messaging
@@ -330,12 +332,16 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* _id = @"_id_example"; // The user id or 'me'
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
 JSAPIChatApi*apiInstance = [[JSAPIChatApi alloc] init];
 
 // Get a list of blocked users for chat messaging
 [apiInstance getChatMessageBlacklistWithId:_id
-          completionHandler: ^(NSArray<JSAPIChatBlacklistResource>* output, NSError* error) {
+              size:size
+              page:page
+          completionHandler: ^(JSAPIPageResourceChatBlacklistResource_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -350,10 +356,12 @@ JSAPIChatApi*apiInstance = [[JSAPIChatApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **_id** | **NSString***| The user id or &#39;me&#39; | 
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
 ### Return type
 
-[**NSArray<JSAPIChatBlacklistResource>***](JSAPIChatBlacklistResource.md)
+[**JSAPIPageResourceChatBlacklistResource_***](JSAPIPageResourceChatBlacklistResource_.md)
 
 ### Authorization
 

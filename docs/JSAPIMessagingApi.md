@@ -1,10 +1,10 @@
 # JSAPIMessagingApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**compileMessageTemplate**](JSAPIMessagingApi.md#compilemessagetemplate) | **POST** /messaging/templates/compilations | Compile a message template
+[**compileMessageTemplates**](JSAPIMessagingApi.md#compilemessagetemplates) | **POST** /messaging/templates/compilations | Compile a message template
 [**createMessageTemplate**](JSAPIMessagingApi.md#createmessagetemplate) | **POST** /messaging/templates | Create a message template
 [**deleteMessageTemplate**](JSAPIMessagingApi.md#deletemessagetemplate) | **DELETE** /messaging/templates/{id} | Delete an existing message template
 [**getMessageTemplate**](JSAPIMessagingApi.md#getmessagetemplate) | **GET** /messaging/templates/{id} | Get a single message template
@@ -20,9 +20,9 @@ Method | HTTP request | Description
 [**updateMessageTemplate**](JSAPIMessagingApi.md#updatemessagetemplate) | **PUT** /messaging/templates/{id} | Update an existing message template
 
 
-# **compileMessageTemplate**
+# **compileMessageTemplates**
 ```objc
--(NSURLSessionTask*) compileMessageTemplateWithRequest: (JSAPIMessageTemplateBulkRequest*) request
+-(NSURLSessionTask*) compileMessageTemplatesWithRequest: (JSAPIMessageTemplateBulkRequest*) request
         completionHandler: (void (^)(NSDictionary<NSString*, NSString*>* output, NSError* error)) handler;
 ```
 
@@ -46,13 +46,13 @@ JSAPIMessageTemplateBulkRequest* request = [[JSAPIMessageTemplateBulkRequest all
 JSAPIMessagingApi*apiInstance = [[JSAPIMessagingApi alloc] init];
 
 // Compile a message template
-[apiInstance compileMessageTemplateWithRequest:request
+[apiInstance compileMessageTemplatesWithRequest:request
           completionHandler: ^(NSDictionary<NSString*, NSString*>* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
                         if (error) {
-                            NSLog(@"Error calling JSAPIMessagingApi->compileMessageTemplate: %@", error);
+                            NSLog(@"Error calling JSAPIMessagingApi->compileMessageTemplates: %@", error);
                         }
                     }];
 ```

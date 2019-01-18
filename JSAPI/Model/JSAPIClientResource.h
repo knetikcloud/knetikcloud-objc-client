@@ -14,6 +14,9 @@
 */
 
 
+#import "JSAPIClientCustomizationResource.h"
+@protocol JSAPIClientCustomizationResource;
+@class JSAPIClientCustomizationResource;
 
 
 
@@ -25,6 +28,9 @@
 /* The expiration time of an initial oauth token in seconds [optional]
  */
 @property(nonatomic) NSNumber* accessTokenValiditySeconds;
+/* The customizable fields for the login page [optional]
+ */
+@property(nonatomic) JSAPIClientCustomizationResource* clientCustomization;
 /* The client_id field of the oauth token request 
  */
 @property(nonatomic) NSString* clientKey;

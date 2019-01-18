@@ -3,6 +3,7 @@
 #import "JSAPIApiClient.h"
 #import "JSAPIOptimalPaymentRequest.h"
 #import "JSAPIResult.h"
+#import "JSAPIStringWrapper.h"
 
 
 @interface JSAPIPaymentsOptimalApi ()
@@ -55,10 +56,10 @@ NSInteger kJSAPIPaymentsOptimalApiMissingParamErrorCode = 234513;
 /// Will return the url for a hosted payment endpoint to post to. See Optimal documentation for details. <br><br><b>Permissions Needed:</b> OPTIMAL_ADMIN or owner
 ///  @param request The payment request to initiate (optional)
 ///
-///  @returns NSString*
+///  @returns JSAPIStringWrapper*
 ///
 -(NSURLSessionTask*) silentPostOptimalWithRequest: (JSAPIOptimalPaymentRequest*) request
-    completionHandler: (void (^)(NSString* output, NSError* error)) handler {
+    completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/payment/provider/optimal/silent"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
@@ -97,10 +98,10 @@ NSInteger kJSAPIPaymentsOptimalApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSString*"
+                              responseType: @"JSAPIStringWrapper*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSString*)data, error);
+                                    handler((JSAPIStringWrapper*)data, error);
                                 }
                             }];
 }

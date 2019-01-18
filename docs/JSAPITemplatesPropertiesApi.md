@@ -1,6 +1,6 @@
 # JSAPITemplatesPropertiesApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -11,12 +11,14 @@ Method | HTTP request | Description
 # **getTemplatePropertyType**
 ```objc
 -(NSURLSessionTask*) getTemplatePropertyTypeWithType: (NSString*) type
+    size: (NSNumber*) size
+    page: (NSNumber*) page
         completionHandler: (void (^)(JSAPIPropertyFieldListResource* output, NSError* error)) handler;
 ```
 
 Get details for a template property type
 
-<b>Permissions Needed:</b> ANY
+<b>Permissions Needed:</b> ANY<br /><b>Permissions Needed:</b> NONE
 
 ### Example 
 ```objc
@@ -30,11 +32,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* type = @"type_example"; // type
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
 JSAPITemplatesPropertiesApi*apiInstance = [[JSAPITemplatesPropertiesApi alloc] init];
 
 // Get details for a template property type
 [apiInstance getTemplatePropertyTypeWithType:type
+              size:size
+              page:page
           completionHandler: ^(JSAPIPropertyFieldListResource* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
@@ -50,6 +56,8 @@ JSAPITemplatesPropertiesApi*apiInstance = [[JSAPITemplatesPropertiesApi alloc] i
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **type** | **NSString***| type | 
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
 ### Return type
 
@@ -69,12 +77,12 @@ Name | Type | Description  | Notes
 # **getTemplatePropertyTypes**
 ```objc
 -(NSURLSessionTask*) getTemplatePropertyTypesWithCompletionHandler: 
-        (void (^)(NSArray<JSAPIPropertyFieldListResource>* output, NSError* error)) handler;
+        (void (^)(JSAPIPageResourcePropertyFieldListResource_* output, NSError* error)) handler;
 ```
 
 List template property types
 
-<b>Permissions Needed:</b> ANY
+<b>Permissions Needed:</b> ANY<br /><b>Permissions Needed:</b> NONE
 
 ### Example 
 ```objc
@@ -92,7 +100,7 @@ JSAPITemplatesPropertiesApi*apiInstance = [[JSAPITemplatesPropertiesApi alloc] i
 
 // List template property types
 [apiInstance getTemplatePropertyTypesWithCompletionHandler: 
-          ^(NSArray<JSAPIPropertyFieldListResource>* output, NSError* error) {
+          ^(JSAPIPageResourcePropertyFieldListResource_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -107,7 +115,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**NSArray<JSAPIPropertyFieldListResource>***](JSAPIPropertyFieldListResource.md)
+[**JSAPIPageResourcePropertyFieldListResource_***](JSAPIPageResourcePropertyFieldListResource_.md)
 
 ### Authorization
 

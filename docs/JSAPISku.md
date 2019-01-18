@@ -8,8 +8,6 @@ Name | Type | Description | Notes
 **_description** | **NSString*** | The friendly name of the SKU as it will appear on invoices and reports. Typically represents the option name like red, large, etc | 
 **inventory** | **NSNumber*** | The number of SKUs currently in stock | [optional] 
 **minInventoryThreshold** | **NSNumber*** | Alerts vendor when SKU inventory drops below this value | [optional] 
-**notAvailable** | **NSNumber*** |  | [optional] 
-**notDisplayable** | **NSNumber*** |  | [optional] 
 **originalPrice** | **NSNumber*** | The base price before any sale | 
 **price** | **NSNumber*** | The current price of the SKU with sales, if any. Set original_price for the base | [optional] 
 **published** | **NSNumber*** | Whether or not the SKU is currently visible to users. This will not block users from purchase. Use start_date or stop_date to prevent purchase. Default: true | [optional] 

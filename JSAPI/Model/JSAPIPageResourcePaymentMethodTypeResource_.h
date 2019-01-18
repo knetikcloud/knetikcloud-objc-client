@@ -14,10 +14,7 @@
 */
 
 
-#import "JSAPIOrder.h"
 #import "JSAPIPaymentMethodTypeResource.h"
-@protocol JSAPIOrder;
-@class JSAPIOrder;
 @protocol JSAPIPaymentMethodTypeResource;
 @class JSAPIPaymentMethodTypeResource;
 
@@ -40,8 +37,6 @@
 @property(nonatomic) NSNumber* numberOfElements;
 
 @property(nonatomic) NSNumber* size;
-
-@property(nonatomic) NSArray<JSAPIOrder>* sort;
 
 @property(nonatomic) NSNumber* totalElements;
 

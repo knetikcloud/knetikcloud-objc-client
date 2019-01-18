@@ -5,6 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **bundleSku** | **NSString*** |  | [optional] 
 **currentFulfillmentStatus** | **NSString*** |  | [optional] 
+**discount** | [**JSAPIDiscount***](JSAPIDiscount.md) |  | [optional] 
 **_id** | **NSNumber*** |  | [optional] 
 **invoiceId** | **NSNumber*** |  | [optional] 
 **itemId** | **NSNumber*** |  | [optional] 

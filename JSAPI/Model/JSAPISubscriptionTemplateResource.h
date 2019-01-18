@@ -28,9 +28,6 @@
 
 @interface JSAPISubscriptionTemplateResource : JSAPIObject
 
-/* Whether to allow additional properties beyond those specified or not [optional]
- */
-@property(nonatomic) NSNumber* allowAdditional;
 /* The date/time this resource was created in seconds since unix epoch [optional]
  */
 @property(nonatomic) NSNumber* createdDate;

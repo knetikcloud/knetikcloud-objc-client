@@ -55,7 +55,7 @@
 /* The user friendly name of that resource 
  */
 @property(nonatomic) NSString* name;
-/* The sort order priority ofr the artist.  Default 100 [optional]
+/* The sort order priority of the artist.  Default 100 [optional]
  */
 @property(nonatomic) NSNumber* priority;
 /* The user friendly name of that resource. Defaults to blank string [optional]

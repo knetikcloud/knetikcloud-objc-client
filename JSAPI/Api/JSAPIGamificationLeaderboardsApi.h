@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "JSAPILeaderboardEntryResource.h"
 #import "JSAPILeaderboardResource.h"
+#import "JSAPIPageResourceString_.h"
 #import "JSAPIResult.h"
 #import "JSAPIApi.h"
 
@@ -72,6 +73,8 @@ extern NSInteger kJSAPIGamificationLeaderboardsApiMissingParamErrorCode;
 /// Get a list of available leaderboard strategy names
 /// <b>Permissions Needed:</b> ANY
 ///
+/// @param size The number of objects returned per page (optional) (default to 25)
+/// @param page The number of the page returned, starting with 1 (optional) (default to 1)
 /// 
 ///  code:200 message:"OK",
 ///  code:400 message:"Bad Request",
@@ -79,9 +82,10 @@ extern NSInteger kJSAPIGamificationLeaderboardsApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSArray<NSString*>*
--(NSURLSessionTask*) getLeaderboardStrategiesWithCompletionHandler: 
-    (void (^)(NSArray<NSString*>* output, NSError* error)) handler;
+/// @return JSAPIPageResourceString_*
+-(NSURLSessionTask*) getLeaderboardStrategiesWithSize: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceString_* output, NSError* error)) handler;
 
 
 

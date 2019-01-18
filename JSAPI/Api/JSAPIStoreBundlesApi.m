@@ -4,6 +4,7 @@
 #import "JSAPIBundleItem.h"
 #import "JSAPIItemTemplateResource.h"
 #import "JSAPIPageResourceItemTemplateResource_.h"
+#import "JSAPIPatchResource.h"
 #import "JSAPIResult.h"
 
 
@@ -115,7 +116,7 @@ NSInteger kJSAPIStoreBundlesApiMissingParamErrorCode = 234513;
 
 ///
 /// Create a bundle template
-/// Bundle Templates define a type of bundle and the properties they have. <br><br><b>Permissions Needed:</b> BUNDLES_ADMIN
+/// Bundle Templates define a type of bundle and the properties they have.<br /><b>Permissions Needed:</b> POST
 ///  @param bundleTemplateResource The new bundle template (optional)
 ///
 ///  @returns JSAPIItemTemplateResource*
@@ -238,7 +239,7 @@ NSInteger kJSAPIStoreBundlesApiMissingParamErrorCode = 234513;
 
 ///
 /// Delete a bundle template
-/// <b>Permissions Needed:</b> BUNDLES_ADMIN
+/// <b>Permissions Needed:</b> DELETE
 ///  @param _id The id of the template 
 ///
 ///  @param cascade force deleting the template if it's attached to other objects, cascade = detach (optional)
@@ -380,7 +381,7 @@ NSInteger kJSAPIStoreBundlesApiMissingParamErrorCode = 234513;
 
 ///
 /// Get a single bundle template
-/// Bundle Templates define a type of bundle and the properties they have. <br><br><b>Permissions Needed:</b> ANY
+/// Bundle Templates define a type of bundle and the properties they have.<br /><b>Permissions Needed:</b> GET
 ///  @param _id The id of the template 
 ///
 ///  @returns JSAPIItemTemplateResource*
@@ -448,7 +449,7 @@ NSInteger kJSAPIStoreBundlesApiMissingParamErrorCode = 234513;
 
 ///
 /// List and search bundle templates
-/// <b>Permissions Needed:</b> ANY
+/// <b>Permissions Needed:</b> LIST
 ///  @param size The number of objects returned per page (optional, default to 25)
 ///
 ///  @param page The number of the page returned, starting with 1 (optional, default to 1)
@@ -595,15 +596,18 @@ NSInteger kJSAPIStoreBundlesApiMissingParamErrorCode = 234513;
 
 ///
 /// Update a bundle template
-/// <b>Permissions Needed:</b> BUNDLES_ADMIN
+/// <b>Permissions Needed:</b> PUT
 ///  @param _id The id of the template 
 ///
-///  @param bundleTemplateResource The bundle template resource object (optional)
+///  @param templatePatchResource The patch resource object (optional)
+///
+///  @param testValidation If true, this will test validation but not submit the patch request (optional)
 ///
 ///  @returns JSAPIItemTemplateResource*
 ///
 -(NSURLSessionTask*) updateBundleTemplateWithId: (NSString*) _id
-    bundleTemplateResource: (JSAPIItemTemplateResource*) bundleTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
     completionHandler: (void (^)(JSAPIItemTemplateResource* output, NSError* error)) handler {
     // verify the required parameter '_id' is set
     if (_id == nil) {
@@ -624,6 +628,9 @@ NSInteger kJSAPIStoreBundlesApiMissingParamErrorCode = 234513;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (testValidation != nil) {
+        queryParams[@"test_validation"] = [testValidation isEqual:@(YES)] ? @"true" : @"false";
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -644,10 +651,10 @@ NSInteger kJSAPIStoreBundlesApiMissingParamErrorCode = 234513;
     id bodyParam = nil;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *localVarFiles = [[NSMutableDictionary alloc] init];
-    bodyParam = bundleTemplateResource;
+    bodyParam = templatePatchResource;
 
     return [self.apiClient requestWithPath: resourcePath
-                                    method: @"PUT"
+                                    method: @"PATCH"
                                 pathParams: pathParams
                                queryParams: queryParams
                                 formParams: formParams

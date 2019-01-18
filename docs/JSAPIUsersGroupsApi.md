@@ -1,16 +1,16 @@
 # JSAPIUsersGroupsApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**addMemberToGroup**](JSAPIUsersGroupsApi.md#addmembertogroup) | **POST** /users/groups/{unique_name}/members | Adds a new member to the group
 [**addMembersToGroup**](JSAPIUsersGroupsApi.md#addmemberstogroup) | **POST** /users/groups/{unique_name}/members/batch-add | Adds multiple members to the group
 [**createGroup**](JSAPIUsersGroupsApi.md#creategroup) | **POST** /users/groups | Create a group
-[**createGroupMemberTemplate**](JSAPIUsersGroupsApi.md#creategroupmembertemplate) | **POST** /users/groups/members/templates | Create an group member template
+[**createGroupMemberTemplate**](JSAPIUsersGroupsApi.md#creategroupmembertemplate) | **POST** /users/groups/members/templates | Create a group member template
 [**createGroupTemplate**](JSAPIUsersGroupsApi.md#creategrouptemplate) | **POST** /users/groups/templates | Create a group template
 [**deleteGroup**](JSAPIUsersGroupsApi.md#deletegroup) | **DELETE** /users/groups/{unique_name} | Removes a group from the system
-[**deleteGroupMemberTemplate**](JSAPIUsersGroupsApi.md#deletegroupmembertemplate) | **DELETE** /users/groups/members/templates/{id} | Delete an group member template
+[**deleteGroupMemberTemplate**](JSAPIUsersGroupsApi.md#deletegroupmembertemplate) | **DELETE** /users/groups/members/templates/{id} | Delete a group member template
 [**deleteGroupTemplate**](JSAPIUsersGroupsApi.md#deletegrouptemplate) | **DELETE** /users/groups/templates/{id} | Delete a group template
 [**disableGroupNotification**](JSAPIUsersGroupsApi.md#disablegroupnotification) | **PUT** /users/groups/{unique_name}/members/{user_id}/messages/disabled | Enable or disable notification of group messages
 [**getGroup**](JSAPIUsersGroupsApi.md#getgroup) | **GET** /users/groups/{unique_name} | Loads a specific group&#39;s details
@@ -27,11 +27,11 @@ Method | HTTP request | Description
 [**postGroupMessage**](JSAPIUsersGroupsApi.md#postgroupmessage) | **POST** /users/groups/{unique_name}/messages | Send a group message
 [**removeGroupMember**](JSAPIUsersGroupsApi.md#removegroupmember) | **DELETE** /users/groups/{unique_name}/members/{user_id} | Removes a user from a group
 [**updateGroup**](JSAPIUsersGroupsApi.md#updategroup) | **PUT** /users/groups/{unique_name} | Update a group
-[**updateGroupMemberProperties**](JSAPIUsersGroupsApi.md#updategroupmemberproperties) | **PUT** /users/groups/{unique_name}/members/{user_id}/order | Change a user&#39;s order
-[**updateGroupMemberProperties1**](JSAPIUsersGroupsApi.md#updategroupmemberproperties1) | **PUT** /users/groups/{unique_name}/members/{user_id}/properties | Change a user&#39;s membership properties
+[**updateGroupMemberOrder**](JSAPIUsersGroupsApi.md#updategroupmemberorder) | **PUT** /users/groups/{unique_name}/members/{user_id}/order | Change a user&#39;s order
+[**updateGroupMemberProperties**](JSAPIUsersGroupsApi.md#updategroupmemberproperties) | **PUT** /users/groups/{unique_name}/members/{user_id}/properties | Change a user&#39;s membership properties
 [**updateGroupMemberStatus**](JSAPIUsersGroupsApi.md#updategroupmemberstatus) | **PUT** /users/groups/{unique_name}/members/{user_id}/status | Change a user&#39;s status
-[**updateGroupMemberTemplate**](JSAPIUsersGroupsApi.md#updategroupmembertemplate) | **PUT** /users/groups/members/templates/{id} | Update an group member template
-[**updateGroupTemplate**](JSAPIUsersGroupsApi.md#updategrouptemplate) | **PUT** /users/groups/templates/{id} | Update a group template
+[**updateGroupMemberTemplate**](JSAPIUsersGroupsApi.md#updategroupmembertemplate) | **PATCH** /users/groups/members/templates/{id} | Update a group member template
+[**updateGroupTemplate**](JSAPIUsersGroupsApi.md#updategrouptemplate) | **PATCH** /users/groups/templates/{id} | Update a group template
 
 
 # **addMemberToGroup**
@@ -43,7 +43,7 @@ Method | HTTP request | Description
 
 Adds a new member to the group
 
-<b>Permissions Needed:</b> POST or JOIN if self
+<b>Permissions Needed:</b> POST or JOIN if self<br /><b>Permissions Needed:</b> NONE
 
 ### Example 
 ```objc
@@ -105,7 +105,7 @@ Name | Type | Description  | Notes
 
 Adds multiple members to the group
 
-<b>Permissions Needed:</b> POST
+<b>Permissions Needed:</b> POST<br /><b>Permissions Needed:</b> POST
 
 ### Example 
 ```objc
@@ -166,7 +166,7 @@ Name | Type | Description  | Notes
 
 Create a group
 
-<b>Permissions Needed:</b> POST
+<b>Permissions Needed:</b> POST<br /><b>Permissions Needed:</b> POST
 
 ### Example 
 ```objc
@@ -222,9 +222,9 @@ Name | Type | Description  | Notes
         completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler;
 ```
 
-Create an group member template
+Create a group member template
 
-GroupMember Templates define a type of group member and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+GroupMember Templates define a type of group member and the properties they have.<br /><b>Permissions Needed:</b> POST
 
 ### Example 
 ```objc
@@ -241,7 +241,7 @@ JSAPITemplateResource* groupMemberTemplateResource = [[JSAPITemplateResource all
 
 JSAPIUsersGroupsApi*apiInstance = [[JSAPIUsersGroupsApi alloc] init];
 
-// Create an group member template
+// Create a group member template
 [apiInstance createGroupMemberTemplateWithGroupMemberTemplateResource:groupMemberTemplateResource
           completionHandler: ^(JSAPITemplateResource* output, NSError* error) {
                         if (output) {
@@ -282,7 +282,7 @@ Name | Type | Description  | Notes
 
 Create a group template
 
-Group Templates define a type of group and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+Group Templates define a type of group and the properties they have.<br /><b>Permissions Needed:</b> POST
 
 ### Example 
 ```objc
@@ -340,7 +340,7 @@ Name | Type | Description  | Notes
 
 Removes a group from the system
 
-All groups listing this as the parent are also removed and users are in turn removed from this and those groups. This may result in users no longer being in this group's parent if they were not added to it directly as well. <br><br><b>Permissions Needed:</b> DELETE
+All groups listing this as the parent are also removed and users are in turn removed from this and those groups. This may result in users no longer being in this group's parent if they were not added to it directly as well. <br><br><b>Permissions Needed:</b> DELETE<br /><b>Permissions Needed:</b> DELETE
 
 ### Example 
 ```objc
@@ -394,9 +394,9 @@ void (empty response body)
         completionHandler: (void (^)(NSError* error)) handler;
 ```
 
-Delete an group member template
+Delete a group member template
 
-If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+If cascade = 'detach', it will force delete the template even if it's attached to other objects.<br /><b>Permissions Needed:</b> DELETE
 
 ### Example 
 ```objc
@@ -414,7 +414,7 @@ NSString* cascade = @"cascade_example"; // The value needed to delete used templ
 
 JSAPIUsersGroupsApi*apiInstance = [[JSAPIUsersGroupsApi alloc] init];
 
-// Delete an group member template
+// Delete a group member template
 [apiInstance deleteGroupMemberTemplateWithId:_id
               cascade:cascade
           completionHandler: ^(NSError* error) {
@@ -455,7 +455,7 @@ void (empty response body)
 
 Delete a group template
 
-If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+If cascade = 'detach', it will force delete the template even if it's attached to other objects.<br /><b>Permissions Needed:</b> DELETE
 
 ### Example 
 ```objc
@@ -576,7 +576,7 @@ void (empty response body)
 
 Loads a specific group's details
 
-<b>Permissions Needed:</b> GET
+<b>Permissions Needed:</b> GET<br /><b>Permissions Needed:</b> GET
 
 ### Example 
 ```objc
@@ -629,12 +629,14 @@ Name | Type | Description  | Notes
 # **getGroupAncestors**
 ```objc
 -(NSURLSessionTask*) getGroupAncestorsWithUniqueName: (NSString*) uniqueName
-        completionHandler: (void (^)(NSArray<JSAPIGroupResource>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+        completionHandler: (void (^)(JSAPIPageResourceGroupResource_* output, NSError* error)) handler;
 ```
 
 Get group ancestors
 
-Returns a list of ancestor groups in reverse order (parent, then grandparent, etc). <br><br><b>Permissions Needed:</b> ANY
+Returns a list of ancestor groups in reverse order (parent, then grandparent, etc). <br><br><b>Permissions Needed:</b> ANY<br /><b>Permissions Needed:</b> LIST
 
 ### Example 
 ```objc
@@ -648,12 +650,16 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* uniqueName = @"uniqueName_example"; // The group unique name
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
 JSAPIUsersGroupsApi*apiInstance = [[JSAPIUsersGroupsApi alloc] init];
 
 // Get group ancestors
 [apiInstance getGroupAncestorsWithUniqueName:uniqueName
-          completionHandler: ^(NSArray<JSAPIGroupResource>* output, NSError* error) {
+              size:size
+              page:page
+          completionHandler: ^(JSAPIPageResourceGroupResource_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -668,10 +674,12 @@ JSAPIUsersGroupsApi*apiInstance = [[JSAPIUsersGroupsApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **uniqueName** | **NSString***| The group unique name | 
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
 ### Return type
 
-[**NSArray<JSAPIGroupResource>***](JSAPIGroupResource.md)
+[**JSAPIPageResourceGroupResource_***](JSAPIPageResourceGroupResource_.md)
 
 ### Authorization
 
@@ -693,7 +701,7 @@ Name | Type | Description  | Notes
 
 Get a user from a group
 
-<b>Permissions Needed:</b> GET
+<b>Permissions Needed:</b> GET<br /><b>Permissions Needed:</b> GET
 
 ### Example 
 ```objc
@@ -754,7 +762,7 @@ Name | Type | Description  | Notes
 
 Get a single group member template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or GROUP_ADMIN
+<b>Permissions Needed:</b> GET
 
 ### Example 
 ```objc
@@ -814,7 +822,7 @@ Name | Type | Description  | Notes
 
 List and search group member templates
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or GROUP_ADMIN
+<b>Permissions Needed:</b> LIST
 
 ### Example 
 ```objc
@@ -881,7 +889,7 @@ Name | Type | Description  | Notes
 
 Lists members of the group
 
-<b>Permissions Needed:</b> LIST
+<b>Permissions Needed:</b> LIST<br /><b>Permissions Needed:</b> LIST
 
 ### Example 
 ```objc
@@ -945,6 +953,7 @@ Name | Type | Description  | Notes
 -(NSURLSessionTask*) getGroupMessagesWithUniqueName: (NSString*) uniqueName
     size: (NSNumber*) size
     page: (NSNumber*) page
+    order: (NSString*) order
         completionHandler: (void (^)(JSAPIPageResourceChatMessageResource_* output, NSError* error)) handler;
 ```
 
@@ -966,6 +975,7 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 NSString* uniqueName = @"uniqueName_example"; // The group unique name
 NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
 NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
+NSString* order = @"order_example"; // A comma separated list of sorting requirements in priority order, each entry matching PROPERTY_NAME:[ASC|DESC] (optional)
 
 JSAPIUsersGroupsApi*apiInstance = [[JSAPIUsersGroupsApi alloc] init];
 
@@ -973,6 +983,7 @@ JSAPIUsersGroupsApi*apiInstance = [[JSAPIUsersGroupsApi alloc] init];
 [apiInstance getGroupMessagesWithUniqueName:uniqueName
               size:size
               page:page
+              order:order
           completionHandler: ^(JSAPIPageResourceChatMessageResource_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
@@ -990,6 +1001,7 @@ Name | Type | Description  | Notes
  **uniqueName** | **NSString***| The group unique name | 
  **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
  **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
+ **order** | **NSString***| A comma separated list of sorting requirements in priority order, each entry matching PROPERTY_NAME:[ASC|DESC] | [optional] 
 
 ### Return type
 
@@ -1014,7 +1026,7 @@ Name | Type | Description  | Notes
 
 Get a single group template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or GROUP_ADMIN
+<b>Permissions Needed:</b> GET
 
 ### Example 
 ```objc
@@ -1074,7 +1086,7 @@ Name | Type | Description  | Notes
 
 List and search group templates
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or GROUP_ADMIN
+<b>Permissions Needed:</b> LIST
 
 ### Example 
 ```objc
@@ -1133,13 +1145,15 @@ Name | Type | Description  | Notes
 # **getGroupsForUser**
 ```objc
 -(NSURLSessionTask*) getGroupsForUserWithUserId: (NSNumber*) userId
+    size: (NSNumber*) size
+    page: (NSNumber*) page
     filterChildren: (NSNumber*) filterChildren
-        completionHandler: (void (^)(NSArray<NSString*>* output, NSError* error)) handler;
+        completionHandler: (void (^)(JSAPIPageResourceString_* output, NSError* error)) handler;
 ```
 
 List groups a user is in
 
-<b>Permissions Needed:</b> LIST_GROUPS
+<b>Permissions Needed:</b> LIST_GROUPS<br /><b>Permissions Needed:</b> LIST_GROUPS
 
 ### Example 
 ```objc
@@ -1153,14 +1167,18 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSNumber* userId = @56; // The id of the user
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 NSNumber* filterChildren = @true; // Whether to limit group list to children of groups only. If true, shows only groups with parents. If false, shows only groups with no parent. (optional)
 
 JSAPIUsersGroupsApi*apiInstance = [[JSAPIUsersGroupsApi alloc] init];
 
 // List groups a user is in
 [apiInstance getGroupsForUserWithUserId:userId
+              size:size
+              page:page
               filterChildren:filterChildren
-          completionHandler: ^(NSArray<NSString*>* output, NSError* error) {
+          completionHandler: ^(JSAPIPageResourceString_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -1175,11 +1193,13 @@ JSAPIUsersGroupsApi*apiInstance = [[JSAPIUsersGroupsApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **userId** | **NSNumber***| The id of the user | 
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
  **filterChildren** | **NSNumber***| Whether to limit group list to children of groups only. If true, shows only groups with parents. If false, shows only groups with no parent. | [optional] 
 
 ### Return type
 
-**NSArray<NSString*>***
+[**JSAPIPageResourceString_***](JSAPIPageResourceString_.md)
 
 ### Authorization
 
@@ -1208,7 +1228,7 @@ Name | Type | Description  | Notes
 
 List and search groups
 
-<b>Permissions Needed:</b> LIST
+<b>Permissions Needed:</b> LIST<br /><b>Permissions Needed:</b> LIST
 
 ### Example 
 ```objc
@@ -1293,6 +1313,14 @@ Send a group message
 
 ### Example 
 ```objc
+JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
 
 NSString* uniqueName = @"uniqueName_example"; // The group unique name
 JSAPIChatMessageRequest* chatMessageRequest = [[JSAPIChatMessageRequest alloc] init]; // The chat message request (optional)
@@ -1325,7 +1353,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
 
 ### HTTP request headers
 
@@ -1343,7 +1371,7 @@ No authorization required
 
 Removes a user from a group
 
-<b>Permissions Needed:</b> DELETE
+<b>Permissions Needed:</b> DELETE<br /><b>Permissions Needed:</b> DELETE
 
 ### Example 
 ```objc
@@ -1402,7 +1430,7 @@ void (empty response body)
 
 Update a group
 
-If adding/removing/changing parent, user membership in group/new parent groups may be modified. The parent being removed will remove members from this sub group unless they were added explicitly to the parent and the new parent will gain members unless they were already a part of it. <br><br><b>Permissions Needed:</b> PUT
+If adding/removing/changing parent, user membership in group/new parent groups may be modified. The parent being removed will remove members from this sub group unless they were added explicitly to the parent and the new parent will gain members unless they were already a part of it. <br><br><b>Permissions Needed:</b> PUT<br /><b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -1452,9 +1480,9 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **updateGroupMemberProperties**
+# **updateGroupMemberOrder**
 ```objc
--(NSURLSessionTask*) updateGroupMemberPropertiesWithUniqueName: (NSString*) uniqueName
+-(NSURLSessionTask*) updateGroupMemberOrderWithUniqueName: (NSString*) uniqueName
     userId: (NSNumber*) userId
     order: (JSAPIStringWrapper*) order
         completionHandler: (void (^)(NSError* error)) handler;
@@ -1462,7 +1490,7 @@ void (empty response body)
 
 Change a user's order
 
-<b>Permissions Needed:</b> PUT
+<b>Permissions Needed:</b> PUT<br /><b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -1482,12 +1510,12 @@ JSAPIStringWrapper* order = [[JSAPIStringWrapper alloc] init]; // The new order 
 JSAPIUsersGroupsApi*apiInstance = [[JSAPIUsersGroupsApi alloc] init];
 
 // Change a user's order
-[apiInstance updateGroupMemberPropertiesWithUniqueName:uniqueName
+[apiInstance updateGroupMemberOrderWithUniqueName:uniqueName
               userId:userId
               order:order
           completionHandler: ^(NSError* error) {
                         if (error) {
-                            NSLog(@"Error calling JSAPIUsersGroupsApi->updateGroupMemberProperties: %@", error);
+                            NSLog(@"Error calling JSAPIUsersGroupsApi->updateGroupMemberOrder: %@", error);
                         }
                     }];
 ```
@@ -1515,9 +1543,9 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **updateGroupMemberProperties1**
+# **updateGroupMemberProperties**
 ```objc
--(NSURLSessionTask*) updateGroupMemberProperties1WithUniqueName: (NSString*) uniqueName
+-(NSURLSessionTask*) updateGroupMemberPropertiesWithUniqueName: (NSString*) uniqueName
     userId: (NSNumber*) userId
     properties: (NSObject*) properties
         completionHandler: (void (^)(NSError* error)) handler;
@@ -1525,7 +1553,7 @@ void (empty response body)
 
 Change a user's membership properties
 
-<b>Permissions Needed:</b> PUT
+<b>Permissions Needed:</b> PUT<br /><b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -1545,12 +1573,12 @@ NSObject* properties = NULL; // The new properties for the membership
 JSAPIUsersGroupsApi*apiInstance = [[JSAPIUsersGroupsApi alloc] init];
 
 // Change a user's membership properties
-[apiInstance updateGroupMemberProperties1WithUniqueName:uniqueName
+[apiInstance updateGroupMemberPropertiesWithUniqueName:uniqueName
               userId:userId
               properties:properties
           completionHandler: ^(NSError* error) {
                         if (error) {
-                            NSLog(@"Error calling JSAPIUsersGroupsApi->updateGroupMemberProperties1: %@", error);
+                            NSLog(@"Error calling JSAPIUsersGroupsApi->updateGroupMemberProperties: %@", error);
                         }
                     }];
 ```
@@ -1588,7 +1616,7 @@ void (empty response body)
 
 Change a user's status
 
-<b>Permissions Needed:</b> PUT
+<b>Permissions Needed:</b> PUT<br /><b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -1644,13 +1672,14 @@ void (empty response body)
 # **updateGroupMemberTemplate**
 ```objc
 -(NSURLSessionTask*) updateGroupMemberTemplateWithId: (NSString*) _id
-    groupMemberTemplateResource: (JSAPITemplateResource*) groupMemberTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
         completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler;
 ```
 
-Update an group member template
+Update a group member template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN
+<b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -1664,13 +1693,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* _id = @"_id_example"; // The id of the template
-JSAPITemplateResource* groupMemberTemplateResource = [[JSAPITemplateResource alloc] init]; // The group member template resource object (optional)
+JSAPIPatchResource* templatePatchResource = [[JSAPIPatchResource alloc] init]; // The patch resource object (optional)
+NSNumber* testValidation = @true; // If true, this will test validation but not submit the patch request (optional)
 
 JSAPIUsersGroupsApi*apiInstance = [[JSAPIUsersGroupsApi alloc] init];
 
-// Update an group member template
+// Update a group member template
 [apiInstance updateGroupMemberTemplateWithId:_id
-              groupMemberTemplateResource:groupMemberTemplateResource
+              templatePatchResource:templatePatchResource
+              testValidation:testValidation
           completionHandler: ^(JSAPITemplateResource* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
@@ -1686,7 +1717,8 @@ JSAPIUsersGroupsApi*apiInstance = [[JSAPIUsersGroupsApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **_id** | **NSString***| The id of the template | 
- **groupMemberTemplateResource** | [**JSAPITemplateResource***](JSAPITemplateResource.md)| The group member template resource object | [optional] 
+ **templatePatchResource** | [**JSAPIPatchResource***](JSAPIPatchResource.md)| The patch resource object | [optional] 
+ **testValidation** | **NSNumber***| If true, this will test validation but not submit the patch request | [optional] 
 
 ### Return type
 
@@ -1706,13 +1738,14 @@ Name | Type | Description  | Notes
 # **updateGroupTemplate**
 ```objc
 -(NSURLSessionTask*) updateGroupTemplateWithId: (NSString*) _id
-    groupTemplateResource: (JSAPITemplateResource*) groupTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
         completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler;
 ```
 
 Update a group template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN
+<b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -1726,13 +1759,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* _id = @"_id_example"; // The id of the template
-JSAPITemplateResource* groupTemplateResource = [[JSAPITemplateResource alloc] init]; // The group template resource object (optional)
+JSAPIPatchResource* templatePatchResource = [[JSAPIPatchResource alloc] init]; // The patch resource object (optional)
+NSNumber* testValidation = @true; // If true, this will test validation but not submit the patch request (optional)
 
 JSAPIUsersGroupsApi*apiInstance = [[JSAPIUsersGroupsApi alloc] init];
 
 // Update a group template
 [apiInstance updateGroupTemplateWithId:_id
-              groupTemplateResource:groupTemplateResource
+              templatePatchResource:templatePatchResource
+              testValidation:testValidation
           completionHandler: ^(JSAPITemplateResource* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
@@ -1748,7 +1783,8 @@ JSAPIUsersGroupsApi*apiInstance = [[JSAPIUsersGroupsApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **_id** | **NSString***| The id of the template | 
- **groupTemplateResource** | [**JSAPITemplateResource***](JSAPITemplateResource.md)| The group template resource object | [optional] 
+ **templatePatchResource** | [**JSAPIPatchResource***](JSAPIPatchResource.md)| The patch resource object | [optional] 
+ **testValidation** | **NSNumber***| If true, this will test validation but not submit the patch request | [optional] 
 
 ### Return type
 

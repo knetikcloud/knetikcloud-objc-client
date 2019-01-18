@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "JSAPIPageResourceSimpleReferenceResourceObject_.h"
+#import "JSAPIPageResourceVariableTypeResource_.h"
 #import "JSAPIResult.h"
-#import "JSAPIVariableTypeResource.h"
 #import "JSAPIApi.h"
 
 /**
@@ -28,6 +28,8 @@ extern NSInteger kJSAPIRuleEngineVariablesApiMissingParamErrorCode;
 /// Get a list of variable types available
 /// Types include integer, string, user and invoice. These are used to qualify trigger parameters and action variables with strong typing. <br><br><b>Permissions Needed:</b> BRE_RULE_ENGINE_VARIABLES_USER
 ///
+/// @param size The number of objects returned per page (optional) (default to 25)
+/// @param page The number of the page returned, starting with 1 (optional) (default to 1)
 /// 
 ///  code:200 message:"OK",
 ///  code:400 message:"Bad Request",
@@ -35,9 +37,10 @@ extern NSInteger kJSAPIRuleEngineVariablesApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSArray<JSAPIVariableTypeResource>*
--(NSURLSessionTask*) getBREVariableTypesWithCompletionHandler: 
-    (void (^)(NSArray<JSAPIVariableTypeResource>* output, NSError* error)) handler;
+/// @return JSAPIPageResourceVariableTypeResource_*
+-(NSURLSessionTask*) getBREVariableTypesWithSize: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceVariableTypeResource_* output, NSError* error)) handler;
 
 
 /// List valid values for a type

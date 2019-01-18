@@ -1,6 +1,6 @@
 # JSAPIUsersApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -21,7 +21,7 @@ Method | HTTP request | Description
 [**startPasswordReset**](JSAPIUsersApi.md#startpasswordreset) | **POST** /users/{id}/password-reset | Reset a user&#39;s password
 [**submitPasswordReset**](JSAPIUsersApi.md#submitpasswordreset) | **POST** /users/password-reset | Reset a user&#39;s password without user id
 [**updateUser**](JSAPIUsersApi.md#updateuser) | **PUT** /users/{id} | Update a user
-[**updateUserTemplate**](JSAPIUsersApi.md#updateusertemplate) | **PUT** /users/templates/{id} | Update a user template
+[**updateUserTemplate**](JSAPIUsersApi.md#updateusertemplate) | **PATCH** /users/templates/{id} | Update a user template
 
 
 # **addUserTag**
@@ -33,7 +33,7 @@ Method | HTTP request | Description
 
 Add a tag to a user
 
-<b>Permissions Needed:</b> TAGS
+<b>Permissions Needed:</b> USERS_ADMIN
 
 ### Example 
 ```objc
@@ -91,7 +91,7 @@ void (empty response body)
 
 Create a user template
 
-User Templates define a type of user and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+User Templates define a type of user and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> POST
 
 ### Example 
 ```objc
@@ -150,7 +150,7 @@ Name | Type | Description  | Notes
 
 Delete a user template
 
-If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> DELETE
 
 ### Example 
 ```objc
@@ -274,7 +274,7 @@ Name | Type | Description  | Notes
 
 Get a single user
 
-Additional private info is included if access controls allow GET. <br><br><b>Permissions Needed:</b> ANY
+Additional private info is included if access controls allow GET.<br /><b>Permissions Needed:</b> GET
 
 ### Example 
 ```objc
@@ -327,7 +327,9 @@ Name | Type | Description  | Notes
 # **getUserTags**
 ```objc
 -(NSURLSessionTask*) getUserTagsWithUserId: (NSNumber*) userId
-        completionHandler: (void (^)(NSArray<NSString*>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+        completionHandler: (void (^)(JSAPIPageResourceString_* output, NSError* error)) handler;
 ```
 
 List tags for a user
@@ -346,12 +348,16 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSNumber* userId = @56; // The id of the user
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
 JSAPIUsersApi*apiInstance = [[JSAPIUsersApi alloc] init];
 
 // List tags for a user
 [apiInstance getUserTagsWithUserId:userId
-          completionHandler: ^(NSArray<NSString*>* output, NSError* error) {
+              size:size
+              page:page
+          completionHandler: ^(JSAPIPageResourceString_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -366,10 +372,12 @@ JSAPIUsersApi*apiInstance = [[JSAPIUsersApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **userId** | **NSNumber***| The id of the user | 
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
 ### Return type
 
-**NSArray<NSString*>***
+[**JSAPIPageResourceString_***](JSAPIPageResourceString_.md)
 
 ### Authorization
 
@@ -390,7 +398,7 @@ Name | Type | Description  | Notes
 
 Get a single user template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or USERS_ADMIN
+<b>Permissions Needed:</b> TEMPLATE_ADMIN or USERS_ADMIN<br /><b>Permissions Needed:</b> GET
 
 ### Example 
 ```objc
@@ -450,7 +458,7 @@ Name | Type | Description  | Notes
 
 List and search user templates
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or USERS_ADMIN
+<b>Permissions Needed:</b> TEMPLATE_ADMIN or USERS_ADMIN<br /><b>Permissions Needed:</b> LIST
 
 ### Example 
 ```objc
@@ -528,7 +536,7 @@ Name | Type | Description  | Notes
 
 List and search users
 
-Additional private info is included with LIST_PRIVATE. <br><br><b>Permissions Needed:</b> LIST
+Additional private info is included with LIST_PRIVATE. <br><br><b>Permissions Needed:</b> LIST<br /><b>Permissions Needed:</b> LIST
 
 ### Example 
 ```objc
@@ -629,7 +637,7 @@ Name | Type | Description  | Notes
 
 Choose a new password after a reset
 
-Finish resetting a user's password using the secret provided from the password-reset endpoint.  Password should be in plain text and will be encrypted on receipt. Use SSL for security. <br><br><b>Permissions Needed:</b> ANY
+Finish resetting a user's password using the secret provided from the password-reset endpoint.  Password should be in plain text and will be encrypted on receipt. Use SSL for security. <br><br><b>Permissions Needed:</b> ANY<br /><b>Permissions Needed:</b> NONE
 
 ### Example 
 ```objc
@@ -690,6 +698,14 @@ Send a user message
 
 ### Example 
 ```objc
+JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
 
 NSNumber* recipientId = @56; // The user id
 JSAPIChatMessageRequest* chatMessageRequest = [[JSAPIChatMessageRequest alloc] init]; // The chat message request (optional)
@@ -722,7 +738,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
 
 ### HTTP request headers
 
@@ -739,7 +755,7 @@ No authorization required
 
 Register a new user
 
-Password should be in plain text and will be encrypted on receipt. Use SSL for security. <br><br><b>Permissions Needed:</b> POST
+Password should be in plain text and will be encrypted on receipt. Use SSL for security.<br /><b>Permissions Needed:</b> POST
 
 ### Example 
 ```objc
@@ -798,7 +814,7 @@ Name | Type | Description  | Notes
 
 Remove a tag from a user
 
-<b>Permissions Needed:</b> TAGS
+<b>Permissions Needed:</b> USERS_ADMIN
 
 ### Example 
 ```objc
@@ -857,7 +873,7 @@ void (empty response body)
 
 Set a user's password
 
-Password should be in plain text and will be encrypted on receipt. Use SSL for security. <br><br><b>Permissions Needed:</b> PUT
+Password should be in plain text and will be encrypted on receipt. Use SSL for security. <br><br><b>Permissions Needed:</b> PUT<br /><b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -915,7 +931,7 @@ void (empty response body)
 
 Reset a user's password
 
-A reset code will be generated and a 'forgot_password' BRE event will be fired with that code.  The default system rule will send an email to the selected user if an email service has been setup. You can modify that rule in BRE to send an SMS instead or any other type of notification as you see fit. <br><br><b>Permissions Needed:</b> ANY
+A reset code will be generated and a 'forgot_password' BRE event will be fired with that code.  The default system rule will send an email to the selected user if an email service has been setup. You can modify that rule in BRE to send an SMS instead or any other type of notification as you see fit. <br><br><b>Permissions Needed:</b> ANY<br /><b>Permissions Needed:</b> NONE
 
 ### Example 
 ```objc
@@ -970,7 +986,7 @@ void (empty response body)
 
 Reset a user's password without user id
 
-A reset code will be generated and a 'forgot_password' BRE event will be fired with that code.  The default system rule will send an email to the selected user if an email service has been setup. You can modify that rule in BRE to send an SMS instead or any other type of notification as you see fit.  Must submit their email, username, or mobile phone number. <br><br><b>Permissions Needed:</b> ANY
+A reset code will be generated and a 'forgot_password' BRE event will be fired with that code.  The default system rule will send an email to the selected user if an email service has been setup. You can modify that rule in BRE to send an SMS instead or any other type of notification as you see fit.  Must submit their email, username, or mobile phone number. <br><br><b>Permissions Needed:</b> ANY<br /><b>Permissions Needed:</b> NONE
 
 ### Example 
 ```objc
@@ -1026,7 +1042,7 @@ void (empty response body)
 
 Update a user
 
-Password will not be edited on this endpoint, use password specific endpoints. <br><br><b>Permissions Needed:</b> PUT
+Password will not be edited on this endpoint, use password specific endpoints. <br><br><b>Permissions Needed:</b> PUT<br /><b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -1079,13 +1095,14 @@ void (empty response body)
 # **updateUserTemplate**
 ```objc
 -(NSURLSessionTask*) updateUserTemplateWithId: (NSString*) _id
-    userTemplateResource: (JSAPITemplateResource*) userTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
         completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler;
 ```
 
 Update a user template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN
+<b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -1099,13 +1116,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* _id = @"_id_example"; // The id of the template
-JSAPITemplateResource* userTemplateResource = [[JSAPITemplateResource alloc] init]; // The user template resource object (optional)
+JSAPIPatchResource* templatePatchResource = [[JSAPIPatchResource alloc] init]; // The patch resource object (optional)
+NSNumber* testValidation = @true; // If true, this will test validation but not submit the patch request (optional)
 
 JSAPIUsersApi*apiInstance = [[JSAPIUsersApi alloc] init];
 
 // Update a user template
 [apiInstance updateUserTemplateWithId:_id
-              userTemplateResource:userTemplateResource
+              templatePatchResource:templatePatchResource
+              testValidation:testValidation
           completionHandler: ^(JSAPITemplateResource* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
@@ -1121,7 +1140,8 @@ JSAPIUsersApi*apiInstance = [[JSAPIUsersApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **_id** | **NSString***| The id of the template | 
- **userTemplateResource** | [**JSAPITemplateResource***](JSAPITemplateResource.md)| The user template resource object | [optional] 
+ **templatePatchResource** | [**JSAPIPatchResource***](JSAPIPatchResource.md)| The patch resource object | [optional] 
+ **testValidation** | **NSNumber***| If true, this will test validation but not submit the patch request | [optional] 
 
 ### Return type
 

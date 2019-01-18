@@ -9,7 +9,6 @@ Name | Type | Description | Notes
 **number** | **NSNumber*** |  | [optional] 
 **numberOfElements** | **NSNumber*** |  | [optional] 
 **size** | **NSNumber*** |  | [optional] 
-**sort** | [**NSArray&lt;JSAPIOrder&gt;***](JSAPIOrder.md) |  | [optional] 
 **totalElements** | **NSNumber*** |  | [optional] 
 **totalPages** | **NSNumber*** |  | [optional] 
 

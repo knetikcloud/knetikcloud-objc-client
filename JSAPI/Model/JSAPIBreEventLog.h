@@ -25,27 +25,42 @@
 
 @interface JSAPIBreEventLog : JSAPIObject
 
-/* The customer of the BRE event log [optional]
+/* The difference between received and handlded in ms [optional]
+ */
+@property(nonatomic) NSNumber* age;
+/* The customer [optional]
  */
 @property(nonatomic) NSString* customer;
-/* The event id of the BRE event log [optional]
+/* The time it took to expand the event parameters [optional]
+ */
+@property(nonatomic) NSNumber* eventExpansionDuration;
+/* The event id [optional]
  */
 @property(nonatomic) NSString* eventId;
-/* The event name of the BRE event log [optional]
+/* The time it took to log the event in IO [optional]
+ */
+@property(nonatomic) NSNumber* eventLoggingDuration;
+/* The event name [optional]
  */
 @property(nonatomic) NSString* eventName;
-/* The event start date of the BRE event log [optional]
+/* The date the event was fired [optional]
+ */
+@property(nonatomic) NSNumber* eventReceivedDate;
+/* The date the event was handled [optional]
  */
 @property(nonatomic) NSNumber* eventStartDate;
-/* The id of the BRE event log [optional]
+/* The id [optional]
  */
 @property(nonatomic) NSString* _id;
-/* The event paramters of the BRE event log [optional]
+/* The event paramters [optional]
  */
 @property(nonatomic) NSObject* parameters;
-/* The rules of the BRE event log [optional]
+/* The rules [optional]
  */
 @property(nonatomic) NSArray<JSAPIBreRuleLog>* rules;
+/* The time it took to run all the rules for that event [optional]
+ */
+@property(nonatomic) NSNumber* runtime;
 
 + (NSDictionary *)modalDictionary;
 

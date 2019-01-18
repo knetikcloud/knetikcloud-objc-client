@@ -14,9 +14,6 @@
 */
 
 
-#import "JSAPIPropertyFieldListResource.h"
-@protocol JSAPIPropertyFieldListResource;
-@class JSAPIPropertyFieldListResource;
 
 
 
@@ -28,13 +25,10 @@
 /* The description of the property [optional]
  */
 @property(nonatomic) NSString* _description;
-/* A list of the fields on both the property definition and property of this type [optional]
- */
-@property(nonatomic) JSAPIPropertyFieldListResource* fieldList;
 /* The friendly front-facing name of the property [optional]
  */
 @property(nonatomic) NSString* friendlyName;
-/* The name of the property 
+/* The name of the property. Must start with a letter 
  */
 @property(nonatomic) NSString* name;
 /* The JSON path to the option label [optional]

@@ -1,6 +1,6 @@
 # JSAPIRuleEngineExpressionsApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -70,7 +70,9 @@ Name | Type | Description  | Notes
 # **getBREExpressions**
 ```objc
 -(NSURLSessionTask*) getBREExpressionsWithFilterTypeGroup: (NSString*) filterTypeGroup
-        completionHandler: (void (^)(NSArray<JSAPIExpressionResource>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+        completionHandler: (void (^)(JSAPIPageResourceExpressionResource_* output, NSError* error)) handler;
 ```
 
 Get a list of supported expressions to use in conditions or actions.
@@ -89,12 +91,16 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* filterTypeGroup = @"filterTypeGroup_example"; // Filter for expressions by type group (optional)
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
 JSAPIRuleEngineExpressionsApi*apiInstance = [[JSAPIRuleEngineExpressionsApi alloc] init];
 
 // Get a list of supported expressions to use in conditions or actions.
 [apiInstance getBREExpressionsWithFilterTypeGroup:filterTypeGroup
-          completionHandler: ^(NSArray<JSAPIExpressionResource>* output, NSError* error) {
+              size:size
+              page:page
+          completionHandler: ^(JSAPIPageResourceExpressionResource_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -109,10 +115,12 @@ JSAPIRuleEngineExpressionsApi*apiInstance = [[JSAPIRuleEngineExpressionsApi allo
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **filterTypeGroup** | **NSString***| Filter for expressions by type group | [optional] 
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
 ### Return type
 
-[**NSArray<JSAPIExpressionResource>***](JSAPIExpressionResource.md)
+[**JSAPIPageResourceExpressionResource_***](JSAPIPageResourceExpressionResource_.md)
 
 ### Authorization
 

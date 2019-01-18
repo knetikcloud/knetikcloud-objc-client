@@ -8,7 +8,8 @@ Name | Type | Description | Notes
 **body** | **NSString*** | The body of the article | 
 **category** | [**JSAPINestedCategory***](JSAPINestedCategory.md) | The category for the article | 
 **createdDate** | **NSNumber*** | The date/time this resource was created in seconds since unix epoch | [optional] 
-**_id** | **NSString*** | The id of the article | [optional] 
+**creator** | [**JSAPISimpleUserResource***](JSAPISimpleUserResource.md) | The creator of the article. Default: caller | [optional] 
+**_id** | **NSString*** | The id of the article. Default: random | [optional] 
 **tags** | **NSArray&lt;NSString*&gt;*** | The tags for the article | [optional] 
 **template** | **NSString*** | An article template this article is validated against (private). May be null and no validation of additional_properties will be done | [optional] 
 **title** | **NSString*** | The title of the article | 

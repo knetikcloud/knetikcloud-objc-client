@@ -65,6 +65,8 @@ extern NSInteger kJSAPIAuthRolesApiMissingParamErrorCode;
 /// <b>Permissions Needed:</b> ROLES_ADMIN
 ///
 /// @param clientKey The client key
+/// @param size The number of objects returned per page (optional) (default to 25)
+/// @param page The number of the page returned, starting with 1 (optional) (default to 1)
 /// 
 ///  code:200 message:"OK",
 ///  code:400 message:"Bad Request",
@@ -72,9 +74,11 @@ extern NSInteger kJSAPIAuthRolesApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSArray<JSAPIRoleResource>*
+/// @return JSAPIPageResourceRoleResource_*
 -(NSURLSessionTask*) getClientRolesWithClientKey: (NSString*) clientKey
-    completionHandler: (void (^)(NSArray<JSAPIRoleResource>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceRoleResource_* output, NSError* error)) handler;
 
 
 /// Get a single role
@@ -121,6 +125,8 @@ extern NSInteger kJSAPIAuthRolesApiMissingParamErrorCode;
 /// <b>Permissions Needed:</b> ROLES_ADMIN
 ///
 /// @param userId The user&#39;s id
+/// @param size The number of objects returned per page (optional) (default to 25)
+/// @param page The number of the page returned, starting with 1 (optional) (default to 1)
 /// 
 ///  code:200 message:"OK",
 ///  code:400 message:"Bad Request",
@@ -128,9 +134,11 @@ extern NSInteger kJSAPIAuthRolesApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSArray<JSAPIRoleResource>*
+/// @return JSAPIPageResourceRoleResource_*
 -(NSURLSessionTask*) getUserRolesWithUserId: (NSNumber*) userId
-    completionHandler: (void (^)(NSArray<JSAPIRoleResource>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceRoleResource_* output, NSError* error)) handler;
 
 
 /// Set roles for a client

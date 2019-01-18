@@ -1,6 +1,6 @@
 # JSAPIUsersSubscriptionsApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -79,7 +79,9 @@ Name | Type | Description  | Notes
 # **getUsersSubscriptionDetails**
 ```objc
 -(NSURLSessionTask*) getUsersSubscriptionDetailsWithUserId: (NSNumber*) userId
-        completionHandler: (void (^)(NSArray<JSAPIInventorySubscriptionResource>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+        completionHandler: (void (^)(JSAPIPageResourceInventorySubscriptionResource_* output, NSError* error)) handler;
 ```
 
 Get details about a user's subscriptions
@@ -98,12 +100,16 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSNumber* userId = @56; // The id of the user
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
 JSAPIUsersSubscriptionsApi*apiInstance = [[JSAPIUsersSubscriptionsApi alloc] init];
 
 // Get details about a user's subscriptions
 [apiInstance getUsersSubscriptionDetailsWithUserId:userId
-          completionHandler: ^(NSArray<JSAPIInventorySubscriptionResource>* output, NSError* error) {
+              size:size
+              page:page
+          completionHandler: ^(JSAPIPageResourceInventorySubscriptionResource_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -118,10 +124,12 @@ JSAPIUsersSubscriptionsApi*apiInstance = [[JSAPIUsersSubscriptionsApi alloc] ini
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **userId** | **NSNumber***| The id of the user | 
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
 ### Return type
 
-[**NSArray<JSAPIInventorySubscriptionResource>***](JSAPIInventorySubscriptionResource.md)
+[**JSAPIPageResourceInventorySubscriptionResource_***](JSAPIPageResourceInventorySubscriptionResource_.md)
 
 ### Authorization
 

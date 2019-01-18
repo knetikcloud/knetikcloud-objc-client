@@ -3,6 +3,7 @@
 #import "JSAPIApiClient.h"
 #import "JSAPIBreEvent.h"
 #import "JSAPIResult.h"
+#import "JSAPIStringWrapper.h"
 
 
 @interface JSAPIRuleEngineEventsApi ()
@@ -55,10 +56,10 @@ NSInteger kJSAPIRuleEngineEventsApiMissingParamErrorCode = 234513;
 /// Parameters within the event must match names and types from the trigger. Actual rule execution is asynchornous.  Returns request id, which will be used as the event id. <br><br><b>Permissions Needed:</b> BRE_RULE_ENGINE_EVENTS_USER
 ///  @param breEvent The BRE event object (optional)
 ///
-///  @returns NSString*
+///  @returns JSAPIStringWrapper*
 ///
 -(NSURLSessionTask*) sendBREEventWithBreEvent: (JSAPIBreEvent*) breEvent
-    completionHandler: (void (^)(NSString* output, NSError* error)) handler {
+    completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/bre/events"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
@@ -97,10 +98,10 @@ NSInteger kJSAPIRuleEngineEventsApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSString*"
+                              responseType: @"JSAPIStringWrapper*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSString*)data, error);
+                                    handler((JSAPIStringWrapper*)data, error);
                                 }
                             }];
 }

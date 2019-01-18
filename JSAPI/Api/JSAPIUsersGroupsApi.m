@@ -8,7 +8,9 @@
 #import "JSAPIPageResourceChatMessageResource_.h"
 #import "JSAPIPageResourceGroupMemberResource_.h"
 #import "JSAPIPageResourceGroupResource_.h"
+#import "JSAPIPageResourceString_.h"
 #import "JSAPIPageResourceTemplateResource_.h"
+#import "JSAPIPatchResource.h"
 #import "JSAPIResult.h"
 #import "JSAPIStringWrapper.h"
 #import "JSAPITemplateResource.h"
@@ -62,7 +64,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// Adds a new member to the group
-/// <b>Permissions Needed:</b> POST or JOIN if self
+/// <b>Permissions Needed:</b> POST or JOIN if self<br /><b>Permissions Needed:</b> NONE
 ///  @param uniqueName The group unique name 
 ///
 ///  @param user The id and status for a user to add to the group 
@@ -145,7 +147,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// Adds multiple members to the group
-/// <b>Permissions Needed:</b> POST
+/// <b>Permissions Needed:</b> POST<br /><b>Permissions Needed:</b> POST
 ///  @param uniqueName The group unique name 
 ///
 ///  @param users The id and status for a list of users to add to the group 
@@ -228,7 +230,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// Create a group
-/// <b>Permissions Needed:</b> POST
+/// <b>Permissions Needed:</b> POST<br /><b>Permissions Needed:</b> POST
 ///  @param groupResource The new group (optional)
 ///
 ///  @returns JSAPIGroupResource*
@@ -282,8 +284,8 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 }
 
 ///
-/// Create an group member template
-/// GroupMember Templates define a type of group member and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// Create a group member template
+/// GroupMember Templates define a type of group member and the properties they have.<br /><b>Permissions Needed:</b> POST
 ///  @param groupMemberTemplateResource The group member template resource object (optional)
 ///
 ///  @returns JSAPITemplateResource*
@@ -338,7 +340,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// Create a group template
-/// Group Templates define a type of group and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// Group Templates define a type of group and the properties they have.<br /><b>Permissions Needed:</b> POST
 ///  @param groupTemplateResource The group template resource object (optional)
 ///
 ///  @returns JSAPITemplateResource*
@@ -393,7 +395,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// Removes a group from the system
-/// All groups listing this as the parent are also removed and users are in turn removed from this and those groups. This may result in users no longer being in this group's parent if they were not added to it directly as well. <br><br><b>Permissions Needed:</b> DELETE
+/// All groups listing this as the parent are also removed and users are in turn removed from this and those groups. This may result in users no longer being in this group's parent if they were not added to it directly as well. <br><br><b>Permissions Needed:</b> DELETE<br /><b>Permissions Needed:</b> DELETE
 ///  @param uniqueName The group unique name 
 ///
 ///  @returns void
@@ -460,8 +462,8 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 }
 
 ///
-/// Delete an group member template
-/// If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// Delete a group member template
+/// If cascade = 'detach', it will force delete the template even if it's attached to other objects.<br /><b>Permissions Needed:</b> DELETE
 ///  @param _id The id of the template 
 ///
 ///  @param cascade The value needed to delete used templates (optional)
@@ -535,7 +537,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// Delete a group template
-/// If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// If cascade = 'detach', it will force delete the template even if it's attached to other objects.<br /><b>Permissions Needed:</b> DELETE
 ///  @param _id The id of the template 
 ///
 ///  @param cascade The value needed to delete used templates (optional)
@@ -709,7 +711,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// Loads a specific group's details
-/// <b>Permissions Needed:</b> GET
+/// <b>Permissions Needed:</b> GET<br /><b>Permissions Needed:</b> GET
 ///  @param uniqueName The group unique name 
 ///
 ///  @returns JSAPIGroupResource*
@@ -777,13 +779,19 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// Get group ancestors
-/// Returns a list of ancestor groups in reverse order (parent, then grandparent, etc). <br><br><b>Permissions Needed:</b> ANY
+/// Returns a list of ancestor groups in reverse order (parent, then grandparent, etc). <br><br><b>Permissions Needed:</b> ANY<br /><b>Permissions Needed:</b> LIST
 ///  @param uniqueName The group unique name 
 ///
-///  @returns NSArray<JSAPIGroupResource>*
+///  @param size The number of objects returned per page (optional, default to 25)
+///
+///  @param page The number of the page returned, starting with 1 (optional, default to 1)
+///
+///  @returns JSAPIPageResourceGroupResource_*
 ///
 -(NSURLSessionTask*) getGroupAncestorsWithUniqueName: (NSString*) uniqueName
-    completionHandler: (void (^)(NSArray<JSAPIGroupResource>* output, NSError* error)) handler {
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceGroupResource_* output, NSError* error)) handler {
     // verify the required parameter 'uniqueName' is set
     if (uniqueName == nil) {
         NSParameterAssert(uniqueName);
@@ -803,6 +811,12 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (size != nil) {
+        queryParams[@"size"] = size;
+    }
+    if (page != nil) {
+        queryParams[@"page"] = page;
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -835,17 +849,17 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSArray<JSAPIGroupResource>*"
+                              responseType: @"JSAPIPageResourceGroupResource_*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSArray<JSAPIGroupResource>*)data, error);
+                                    handler((JSAPIPageResourceGroupResource_*)data, error);
                                 }
                             }];
 }
 
 ///
 /// Get a user from a group
-/// <b>Permissions Needed:</b> GET
+/// <b>Permissions Needed:</b> GET<br /><b>Permissions Needed:</b> GET
 ///  @param uniqueName The group unique name 
 ///
 ///  @param userId The id of the user 
@@ -930,7 +944,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// Get a single group member template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or GROUP_ADMIN
+/// <b>Permissions Needed:</b> GET
 ///  @param _id The id of the template 
 ///
 ///  @returns JSAPITemplateResource*
@@ -998,7 +1012,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// List and search group member templates
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or GROUP_ADMIN
+/// <b>Permissions Needed:</b> LIST
 ///  @param size The number of objects returned per page (optional, default to 25)
 ///
 ///  @param page The number of the page returned, starting with 1 (optional, default to 1)
@@ -1067,7 +1081,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// Lists members of the group
-/// <b>Permissions Needed:</b> LIST
+/// <b>Permissions Needed:</b> LIST<br /><b>Permissions Needed:</b> LIST
 ///  @param uniqueName The group unique name 
 ///
 ///  @param size The number of objects returned per page (optional, default to 25)
@@ -1160,11 +1174,14 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 ///
 ///  @param page The number of the page returned, starting with 1 (optional, default to 1)
 ///
+///  @param order A comma separated list of sorting requirements in priority order, each entry matching PROPERTY_NAME:[ASC|DESC] (optional)
+///
 ///  @returns JSAPIPageResourceChatMessageResource_*
 ///
 -(NSURLSessionTask*) getGroupMessagesWithUniqueName: (NSString*) uniqueName
     size: (NSNumber*) size
     page: (NSNumber*) page
+    order: (NSString*) order
     completionHandler: (void (^)(JSAPIPageResourceChatMessageResource_* output, NSError* error)) handler {
     // verify the required parameter 'uniqueName' is set
     if (uniqueName == nil) {
@@ -1190,6 +1207,9 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
     }
     if (page != nil) {
         queryParams[@"page"] = page;
+    }
+    if (order != nil) {
+        queryParams[@"order"] = order;
     }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
@@ -1233,7 +1253,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// Get a single group template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or GROUP_ADMIN
+/// <b>Permissions Needed:</b> GET
 ///  @param _id The id of the template 
 ///
 ///  @returns JSAPITemplateResource*
@@ -1301,7 +1321,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// List and search group templates
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or GROUP_ADMIN
+/// <b>Permissions Needed:</b> LIST
 ///  @param size The number of objects returned per page (optional, default to 25)
 ///
 ///  @param page The number of the page returned, starting with 1 (optional, default to 1)
@@ -1370,16 +1390,22 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// List groups a user is in
-/// <b>Permissions Needed:</b> LIST_GROUPS
+/// <b>Permissions Needed:</b> LIST_GROUPS<br /><b>Permissions Needed:</b> LIST_GROUPS
 ///  @param userId The id of the user 
+///
+///  @param size The number of objects returned per page (optional, default to 25)
+///
+///  @param page The number of the page returned, starting with 1 (optional, default to 1)
 ///
 ///  @param filterChildren Whether to limit group list to children of groups only. If true, shows only groups with parents. If false, shows only groups with no parent. (optional)
 ///
-///  @returns NSArray<NSString*>*
+///  @returns JSAPIPageResourceString_*
 ///
 -(NSURLSessionTask*) getGroupsForUserWithUserId: (NSNumber*) userId
+    size: (NSNumber*) size
+    page: (NSNumber*) page
     filterChildren: (NSNumber*) filterChildren
-    completionHandler: (void (^)(NSArray<NSString*>* output, NSError* error)) handler {
+    completionHandler: (void (^)(JSAPIPageResourceString_* output, NSError* error)) handler {
     // verify the required parameter 'userId' is set
     if (userId == nil) {
         NSParameterAssert(userId);
@@ -1399,6 +1425,12 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (size != nil) {
+        queryParams[@"size"] = size;
+    }
+    if (page != nil) {
+        queryParams[@"page"] = page;
+    }
     if (filterChildren != nil) {
         queryParams[@"filter_children"] = [filterChildren isEqual:@(YES)] ? @"true" : @"false";
     }
@@ -1434,17 +1466,17 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSArray<NSString*>*"
+                              responseType: @"JSAPIPageResourceString_*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSArray<NSString*>*)data, error);
+                                    handler((JSAPIPageResourceString_*)data, error);
                                 }
                             }];
 }
 
 ///
 /// List and search groups
-/// <b>Permissions Needed:</b> LIST
+/// <b>Permissions Needed:</b> LIST<br /><b>Permissions Needed:</b> LIST
 ///  @param filterTemplate Filter for groups using a specific template, by id (optional)
 ///
 ///  @param filterMemberCount Filters groups by member count. Multiple values possible for range search. Format: filter_member_count=OP,ts&... where OP in (GT, LT, GOE, LOE, EQ). Ex: filter_member_count=GT,14,LT,17 (optional)
@@ -1593,7 +1625,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
     NSString *requestContentType = [self.apiClient.sanitizer selectHeaderContentType:@[@"application/json"]];
 
     // Authentication setting
-    NSArray *authSettings = @[];
+    NSArray *authSettings = @[@"oauth2_client_credentials_grant", @"oauth2_password_grant"];
 
     id bodyParam = nil;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
@@ -1621,7 +1653,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// Removes a user from a group
-/// <b>Permissions Needed:</b> DELETE
+/// <b>Permissions Needed:</b> DELETE<br /><b>Permissions Needed:</b> DELETE
 ///  @param uniqueName The group unique name 
 ///
 ///  @param userId The id of the user to remove 
@@ -1706,7 +1738,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// Update a group
-/// If adding/removing/changing parent, user membership in group/new parent groups may be modified. The parent being removed will remove members from this sub group unless they were added explicitly to the parent and the new parent will gain members unless they were already a part of it. <br><br><b>Permissions Needed:</b> PUT
+/// If adding/removing/changing parent, user membership in group/new parent groups may be modified. The parent being removed will remove members from this sub group unless they were added explicitly to the parent and the new parent will gain members unless they were already a part of it. <br><br><b>Permissions Needed:</b> PUT<br /><b>Permissions Needed:</b> PUT
 ///  @param uniqueName The group unique name 
 ///
 ///  @param groupResource The updated group (optional)
@@ -1778,7 +1810,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// Change a user's order
-/// <b>Permissions Needed:</b> PUT
+/// <b>Permissions Needed:</b> PUT<br /><b>Permissions Needed:</b> PUT
 ///  @param uniqueName The group unique name 
 ///
 ///  @param userId The user id of the member to modify 
@@ -1787,7 +1819,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 ///
 ///  @returns void
 ///
--(NSURLSessionTask*) updateGroupMemberPropertiesWithUniqueName: (NSString*) uniqueName
+-(NSURLSessionTask*) updateGroupMemberOrderWithUniqueName: (NSString*) uniqueName
     userId: (NSNumber*) userId
     order: (JSAPIStringWrapper*) order
     completionHandler: (void (^)(NSError* error)) handler {
@@ -1878,7 +1910,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// Change a user's membership properties
-/// <b>Permissions Needed:</b> PUT
+/// <b>Permissions Needed:</b> PUT<br /><b>Permissions Needed:</b> PUT
 ///  @param uniqueName The group unique name 
 ///
 ///  @param userId The user id of the member to modify 
@@ -1887,7 +1919,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 ///
 ///  @returns void
 ///
--(NSURLSessionTask*) updateGroupMemberProperties1WithUniqueName: (NSString*) uniqueName
+-(NSURLSessionTask*) updateGroupMemberPropertiesWithUniqueName: (NSString*) uniqueName
     userId: (NSNumber*) userId
     properties: (NSObject*) properties
     completionHandler: (void (^)(NSError* error)) handler {
@@ -1978,7 +2010,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// Change a user's status
-/// <b>Permissions Needed:</b> PUT
+/// <b>Permissions Needed:</b> PUT<br /><b>Permissions Needed:</b> PUT
 ///  @param uniqueName The group unique name 
 ///
 ///  @param userId The user id of the member to modify 
@@ -2077,16 +2109,19 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 }
 
 ///
-/// Update an group member template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// Update a group member template
+/// <b>Permissions Needed:</b> PUT
 ///  @param _id The id of the template 
 ///
-///  @param groupMemberTemplateResource The group member template resource object (optional)
+///  @param templatePatchResource The patch resource object (optional)
+///
+///  @param testValidation If true, this will test validation but not submit the patch request (optional)
 ///
 ///  @returns JSAPITemplateResource*
 ///
 -(NSURLSessionTask*) updateGroupMemberTemplateWithId: (NSString*) _id
-    groupMemberTemplateResource: (JSAPITemplateResource*) groupMemberTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
     completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler {
     // verify the required parameter '_id' is set
     if (_id == nil) {
@@ -2107,6 +2142,9 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (testValidation != nil) {
+        queryParams[@"test_validation"] = [testValidation isEqual:@(YES)] ? @"true" : @"false";
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -2127,10 +2165,10 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
     id bodyParam = nil;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *localVarFiles = [[NSMutableDictionary alloc] init];
-    bodyParam = groupMemberTemplateResource;
+    bodyParam = templatePatchResource;
 
     return [self.apiClient requestWithPath: resourcePath
-                                    method: @"PUT"
+                                    method: @"PATCH"
                                 pathParams: pathParams
                                queryParams: queryParams
                                 formParams: formParams
@@ -2150,15 +2188,18 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// Update a group template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> PUT
 ///  @param _id The id of the template 
 ///
-///  @param groupTemplateResource The group template resource object (optional)
+///  @param templatePatchResource The patch resource object (optional)
+///
+///  @param testValidation If true, this will test validation but not submit the patch request (optional)
 ///
 ///  @returns JSAPITemplateResource*
 ///
 -(NSURLSessionTask*) updateGroupTemplateWithId: (NSString*) _id
-    groupTemplateResource: (JSAPITemplateResource*) groupTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
     completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler {
     // verify the required parameter '_id' is set
     if (_id == nil) {
@@ -2179,6 +2220,9 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (testValidation != nil) {
+        queryParams[@"test_validation"] = [testValidation isEqual:@(YES)] ? @"true" : @"false";
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -2199,10 +2243,10 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
     id bodyParam = nil;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *localVarFiles = [[NSMutableDictionary alloc] init];
-    bodyParam = groupTemplateResource;
+    bodyParam = templatePatchResource;
 
     return [self.apiClient requestWithPath: resourcePath
-                                    method: @"PUT"
+                                    method: @"PATCH"
                                 pathParams: pathParams
                                queryParams: queryParams
                                 formParams: formParams

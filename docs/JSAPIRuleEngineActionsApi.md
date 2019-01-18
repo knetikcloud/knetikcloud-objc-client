@@ -1,6 +1,6 @@
 # JSAPIRuleEngineActionsApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -13,7 +13,9 @@ Method | HTTP request | Description
     filterName: (NSString*) filterName
     filterTags: (NSString*) filterTags
     filterSearch: (NSString*) filterSearch
-        completionHandler: (void (^)(NSArray<JSAPIActionResource>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+        completionHandler: (void (^)(JSAPIPageResourceActionResource_* output, NSError* error)) handler;
 ```
 
 Get a list of available actions
@@ -35,6 +37,8 @@ NSString* filterCategory = @"filterCategory_example"; // Filter for actions that
 NSString* filterName = @"filterName_example"; // Filter for actions that have names containing the given string (optional)
 NSString* filterTags = @"filterTags_example"; // Filter for actions that have all of the given tags (comma separated list) (optional)
 NSString* filterSearch = @"filterSearch_example"; // Filter for actions containing the given words somewhere within name, description and tags (optional)
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
 JSAPIRuleEngineActionsApi*apiInstance = [[JSAPIRuleEngineActionsApi alloc] init];
 
@@ -43,7 +47,9 @@ JSAPIRuleEngineActionsApi*apiInstance = [[JSAPIRuleEngineActionsApi alloc] init]
               filterName:filterName
               filterTags:filterTags
               filterSearch:filterSearch
-          completionHandler: ^(NSArray<JSAPIActionResource>* output, NSError* error) {
+              size:size
+              page:page
+          completionHandler: ^(JSAPIPageResourceActionResource_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -61,10 +67,12 @@ Name | Type | Description  | Notes
  **filterName** | **NSString***| Filter for actions that have names containing the given string | [optional] 
  **filterTags** | **NSString***| Filter for actions that have all of the given tags (comma separated list) | [optional] 
  **filterSearch** | **NSString***| Filter for actions containing the given words somewhere within name, description and tags | [optional] 
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
 ### Return type
 
-[**NSArray<JSAPIActionResource>***](JSAPIActionResource.md)
+[**JSAPIPageResourceActionResource_***](JSAPIPageResourceActionResource_.md)
 
 ### Authorization
 

@@ -1,6 +1,6 @@
 # JSAPIGamificationTriviaApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -32,7 +32,7 @@ Method | HTTP request | Description
 [**updateImportJob**](JSAPIGamificationTriviaApi.md#updateimportjob) | **PUT** /trivia/import/{id} | Update an import job
 [**updateQuestion**](JSAPIGamificationTriviaApi.md#updatequestion) | **PUT** /trivia/questions/{id} | Update a question
 [**updateQuestionAnswer**](JSAPIGamificationTriviaApi.md#updatequestionanswer) | **PUT** /trivia/questions/{question_id}/answers/{id} | Update an answer for a question
-[**updateQuestionTemplate**](JSAPIGamificationTriviaApi.md#updatequestiontemplate) | **PUT** /trivia/questions/templates/{id} | Update a question template
+[**updateQuestionTemplate**](JSAPIGamificationTriviaApi.md#updatequestiontemplate) | **PATCH** /trivia/questions/templates/{id} | Update a question template
 [**updateQuestionsInBulk**](JSAPIGamificationTriviaApi.md#updatequestionsinbulk) | **PUT** /trivia/questions | Bulk update questions
 
 
@@ -371,7 +371,7 @@ Name | Type | Description  | Notes
 
 Create a question template
 
-Question templates define a type of question and the properties they have. <br><br><b>Permissions Needed:</b> TRIVIA_ADMIN
+Question templates define a type of question and the properties they have. <br><br><b>Permissions Needed:</b> TRIVIA_ADMIN<br /><b>Permissions Needed:</b> POST
 
 ### Example 
 ```objc
@@ -599,7 +599,7 @@ void (empty response body)
 
 Delete a question template
 
-If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> DELETE
 
 ### Example 
 ```objc
@@ -912,7 +912,9 @@ Name | Type | Description  | Notes
 # **getQuestionAnswers**
 ```objc
 -(NSURLSessionTask*) getQuestionAnswersWithQuestionId: (NSString*) questionId
-        completionHandler: (void (^)(NSArray<JSAPIAnswerResource>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+        completionHandler: (void (^)(JSAPIPageResourceAnswerResource_* output, NSError* error)) handler;
 ```
 
 List the answers available for a question
@@ -931,12 +933,16 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* questionId = @"questionId_example"; // The id of the question
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
 JSAPIGamificationTriviaApi*apiInstance = [[JSAPIGamificationTriviaApi alloc] init];
 
 // List the answers available for a question
 [apiInstance getQuestionAnswersWithQuestionId:questionId
-          completionHandler: ^(NSArray<JSAPIAnswerResource>* output, NSError* error) {
+              size:size
+              page:page
+          completionHandler: ^(JSAPIPageResourceAnswerResource_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -951,10 +957,12 @@ JSAPIGamificationTriviaApi*apiInstance = [[JSAPIGamificationTriviaApi alloc] ini
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **questionId** | **NSString***| The id of the question | 
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
 ### Return type
 
-[**NSArray<JSAPIAnswerResource>***](JSAPIAnswerResource.md)
+[**JSAPIPageResourceAnswerResource_***](JSAPIPageResourceAnswerResource_.md)
 
 ### Authorization
 
@@ -970,7 +978,9 @@ Name | Type | Description  | Notes
 # **getQuestionDeltas**
 ```objc
 -(NSURLSessionTask*) getQuestionDeltasWithSince: (NSNumber*) since
-        completionHandler: (void (^)(NSArray<JSAPIDeltaResource>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+        completionHandler: (void (^)(JSAPIPageResourceDeltaResource_* output, NSError* error)) handler;
 ```
 
 List question deltas in ascending order of updated date
@@ -989,12 +999,16 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSNumber* since = @789; // Timestamp in seconds (optional)
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
 JSAPIGamificationTriviaApi*apiInstance = [[JSAPIGamificationTriviaApi alloc] init];
 
 // List question deltas in ascending order of updated date
 [apiInstance getQuestionDeltasWithSince:since
-          completionHandler: ^(NSArray<JSAPIDeltaResource>* output, NSError* error) {
+              size:size
+              page:page
+          completionHandler: ^(JSAPIPageResourceDeltaResource_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -1009,10 +1023,12 @@ JSAPIGamificationTriviaApi*apiInstance = [[JSAPIGamificationTriviaApi alloc] ini
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **since** | **NSNumber***| Timestamp in seconds | [optional] 
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
 ### Return type
 
-[**NSArray<JSAPIDeltaResource>***](JSAPIDeltaResource.md)
+[**JSAPIPageResourceDeltaResource_***](JSAPIPageResourceDeltaResource_.md)
 
 ### Authorization
 
@@ -1028,7 +1044,9 @@ Name | Type | Description  | Notes
 # **getQuestionTags**
 ```objc
 -(NSURLSessionTask*) getQuestionTagsWithId: (NSString*) _id
-        completionHandler: (void (^)(NSArray<NSString*>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+        completionHandler: (void (^)(JSAPIPageResourceString_* output, NSError* error)) handler;
 ```
 
 List the tags for a question
@@ -1047,12 +1065,16 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* _id = @"_id_example"; // The id of the question
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
 JSAPIGamificationTriviaApi*apiInstance = [[JSAPIGamificationTriviaApi alloc] init];
 
 // List the tags for a question
 [apiInstance getQuestionTagsWithId:_id
-          completionHandler: ^(NSArray<NSString*>* output, NSError* error) {
+              size:size
+              page:page
+          completionHandler: ^(JSAPIPageResourceString_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -1067,10 +1089,12 @@ JSAPIGamificationTriviaApi*apiInstance = [[JSAPIGamificationTriviaApi alloc] ini
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **_id** | **NSString***| The id of the question | 
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
 ### Return type
 
-**NSArray<NSString*>***
+[**JSAPIPageResourceString_***](JSAPIPageResourceString_.md)
 
 ### Authorization
 
@@ -1091,7 +1115,7 @@ Name | Type | Description  | Notes
 
 Get a single question template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or TRIVIA_ADMIN
+<b>Permissions Needed:</b> TEMPLATE_ADMIN or TRIVIA_ADMIN<br /><b>Permissions Needed:</b> GET
 
 ### Example 
 ```objc
@@ -1151,7 +1175,7 @@ Name | Type | Description  | Notes
 
 List and search question templates
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or TRIVIA_ADMIN
+<b>Permissions Needed:</b> TEMPLATE_ADMIN or TRIVIA_ADMIN<br /><b>Permissions Needed:</b> LIST
 
 ### Example 
 ```objc
@@ -1314,7 +1338,7 @@ Name | Type | Description  | Notes
     filterTagset: (NSString*) filterTagset
     filterType: (NSString*) filterType
     filterPublished: (NSNumber*) filterPublished
-        completionHandler: (void (^)(NSNumber* output, NSError* error)) handler;
+        completionHandler: (void (^)(JSAPILongWrapper* output, NSError* error)) handler;
 ```
 
 Count questions based on filters
@@ -1350,7 +1374,7 @@ JSAPIGamificationTriviaApi*apiInstance = [[JSAPIGamificationTriviaApi alloc] ini
               filterTagset:filterTagset
               filterType:filterType
               filterPublished:filterPublished
-          completionHandler: ^(NSNumber* output, NSError* error) {
+          completionHandler: ^(JSAPILongWrapper* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -1374,7 +1398,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**NSNumber***
+[**JSAPILongWrapper***](JSAPILongWrapper.md)
 
 ### Authorization
 
@@ -1603,7 +1627,9 @@ Name | Type | Description  | Notes
 -(NSURLSessionTask*) searchQuestionTagsWithFilterSearch: (NSString*) filterSearch
     filterCategory: (NSString*) filterCategory
     filterImportId: (NSNumber*) filterImportId
-        completionHandler: (void (^)(NSArray<NSString*>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+        completionHandler: (void (^)(JSAPIPageResourceString_* output, NSError* error)) handler;
 ```
 
 List and search tags by the beginning of the string
@@ -1624,6 +1650,8 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 NSString* filterSearch = @"filterSearch_example"; // Filter for tags starting with the given text (optional)
 NSString* filterCategory = @"filterCategory_example"; // Filter for tags on questions from a specific category (optional)
 NSNumber* filterImportId = @789; // Filter for tags on questions from a specific import job (optional)
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
 JSAPIGamificationTriviaApi*apiInstance = [[JSAPIGamificationTriviaApi alloc] init];
 
@@ -1631,7 +1659,9 @@ JSAPIGamificationTriviaApi*apiInstance = [[JSAPIGamificationTriviaApi alloc] ini
 [apiInstance searchQuestionTagsWithFilterSearch:filterSearch
               filterCategory:filterCategory
               filterImportId:filterImportId
-          completionHandler: ^(NSArray<NSString*>* output, NSError* error) {
+              size:size
+              page:page
+          completionHandler: ^(JSAPIPageResourceString_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -1648,10 +1678,12 @@ Name | Type | Description  | Notes
  **filterSearch** | **NSString***| Filter for tags starting with the given text | [optional] 
  **filterCategory** | **NSString***| Filter for tags on questions from a specific category | [optional] 
  **filterImportId** | **NSNumber***| Filter for tags on questions from a specific import job | [optional] 
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
 ### Return type
 
-**NSArray<NSString*>***
+[**JSAPIPageResourceString_***](JSAPIPageResourceString_.md)
 
 ### Authorization
 
@@ -1854,13 +1886,14 @@ void (empty response body)
 # **updateQuestionTemplate**
 ```objc
 -(NSURLSessionTask*) updateQuestionTemplateWithId: (NSString*) _id
-    questionTemplateResource: (JSAPIQuestionTemplateResource*) questionTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
         completionHandler: (void (^)(JSAPIQuestionTemplateResource* output, NSError* error)) handler;
 ```
 
 Update a question template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN
+<b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -1874,13 +1907,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* _id = @"_id_example"; // The id of the template
-JSAPIQuestionTemplateResource* questionTemplateResource = [[JSAPIQuestionTemplateResource alloc] init]; // The question template resource object (optional)
+JSAPIPatchResource* templatePatchResource = [[JSAPIPatchResource alloc] init]; // The patch resource object (optional)
+NSNumber* testValidation = @true; // If true, this will test validation but not submit the patch request (optional)
 
 JSAPIGamificationTriviaApi*apiInstance = [[JSAPIGamificationTriviaApi alloc] init];
 
 // Update a question template
 [apiInstance updateQuestionTemplateWithId:_id
-              questionTemplateResource:questionTemplateResource
+              templatePatchResource:templatePatchResource
+              testValidation:testValidation
           completionHandler: ^(JSAPIQuestionTemplateResource* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
@@ -1896,7 +1931,8 @@ JSAPIGamificationTriviaApi*apiInstance = [[JSAPIGamificationTriviaApi alloc] ini
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **_id** | **NSString***| The id of the template | 
- **questionTemplateResource** | [**JSAPIQuestionTemplateResource***](JSAPIQuestionTemplateResource.md)| The question template resource object | [optional] 
+ **templatePatchResource** | [**JSAPIPatchResource***](JSAPIPatchResource.md)| The patch resource object | [optional] 
+ **testValidation** | **NSNumber***| If true, this will test validation but not submit the patch request | [optional] 
 
 ### Return type
 

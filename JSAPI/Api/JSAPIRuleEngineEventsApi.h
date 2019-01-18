@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "JSAPIBreEvent.h"
 #import "JSAPIResult.h"
+#import "JSAPIStringWrapper.h"
 #import "JSAPIApi.h"
 
 /**
@@ -35,9 +36,9 @@ extern NSInteger kJSAPIRuleEngineEventsApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSString*
+/// @return JSAPIStringWrapper*
 -(NSURLSessionTask*) sendBREEventWithBreEvent: (JSAPIBreEvent*) breEvent
-    completionHandler: (void (^)(NSString* output, NSError* error)) handler;
+    completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler;
 
 
 

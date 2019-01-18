@@ -1,6 +1,6 @@
 # JSAPIGamificationLeaderboardsApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -151,8 +151,9 @@ Name | Type | Description  | Notes
 
 # **getLeaderboardStrategies**
 ```objc
--(NSURLSessionTask*) getLeaderboardStrategiesWithCompletionHandler: 
-        (void (^)(NSArray<NSString*>* output, NSError* error)) handler;
+-(NSURLSessionTask*) getLeaderboardStrategiesWithSize: (NSNumber*) size
+    page: (NSNumber*) page
+        completionHandler: (void (^)(JSAPIPageResourceString_* output, NSError* error)) handler;
 ```
 
 Get a list of available leaderboard strategy names
@@ -170,12 +171,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 [apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
 
 
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
 JSAPIGamificationLeaderboardsApi*apiInstance = [[JSAPIGamificationLeaderboardsApi alloc] init];
 
 // Get a list of available leaderboard strategy names
-[apiInstance getLeaderboardStrategiesWithCompletionHandler: 
-          ^(NSArray<NSString*>* output, NSError* error) {
+[apiInstance getLeaderboardStrategiesWithSize:size
+              page:page
+          completionHandler: ^(JSAPIPageResourceString_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -186,11 +190,15 @@ JSAPIGamificationLeaderboardsApi*apiInstance = [[JSAPIGamificationLeaderboardsAp
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
 ### Return type
 
-**NSArray<NSString*>***
+[**JSAPIPageResourceString_***](JSAPIPageResourceString_.md)
 
 ### Authorization
 

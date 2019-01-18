@@ -7,6 +7,7 @@
 #import "JSAPIInvoiceResource.h"
 #import "JSAPIPageResourceInvoiceLogEntry_.h"
 #import "JSAPIPageResourceInvoiceResource_.h"
+#import "JSAPIPageResourceString_.h"
 #import "JSAPIPayBySavedMethodRequest.h"
 #import "JSAPIResult.h"
 #import "JSAPIStringWrapper.h"
@@ -115,15 +116,26 @@ NSInteger kJSAPIInvoicesApiMissingParamErrorCode = 234513;
 ///
 /// Lists available fulfillment statuses
 /// <b>Permissions Needed:</b> ANY
-///  @returns NSArray<NSString*>*
+///  @param size The number of objects returned per page (optional, default to 25)
 ///
--(NSURLSessionTask*) getFulFillmentStatusesWithCompletionHandler: 
-    (void (^)(NSArray<NSString*>* output, NSError* error)) handler {
+///  @param page The number of the page returned, starting with 1 (optional, default to 1)
+///
+///  @returns JSAPIPageResourceString_*
+///
+-(NSURLSessionTask*) getFulFillmentStatusesWithSize: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceString_* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/invoices/fulfillment-statuses"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (size != nil) {
+        queryParams[@"size"] = size;
+    }
+    if (page != nil) {
+        queryParams[@"page"] = page;
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -156,10 +168,10 @@ NSInteger kJSAPIInvoicesApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSArray<NSString*>*"
+                              responseType: @"JSAPIPageResourceString_*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSArray<NSString*>*)data, error);
+                                    handler((JSAPIPageResourceString_*)data, error);
                                 }
                             }];
 }
@@ -468,15 +480,26 @@ NSInteger kJSAPIInvoicesApiMissingParamErrorCode = 234513;
 ///
 /// Lists available payment statuses
 /// <b>Permissions Needed:</b> ANY
-///  @returns NSArray<NSString*>*
+///  @param size The number of objects returned per page (optional, default to 25)
 ///
--(NSURLSessionTask*) getPaymentStatusesWithCompletionHandler: 
-    (void (^)(NSArray<NSString*>* output, NSError* error)) handler {
+///  @param page The number of the page returned, starting with 1 (optional, default to 1)
+///
+///  @returns JSAPIPageResourceString_*
+///
+-(NSURLSessionTask*) getPaymentStatusesWithSize: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceString_* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/invoices/payment-statuses"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (size != nil) {
+        queryParams[@"size"] = size;
+    }
+    if (page != nil) {
+        queryParams[@"page"] = page;
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -509,10 +532,10 @@ NSInteger kJSAPIInvoicesApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSArray<NSString*>*"
+                              responseType: @"JSAPIPageResourceString_*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSArray<NSString*>*)data, error);
+                                    handler((JSAPIPageResourceString_*)data, error);
                                 }
                             }];
 }

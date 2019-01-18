@@ -282,11 +282,11 @@ NSInteger kJSAPIStoreShoppingCartsApiMissingParamErrorCode = 234513;
 ///
 ///  @param currencyCode Set the currency for the cart, by currency code. May be disallowed by site settings. (optional)
 ///
-///  @returns NSString*
+///  @returns JSAPIStringWrapper*
 ///
 -(NSURLSessionTask*) createCartWithOwner: (NSNumber*) owner
     currencyCode: (NSString*) currencyCode
-    completionHandler: (void (^)(NSString* output, NSError* error)) handler {
+    completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/carts"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
@@ -330,10 +330,10 @@ NSInteger kJSAPIStoreShoppingCartsApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSString*"
+                              responseType: @"JSAPIStringWrapper*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSString*)data, error);
+                                    handler((JSAPIStringWrapper*)data, error);
                                 }
                             }];
 }

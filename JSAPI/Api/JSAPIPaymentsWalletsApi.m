@@ -272,10 +272,16 @@ NSInteger kJSAPIPaymentsWalletsApiMissingParamErrorCode = 234513;
 /// <b>Permissions Needed:</b> WALLETS_ADMIN or owner
 ///  @param userId The ID of the user for whom wallets are being retrieved 
 ///
-///  @returns NSArray<JSAPISimpleWallet>*
+///  @param size The number of objects returned per page (optional, default to 25)
+///
+///  @param page The number of the page returned, starting with 1 (optional, default to 1)
+///
+///  @returns JSAPIPageResourceSimpleWallet_*
 ///
 -(NSURLSessionTask*) getUserWalletsWithUserId: (NSNumber*) userId
-    completionHandler: (void (^)(NSArray<JSAPISimpleWallet>* output, NSError* error)) handler {
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceSimpleWallet_* output, NSError* error)) handler {
     // verify the required parameter 'userId' is set
     if (userId == nil) {
         NSParameterAssert(userId);
@@ -295,6 +301,12 @@ NSInteger kJSAPIPaymentsWalletsApiMissingParamErrorCode = 234513;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (size != nil) {
+        queryParams[@"size"] = size;
+    }
+    if (page != nil) {
+        queryParams[@"page"] = page;
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -327,10 +339,10 @@ NSInteger kJSAPIPaymentsWalletsApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSArray<JSAPISimpleWallet>*"
+                              responseType: @"JSAPIPageResourceSimpleWallet_*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSArray<JSAPISimpleWallet>*)data, error);
+                                    handler((JSAPIPageResourceSimpleWallet_*)data, error);
                                 }
                             }];
 }

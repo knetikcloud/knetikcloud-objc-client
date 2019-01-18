@@ -1,9 +1,9 @@
 #import "JSAPIChatApi.h"
 #import "JSAPIQueryParamCollection.h"
 #import "JSAPIApiClient.h"
-#import "JSAPIChatBlacklistResource.h"
 #import "JSAPIChatMessageResource.h"
 #import "JSAPIIntWrapper.h"
+#import "JSAPIPageResourceChatBlacklistResource_.h"
 #import "JSAPIPageResourceChatMessageResource_.h"
 #import "JSAPIPageResourceChatUserThreadResource_.h"
 #import "JSAPIResult.h"
@@ -424,10 +424,16 @@ NSInteger kJSAPIChatApiMissingParamErrorCode = 234513;
 /// <b>Permissions Needed:</b> CHAT_ADMIN or owner
 ///  @param _id The user id or 'me' 
 ///
-///  @returns NSArray<JSAPIChatBlacklistResource>*
+///  @param size The number of objects returned per page (optional, default to 25)
+///
+///  @param page The number of the page returned, starting with 1 (optional, default to 1)
+///
+///  @returns JSAPIPageResourceChatBlacklistResource_*
 ///
 -(NSURLSessionTask*) getChatMessageBlacklistWithId: (NSString*) _id
-    completionHandler: (void (^)(NSArray<JSAPIChatBlacklistResource>* output, NSError* error)) handler {
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceChatBlacklistResource_* output, NSError* error)) handler {
     // verify the required parameter '_id' is set
     if (_id == nil) {
         NSParameterAssert(_id);
@@ -447,6 +453,12 @@ NSInteger kJSAPIChatApiMissingParamErrorCode = 234513;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (size != nil) {
+        queryParams[@"size"] = size;
+    }
+    if (page != nil) {
+        queryParams[@"page"] = page;
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -479,10 +491,10 @@ NSInteger kJSAPIChatApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSArray<JSAPIChatBlacklistResource>*"
+                              responseType: @"JSAPIPageResourceChatBlacklistResource_*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSArray<JSAPIChatBlacklistResource>*)data, error);
+                                    handler((JSAPIPageResourceChatBlacklistResource_*)data, error);
                                 }
                             }];
 }

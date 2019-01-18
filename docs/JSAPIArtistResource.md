@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **_id** | **NSNumber*** | The unique ID for that resource | [optional] 
 **longDescription** | **NSString*** | The user friendly name of that resource. Defaults to blank string | [optional] 
 **name** | **NSString*** | The user friendly name of that resource | 
-**priority** | **NSNumber*** | The sort order priority ofr the artist.  Default 100 | [optional] 
+**priority** | **NSNumber*** | The sort order priority of the artist.  Default 100 | [optional] 
 **shortDescription** | **NSString*** | The user friendly name of that resource. Defaults to blank string | [optional] 
 **template** | **NSString*** | An artist template this artist is validated against (private). May be null and no validation of additional_properties will be done | [optional] 
 **updatedDate** | **NSNumber*** | The date/time this resource was last updated in seconds since unix epoch | [optional] 

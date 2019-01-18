@@ -1,6 +1,6 @@
 # JSAPIStoreShippingApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -12,7 +12,7 @@ Method | HTTP request | Description
 [**getShippingTemplate**](JSAPIStoreShippingApi.md#getshippingtemplate) | **GET** /store/shipping/templates/{id} | Get a single shipping template
 [**getShippingTemplates**](JSAPIStoreShippingApi.md#getshippingtemplates) | **GET** /store/shipping/templates | List and search shipping templates
 [**updateShippingItem**](JSAPIStoreShippingApi.md#updateshippingitem) | **PUT** /store/shipping/{id} | Update a shipping item
-[**updateShippingTemplate**](JSAPIStoreShippingApi.md#updateshippingtemplate) | **PUT** /store/shipping/templates/{id} | Update a shipping template
+[**updateShippingTemplate**](JSAPIStoreShippingApi.md#updateshippingtemplate) | **PATCH** /store/shipping/templates/{id} | Update a shipping template
 
 
 # **createShippingItem**
@@ -85,7 +85,7 @@ Name | Type | Description  | Notes
 
 Create a shipping template
 
-Shipping Templates define a type of shipping and the properties they have.
+Shipping Templates define a type of shipping and the properties they have.<br /><b>Permissions Needed:</b> POST
 
 ### Example 
 ```objc
@@ -199,7 +199,7 @@ void (empty response body)
 
 Delete a shipping template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN
+<b>Permissions Needed:</b> DELETE<br /><b>Permissions Needed:</b> DELETE
 
 ### Example 
 ```objc
@@ -315,7 +315,7 @@ Name | Type | Description  | Notes
 
 Get a single shipping template
 
-Shipping Templates define a type of shipping and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN or SHIPPING_ADMIN
+Shipping Templates define a type of shipping and the properties they have. <br><br><b>Permissions Needed:</b> GET<br /><b>Permissions Needed:</b> GET
 
 ### Example 
 ```objc
@@ -375,7 +375,7 @@ Name | Type | Description  | Notes
 
 List and search shipping templates
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or SHIPPING_ADMIN
+<b>Permissions Needed:</b> LIST<br /><b>Permissions Needed:</b> LIST
 
 ### Example 
 ```objc
@@ -500,13 +500,14 @@ Name | Type | Description  | Notes
 # **updateShippingTemplate**
 ```objc
 -(NSURLSessionTask*) updateShippingTemplateWithId: (NSString*) _id
-    shippingTemplateResource: (JSAPIItemTemplateResource*) shippingTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
         completionHandler: (void (^)(JSAPIItemTemplateResource* output, NSError* error)) handler;
 ```
 
 Update a shipping template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN
+<b>Permissions Needed:</b> PUT<br /><b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -520,13 +521,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* _id = @"_id_example"; // The id of the template
-JSAPIItemTemplateResource* shippingTemplateResource = [[JSAPIItemTemplateResource alloc] init]; // The shipping template resource object (optional)
+JSAPIPatchResource* templatePatchResource = [[JSAPIPatchResource alloc] init]; // The patch resource object (optional)
+NSNumber* testValidation = @true; // If true, this will test validation but not submit the patch request (optional)
 
 JSAPIStoreShippingApi*apiInstance = [[JSAPIStoreShippingApi alloc] init];
 
 // Update a shipping template
 [apiInstance updateShippingTemplateWithId:_id
-              shippingTemplateResource:shippingTemplateResource
+              templatePatchResource:templatePatchResource
+              testValidation:testValidation
           completionHandler: ^(JSAPIItemTemplateResource* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
@@ -542,7 +545,8 @@ JSAPIStoreShippingApi*apiInstance = [[JSAPIStoreShippingApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **_id** | **NSString***| The id of the template | 
- **shippingTemplateResource** | [**JSAPIItemTemplateResource***](JSAPIItemTemplateResource.md)| The shipping template resource object | [optional] 
+ **templatePatchResource** | [**JSAPIPatchResource***](JSAPIPatchResource.md)| The patch resource object | [optional] 
+ **testValidation** | **NSNumber***| If true, this will test validation but not submit the patch request | [optional] 
 
 ### Return type
 

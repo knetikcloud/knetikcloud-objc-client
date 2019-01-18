@@ -1,6 +1,6 @@
 # JSAPICampaignsApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -16,7 +16,7 @@ Method | HTTP request | Description
 [**getCampaigns**](JSAPICampaignsApi.md#getcampaigns) | **GET** /campaigns | List and search campaigns
 [**removeChallengeFromCampaign**](JSAPICampaignsApi.md#removechallengefromcampaign) | **DELETE** /campaigns/{campaign_id}/challenges/{id} | Remove a challenge from a campaign
 [**updateCampaign**](JSAPICampaignsApi.md#updatecampaign) | **PUT** /campaigns/{id} | Update a campaign
-[**updateCampaignTemplate**](JSAPICampaignsApi.md#updatecampaigntemplate) | **PUT** /campaigns/templates/{id} | Update an campaign template
+[**updateCampaignTemplate**](JSAPICampaignsApi.md#updatecampaigntemplate) | **PATCH** /campaigns/templates/{id} | Update an campaign template
 
 
 # **addChallengeToCampaign**
@@ -144,7 +144,7 @@ Name | Type | Description  | Notes
 
 Create a campaign template
 
-Campaign Templates define a type of campaign and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+Campaign Templates define a type of campaign and the properties they have.<br /><b>Permissions Needed:</b> POST
 
 ### Example 
 ```objc
@@ -258,7 +258,7 @@ void (empty response body)
 
 Delete a campaign template
 
-If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+If cascade = 'detach', it will force delete the template even if it's attached to other objects.<br /><b>Permissions Needed:</b> DELETE
 
 ### Example 
 ```objc
@@ -452,7 +452,7 @@ Name | Type | Description  | Notes
 
 Get a single campaign template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or CAMPAIGNS_ADMIN
+<b>Permissions Needed:</b> GET
 
 ### Example 
 ```objc
@@ -512,7 +512,7 @@ Name | Type | Description  | Notes
 
 List and search campaign templates
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or CAMPAIGNS_ADMIN
+<b>Permissions Needed:</b> LIST
 
 ### Example 
 ```objc
@@ -762,13 +762,14 @@ Name | Type | Description  | Notes
 # **updateCampaignTemplate**
 ```objc
 -(NSURLSessionTask*) updateCampaignTemplateWithId: (NSString*) _id
-    campaignTemplateResource: (JSAPITemplateResource*) campaignTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
         completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler;
 ```
 
 Update an campaign template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN
+<b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -782,13 +783,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* _id = @"_id_example"; // The id of the template
-JSAPITemplateResource* campaignTemplateResource = [[JSAPITemplateResource alloc] init]; // The campaign template resource object (optional)
+JSAPIPatchResource* templatePatchResource = [[JSAPIPatchResource alloc] init]; // The patch resource object (optional)
+NSNumber* testValidation = @true; // If true, this will test validation but not submit the patch request (optional)
 
 JSAPICampaignsApi*apiInstance = [[JSAPICampaignsApi alloc] init];
 
 // Update an campaign template
 [apiInstance updateCampaignTemplateWithId:_id
-              campaignTemplateResource:campaignTemplateResource
+              templatePatchResource:templatePatchResource
+              testValidation:testValidation
           completionHandler: ^(JSAPITemplateResource* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
@@ -804,7 +807,8 @@ JSAPICampaignsApi*apiInstance = [[JSAPICampaignsApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **_id** | **NSString***| The id of the template | 
- **campaignTemplateResource** | [**JSAPITemplateResource***](JSAPITemplateResource.md)| The campaign template resource object | [optional] 
+ **templatePatchResource** | [**JSAPIPatchResource***](JSAPIPatchResource.md)| The patch resource object | [optional] 
+ **testValidation** | **NSNumber***| If true, this will test validation but not submit the patch request | [optional] 
 
 ### Return type
 

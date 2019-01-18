@@ -14,10 +14,7 @@
 */
 
 
-#import "JSAPIOrder.h"
 #import "JSAPIStoreItemTemplateResource.h"
-@protocol JSAPIOrder;
-@class JSAPIOrder;
 @protocol JSAPIStoreItemTemplateResource;
 @class JSAPIStoreItemTemplateResource;
 
@@ -40,8 +37,6 @@
 @property(nonatomic) NSNumber* numberOfElements;
 
 @property(nonatomic) NSNumber* size;
-
-@property(nonatomic) NSArray<JSAPIOrder>* sort;
 
 @property(nonatomic) NSNumber* totalElements;
 

@@ -1,6 +1,6 @@
 # JSAPIStoreApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -14,7 +14,7 @@ Method | HTTP request | Description
 [**getStoreItem**](JSAPIStoreApi.md#getstoreitem) | **GET** /store/items/{id} | Get a single store item
 [**getStoreItems**](JSAPIStoreApi.md#getstoreitems) | **GET** /store/items | List and search store items
 [**quickBuy**](JSAPIStoreApi.md#quickbuy) | **POST** /store/quick-buy | One-step purchase and pay for a single SKU item from a user&#39;s wallet
-[**updateItemTemplate**](JSAPIStoreApi.md#updateitemtemplate) | **PUT** /store/items/templates/{id} | Update an item template
+[**updateItemTemplate**](JSAPIStoreApi.md#updateitemtemplate) | **PATCH** /store/items/templates/{id} | Update an item template
 [**updateStoreItem**](JSAPIStoreApi.md#updatestoreitem) | **PUT** /store/items/{id} | Update a store item
 
 
@@ -26,7 +26,7 @@ Method | HTTP request | Description
 
 Create an item template
 
-Item Templates define a type of item and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+Item Templates define a type of item and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> POST
 
 ### Example 
 ```objc
@@ -147,7 +147,7 @@ Name | Type | Description  | Notes
 
 Delete an item template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN
+<b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> DELETE
 
 ### Example 
 ```objc
@@ -254,8 +254,9 @@ void (empty response body)
 
 # **getBehaviors**
 ```objc
--(NSURLSessionTask*) getBehaviorsWithCompletionHandler: 
-        (void (^)(NSArray<JSAPIBehaviorDefinitionResource>* output, NSError* error)) handler;
+-(NSURLSessionTask*) getBehaviorsWithSize: (NSNumber*) size
+    page: (NSNumber*) page
+        completionHandler: (void (^)(JSAPIPageResourceBehaviorDefinitionResource_* output, NSError* error)) handler;
 ```
 
 List available item behaviors
@@ -273,12 +274,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 [apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
 
 
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
 JSAPIStoreApi*apiInstance = [[JSAPIStoreApi alloc] init];
 
 // List available item behaviors
-[apiInstance getBehaviorsWithCompletionHandler: 
-          ^(NSArray<JSAPIBehaviorDefinitionResource>* output, NSError* error) {
+[apiInstance getBehaviorsWithSize:size
+              page:page
+          completionHandler: ^(JSAPIPageResourceBehaviorDefinitionResource_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -289,11 +293,15 @@ JSAPIStoreApi*apiInstance = [[JSAPIStoreApi alloc] init];
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
 ### Return type
 
-[**NSArray<JSAPIBehaviorDefinitionResource>***](JSAPIBehaviorDefinitionResource.md)
+[**JSAPIPageResourceBehaviorDefinitionResource_***](JSAPIPageResourceBehaviorDefinitionResource_.md)
 
 ### Authorization
 
@@ -314,7 +322,7 @@ This endpoint does not need any parameter.
 
 Get a single item template
 
-Item Templates define a type of item and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+Item Templates define a type of item and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> GET
 
 ### Example 
 ```objc
@@ -374,7 +382,7 @@ Name | Type | Description  | Notes
 
 List and search item templates
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN
+<b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> LIST
 
 ### Example 
 ```objc
@@ -671,13 +679,14 @@ Name | Type | Description  | Notes
 # **updateItemTemplate**
 ```objc
 -(NSURLSessionTask*) updateItemTemplateWithId: (NSString*) _id
-    itemTemplateResource: (JSAPIStoreItemTemplateResource*) itemTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
         completionHandler: (void (^)(JSAPIStoreItemTemplateResource* output, NSError* error)) handler;
 ```
 
 Update an item template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN
+<b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -691,13 +700,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* _id = @"_id_example"; // The id of the template
-JSAPIStoreItemTemplateResource* itemTemplateResource = [[JSAPIStoreItemTemplateResource alloc] init]; // The item template resource object (optional)
+JSAPIPatchResource* templatePatchResource = [[JSAPIPatchResource alloc] init]; // The patch resource object (optional)
+NSNumber* testValidation = @true; // If true, this will test validation but not submit the patch request (optional)
 
 JSAPIStoreApi*apiInstance = [[JSAPIStoreApi alloc] init];
 
 // Update an item template
 [apiInstance updateItemTemplateWithId:_id
-              itemTemplateResource:itemTemplateResource
+              templatePatchResource:templatePatchResource
+              testValidation:testValidation
           completionHandler: ^(JSAPIStoreItemTemplateResource* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
@@ -713,7 +724,8 @@ JSAPIStoreApi*apiInstance = [[JSAPIStoreApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **_id** | **NSString***| The id of the template | 
- **itemTemplateResource** | [**JSAPIStoreItemTemplateResource***](JSAPIStoreItemTemplateResource.md)| The item template resource object | [optional] 
+ **templatePatchResource** | [**JSAPIPatchResource***](JSAPIPatchResource.md)| The patch resource object | [optional] 
+ **testValidation** | **NSNumber***| If true, this will test validation but not submit the patch request | [optional] 
 
 ### Return type
 

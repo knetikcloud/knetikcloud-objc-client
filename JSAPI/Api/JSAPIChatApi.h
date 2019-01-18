@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
-#import "JSAPIChatBlacklistResource.h"
 #import "JSAPIChatMessageResource.h"
 #import "JSAPIIntWrapper.h"
+#import "JSAPIPageResourceChatBlacklistResource_.h"
 #import "JSAPIPageResourceChatMessageResource_.h"
 #import "JSAPIPageResourceChatUserThreadResource_.h"
 #import "JSAPIResult.h"
@@ -118,6 +118,8 @@ extern NSInteger kJSAPIChatApiMissingParamErrorCode;
 /// <b>Permissions Needed:</b> CHAT_ADMIN or owner
 ///
 /// @param _id The user id or &#39;me&#39;
+/// @param size The number of objects returned per page (optional) (default to 25)
+/// @param page The number of the page returned, starting with 1 (optional) (default to 1)
 /// 
 ///  code:200 message:"OK",
 ///  code:400 message:"Bad Request",
@@ -125,9 +127,11 @@ extern NSInteger kJSAPIChatApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSArray<JSAPIChatBlacklistResource>*
+/// @return JSAPIPageResourceChatBlacklistResource_*
 -(NSURLSessionTask*) getChatMessageBlacklistWithId: (NSString*) _id
-    completionHandler: (void (^)(NSArray<JSAPIChatBlacklistResource>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceChatBlacklistResource_* output, NSError* error)) handler;
 
 
 /// List your threads

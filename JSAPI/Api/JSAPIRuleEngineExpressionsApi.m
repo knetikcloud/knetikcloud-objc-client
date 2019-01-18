@@ -2,6 +2,7 @@
 #import "JSAPIQueryParamCollection.h"
 #import "JSAPIApiClient.h"
 #import "JSAPIExpressionResource.h"
+#import "JSAPIPageResourceExpressionResource_.h"
 #import "JSAPIResult.h"
 #import "JSAPIStringWrapper.h"
 
@@ -124,10 +125,16 @@ NSInteger kJSAPIRuleEngineExpressionsApiMissingParamErrorCode = 234513;
 /// Each resource contains a type and a definition that are read-only, all the other fields must be provided when using the expression in a rule. <br><br><b>Permissions Needed:</b> BRE_RULE_ENGINE_EXPRESSIONS_USER
 ///  @param filterTypeGroup Filter for expressions by type group (optional)
 ///
-///  @returns NSArray<JSAPIExpressionResource>*
+///  @param size The number of objects returned per page (optional, default to 25)
+///
+///  @param page The number of the page returned, starting with 1 (optional, default to 1)
+///
+///  @returns JSAPIPageResourceExpressionResource_*
 ///
 -(NSURLSessionTask*) getBREExpressionsWithFilterTypeGroup: (NSString*) filterTypeGroup
-    completionHandler: (void (^)(NSArray<JSAPIExpressionResource>* output, NSError* error)) handler {
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceExpressionResource_* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/bre/expressions"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
@@ -135,6 +142,12 @@ NSInteger kJSAPIRuleEngineExpressionsApiMissingParamErrorCode = 234513;
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     if (filterTypeGroup != nil) {
         queryParams[@"filter_type_group"] = filterTypeGroup;
+    }
+    if (size != nil) {
+        queryParams[@"size"] = size;
+    }
+    if (page != nil) {
+        queryParams[@"page"] = page;
     }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
@@ -168,10 +181,10 @@ NSInteger kJSAPIRuleEngineExpressionsApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSArray<JSAPIExpressionResource>*"
+                              responseType: @"JSAPIPageResourceExpressionResource_*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSArray<JSAPIExpressionResource>*)data, error);
+                                    handler((JSAPIPageResourceExpressionResource_*)data, error);
                                 }
                             }];
 }

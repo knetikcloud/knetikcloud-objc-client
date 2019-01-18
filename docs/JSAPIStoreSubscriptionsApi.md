@@ -1,6 +1,6 @@
 # JSAPIStoreSubscriptionsApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -14,7 +14,7 @@ Method | HTTP request | Description
 [**getSubscriptions**](JSAPIStoreSubscriptionsApi.md#getsubscriptions) | **GET** /subscriptions | List available subscription items and associated plans
 [**processSubscriptions**](JSAPIStoreSubscriptionsApi.md#processsubscriptions) | **POST** /subscriptions/process | Processes subscriptions and charge dues
 [**updateSubscription**](JSAPIStoreSubscriptionsApi.md#updatesubscription) | **PUT** /subscriptions/{id} | Updates a subscription item and associated plans
-[**updateSubscriptionTemplate**](JSAPIStoreSubscriptionsApi.md#updatesubscriptiontemplate) | **PUT** /subscriptions/templates/{id} | Update a subscription template
+[**updateSubscriptionTemplate**](JSAPIStoreSubscriptionsApi.md#updatesubscriptiontemplate) | **PATCH** /subscriptions/templates/{id} | Update a subscription template
 
 
 # **createSubscription**
@@ -83,7 +83,7 @@ Name | Type | Description  | Notes
 
 Create a subscription template
 
-Subscription Templates define a type of subscription and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+Subscription Templates define a type of subscription and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> POST
 
 ### Example 
 ```objc
@@ -201,7 +201,7 @@ void (empty response body)
 
 Delete a subscription template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN
+<b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> DELETE
 
 ### Example 
 ```objc
@@ -317,7 +317,7 @@ Name | Type | Description  | Notes
 
 Get a single subscription template
 
-Subscription Templates define a type of subscription and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+Subscription Templates define a type of subscription and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> GET
 
 ### Example 
 ```objc
@@ -377,7 +377,7 @@ Name | Type | Description  | Notes
 
 List and search subscription templates
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or SUBSCRIPTIONS_ADMIN
+<b>Permissions Needed:</b> TEMPLATE_ADMIN or SUBSCRIPTIONS_ADMIN<br /><b>Permissions Needed:</b> LIST
 
 ### Example 
 ```objc
@@ -612,13 +612,14 @@ void (empty response body)
 # **updateSubscriptionTemplate**
 ```objc
 -(NSURLSessionTask*) updateSubscriptionTemplateWithId: (NSString*) _id
-    subscriptionTemplateResource: (JSAPISubscriptionTemplateResource*) subscriptionTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
         completionHandler: (void (^)(JSAPISubscriptionTemplateResource* output, NSError* error)) handler;
 ```
 
 Update a subscription template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN
+<b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -632,13 +633,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* _id = @"_id_example"; // The id of the template
-JSAPISubscriptionTemplateResource* subscriptionTemplateResource = [[JSAPISubscriptionTemplateResource alloc] init]; // The subscription template resource object (optional)
+JSAPIPatchResource* templatePatchResource = [[JSAPIPatchResource alloc] init]; // The patch resource object (optional)
+NSNumber* testValidation = @true; // If true, this will test validation but not submit the patch request (optional)
 
 JSAPIStoreSubscriptionsApi*apiInstance = [[JSAPIStoreSubscriptionsApi alloc] init];
 
 // Update a subscription template
 [apiInstance updateSubscriptionTemplateWithId:_id
-              subscriptionTemplateResource:subscriptionTemplateResource
+              templatePatchResource:templatePatchResource
+              testValidation:testValidation
           completionHandler: ^(JSAPISubscriptionTemplateResource* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
@@ -654,7 +657,8 @@ JSAPIStoreSubscriptionsApi*apiInstance = [[JSAPIStoreSubscriptionsApi alloc] ini
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **_id** | **NSString***| The id of the template | 
- **subscriptionTemplateResource** | [**JSAPISubscriptionTemplateResource***](JSAPISubscriptionTemplateResource.md)| The subscription template resource object | [optional] 
+ **templatePatchResource** | [**JSAPIPatchResource***](JSAPIPatchResource.md)| The patch resource object | [optional] 
+ **testValidation** | **NSNumber***| If true, this will test validation but not submit the patch request | [optional] 
 
 ### Return type
 

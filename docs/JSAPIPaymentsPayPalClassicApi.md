@@ -1,6 +1,6 @@
 # JSAPIPaymentsPayPalClassicApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -13,7 +13,7 @@ Method | HTTP request | Description
 # **createPayPalBillingAgreementUrl**
 ```objc
 -(NSURLSessionTask*) createPayPalBillingAgreementUrlWithRequest: (JSAPICreateBillingAgreementRequest*) request
-        completionHandler: (void (^)(NSString* output, NSError* error)) handler;
+        completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler;
 ```
 
 Create a PayPal Classic billing agreement for the user
@@ -37,7 +37,7 @@ JSAPIPaymentsPayPalClassicApi*apiInstance = [[JSAPIPaymentsPayPalClassicApi allo
 
 // Create a PayPal Classic billing agreement for the user
 [apiInstance createPayPalBillingAgreementUrlWithRequest:request
-          completionHandler: ^(NSString* output, NSError* error) {
+          completionHandler: ^(JSAPIStringWrapper* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -55,7 +55,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**NSString***
+[**JSAPIStringWrapper***](JSAPIStringWrapper.md)
 
 ### Authorization
 
@@ -71,7 +71,7 @@ Name | Type | Description  | Notes
 # **createPayPalExpressCheckout**
 ```objc
 -(NSURLSessionTask*) createPayPalExpressCheckoutWithRequest: (JSAPICreatePayPalPaymentRequest*) request
-        completionHandler: (void (^)(NSString* output, NSError* error)) handler;
+        completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler;
 ```
 
 Create a payment token for PayPal express checkout
@@ -95,7 +95,7 @@ JSAPIPaymentsPayPalClassicApi*apiInstance = [[JSAPIPaymentsPayPalClassicApi allo
 
 // Create a payment token for PayPal express checkout
 [apiInstance createPayPalExpressCheckoutWithRequest:request
-          completionHandler: ^(NSString* output, NSError* error) {
+          completionHandler: ^(JSAPIStringWrapper* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -113,7 +113,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**NSString***
+[**JSAPIStringWrapper***](JSAPIStringWrapper.md)
 
 ### Authorization
 
@@ -129,7 +129,7 @@ Name | Type | Description  | Notes
 # **finalizePayPalBillingAgreement**
 ```objc
 -(NSURLSessionTask*) finalizePayPalBillingAgreementWithRequest: (JSAPIFinalizeBillingAgreementRequest*) request
-        completionHandler: (void (^)(NSNumber* output, NSError* error)) handler;
+        completionHandler: (void (^)(JSAPIIntWrapper* output, NSError* error)) handler;
 ```
 
 Finalizes a billing agreement after the user has accepted through PayPal
@@ -153,7 +153,7 @@ JSAPIPaymentsPayPalClassicApi*apiInstance = [[JSAPIPaymentsPayPalClassicApi allo
 
 // Finalizes a billing agreement after the user has accepted through PayPal
 [apiInstance finalizePayPalBillingAgreementWithRequest:request
-          completionHandler: ^(NSNumber* output, NSError* error) {
+          completionHandler: ^(JSAPIIntWrapper* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -171,7 +171,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**NSNumber***
+[**JSAPIIntWrapper***](JSAPIIntWrapper.md)
 
 ### Authorization
 

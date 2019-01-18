@@ -40,10 +40,6 @@
 /* Alerts vendor when SKU inventory drops below this value [optional]
  */
 @property(nonatomic) NSNumber* minInventoryThreshold;
-
-@property(nonatomic) NSNumber* notAvailable;
-
-@property(nonatomic) NSNumber* notDisplayable;
 /* The base price before any sale 
  */
 @property(nonatomic) NSNumber* originalPrice;

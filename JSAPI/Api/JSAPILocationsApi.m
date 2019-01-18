@@ -1,10 +1,11 @@
 #import "JSAPILocationsApi.h"
 #import "JSAPIQueryParamCollection.h"
 #import "JSAPIApiClient.h"
-#import "JSAPICountryResource.h"
 #import "JSAPICurrencyResource.h"
+#import "JSAPIPageResourceCountryResource_.h"
+#import "JSAPIPageResourceStateResource_.h"
 #import "JSAPIResult.h"
-#import "JSAPIStateResource.h"
+#import "JSAPIStringWrapper.h"
 
 
 @interface JSAPILocationsApi ()
@@ -55,15 +56,26 @@ NSInteger kJSAPILocationsApiMissingParamErrorCode = 234513;
 ///
 /// Get a list of countries
 /// <b>Permissions Needed:</b> ANY
-///  @returns NSArray<JSAPICountryResource>*
+///  @param size The number of objects returned per page (optional, default to 25)
 ///
--(NSURLSessionTask*) getCountriesWithCompletionHandler: 
-    (void (^)(NSArray<JSAPICountryResource>* output, NSError* error)) handler {
+///  @param page The number of the page returned, starting with 1 (optional, default to 1)
+///
+///  @returns JSAPIPageResourceCountryResource_*
+///
+-(NSURLSessionTask*) getCountriesWithSize: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceCountryResource_* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/location/countries"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (size != nil) {
+        queryParams[@"size"] = size;
+    }
+    if (page != nil) {
+        queryParams[@"page"] = page;
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -96,10 +108,10 @@ NSInteger kJSAPILocationsApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSArray<JSAPICountryResource>*"
+                              responseType: @"JSAPIPageResourceCountryResource_*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSArray<JSAPICountryResource>*)data, error);
+                                    handler((JSAPIPageResourceCountryResource_*)data, error);
                                 }
                             }];
 }
@@ -107,10 +119,10 @@ NSInteger kJSAPILocationsApiMissingParamErrorCode = 234513;
 ///
 /// Get the iso3 code of your country
 /// Determined by geo ip location. <br><br><b>Permissions Needed:</b> ANY
-///  @returns NSString*
+///  @returns JSAPIStringWrapper*
 ///
 -(NSURLSessionTask*) getCountryByGeoLocationWithCompletionHandler: 
-    (void (^)(NSString* output, NSError* error)) handler {
+    (void (^)(JSAPIStringWrapper* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/location/geolocation/country"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
@@ -148,10 +160,10 @@ NSInteger kJSAPILocationsApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSString*"
+                              responseType: @"JSAPIStringWrapper*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSString*)data, error);
+                                    handler((JSAPIStringWrapper*)data, error);
                                 }
                             }];
 }
@@ -161,10 +173,16 @@ NSInteger kJSAPILocationsApiMissingParamErrorCode = 234513;
 /// <b>Permissions Needed:</b> ANY
 ///  @param countryCodeIso3 The iso3 code of the country 
 ///
-///  @returns NSArray<JSAPIStateResource>*
+///  @param size The number of objects returned per page (optional, default to 25)
+///
+///  @param page The number of the page returned, starting with 1 (optional, default to 1)
+///
+///  @returns JSAPIPageResourceStateResource_*
 ///
 -(NSURLSessionTask*) getCountryStatesWithCountryCodeIso3: (NSString*) countryCodeIso3
-    completionHandler: (void (^)(NSArray<JSAPIStateResource>* output, NSError* error)) handler {
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceStateResource_* output, NSError* error)) handler {
     // verify the required parameter 'countryCodeIso3' is set
     if (countryCodeIso3 == nil) {
         NSParameterAssert(countryCodeIso3);
@@ -184,6 +202,12 @@ NSInteger kJSAPILocationsApiMissingParamErrorCode = 234513;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (size != nil) {
+        queryParams[@"size"] = size;
+    }
+    if (page != nil) {
+        queryParams[@"page"] = page;
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -216,10 +240,10 @@ NSInteger kJSAPILocationsApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSArray<JSAPIStateResource>*"
+                              responseType: @"JSAPIPageResourceStateResource_*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSArray<JSAPIStateResource>*)data, error);
+                                    handler((JSAPIPageResourceStateResource_*)data, error);
                                 }
                             }];
 }

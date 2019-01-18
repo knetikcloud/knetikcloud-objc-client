@@ -1,6 +1,6 @@
 # JSAPIInvoicesApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -79,8 +79,9 @@ Name | Type | Description  | Notes
 
 # **getFulFillmentStatuses**
 ```objc
--(NSURLSessionTask*) getFulFillmentStatusesWithCompletionHandler: 
-        (void (^)(NSArray<NSString*>* output, NSError* error)) handler;
+-(NSURLSessionTask*) getFulFillmentStatusesWithSize: (NSNumber*) size
+    page: (NSNumber*) page
+        completionHandler: (void (^)(JSAPIPageResourceString_* output, NSError* error)) handler;
 ```
 
 Lists available fulfillment statuses
@@ -98,12 +99,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 [apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
 
 
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
 JSAPIInvoicesApi*apiInstance = [[JSAPIInvoicesApi alloc] init];
 
 // Lists available fulfillment statuses
-[apiInstance getFulFillmentStatusesWithCompletionHandler: 
-          ^(NSArray<NSString*>* output, NSError* error) {
+[apiInstance getFulFillmentStatusesWithSize:size
+              page:page
+          completionHandler: ^(JSAPIPageResourceString_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -114,11 +118,15 @@ JSAPIInvoicesApi*apiInstance = [[JSAPIInvoicesApi alloc] init];
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
 ### Return type
 
-**NSArray<NSString*>***
+[**JSAPIPageResourceString_***](JSAPIPageResourceString_.md)
 
 ### Authorization
 
@@ -379,8 +387,9 @@ Name | Type | Description  | Notes
 
 # **getPaymentStatuses**
 ```objc
--(NSURLSessionTask*) getPaymentStatusesWithCompletionHandler: 
-        (void (^)(NSArray<NSString*>* output, NSError* error)) handler;
+-(NSURLSessionTask*) getPaymentStatusesWithSize: (NSNumber*) size
+    page: (NSNumber*) page
+        completionHandler: (void (^)(JSAPIPageResourceString_* output, NSError* error)) handler;
 ```
 
 Lists available payment statuses
@@ -398,12 +407,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 [apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
 
 
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
 JSAPIInvoicesApi*apiInstance = [[JSAPIInvoicesApi alloc] init];
 
 // Lists available payment statuses
-[apiInstance getPaymentStatusesWithCompletionHandler: 
-          ^(NSArray<NSString*>* output, NSError* error) {
+[apiInstance getPaymentStatusesWithSize:size
+              page:page
+          completionHandler: ^(JSAPIPageResourceString_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -414,11 +426,15 @@ JSAPIInvoicesApi*apiInstance = [[JSAPIInvoicesApi alloc] init];
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
 ### Return type
 
-**NSArray<NSString*>***
+[**JSAPIPageResourceString_***](JSAPIPageResourceString_.md)
 
 ### Authorization
 

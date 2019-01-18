@@ -1,6 +1,6 @@
 # JSAPILocationsApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -12,8 +12,9 @@ Method | HTTP request | Description
 
 # **getCountries**
 ```objc
--(NSURLSessionTask*) getCountriesWithCompletionHandler: 
-        (void (^)(NSArray<JSAPICountryResource>* output, NSError* error)) handler;
+-(NSURLSessionTask*) getCountriesWithSize: (NSNumber*) size
+    page: (NSNumber*) page
+        completionHandler: (void (^)(JSAPIPageResourceCountryResource_* output, NSError* error)) handler;
 ```
 
 Get a list of countries
@@ -31,12 +32,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 [apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
 
 
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
 JSAPILocationsApi*apiInstance = [[JSAPILocationsApi alloc] init];
 
 // Get a list of countries
-[apiInstance getCountriesWithCompletionHandler: 
-          ^(NSArray<JSAPICountryResource>* output, NSError* error) {
+[apiInstance getCountriesWithSize:size
+              page:page
+          completionHandler: ^(JSAPIPageResourceCountryResource_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -47,11 +51,15 @@ JSAPILocationsApi*apiInstance = [[JSAPILocationsApi alloc] init];
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
 ### Return type
 
-[**NSArray<JSAPICountryResource>***](JSAPICountryResource.md)
+[**JSAPIPageResourceCountryResource_***](JSAPIPageResourceCountryResource_.md)
 
 ### Authorization
 
@@ -67,7 +75,7 @@ This endpoint does not need any parameter.
 # **getCountryByGeoLocation**
 ```objc
 -(NSURLSessionTask*) getCountryByGeoLocationWithCompletionHandler: 
-        (void (^)(NSString* output, NSError* error)) handler;
+        (void (^)(JSAPIStringWrapper* output, NSError* error)) handler;
 ```
 
 Get the iso3 code of your country
@@ -90,7 +98,7 @@ JSAPILocationsApi*apiInstance = [[JSAPILocationsApi alloc] init];
 
 // Get the iso3 code of your country
 [apiInstance getCountryByGeoLocationWithCompletionHandler: 
-          ^(NSString* output, NSError* error) {
+          ^(JSAPIStringWrapper* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -105,7 +113,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**NSString***
+[**JSAPIStringWrapper***](JSAPIStringWrapper.md)
 
 ### Authorization
 
@@ -121,7 +129,9 @@ This endpoint does not need any parameter.
 # **getCountryStates**
 ```objc
 -(NSURLSessionTask*) getCountryStatesWithCountryCodeIso3: (NSString*) countryCodeIso3
-        completionHandler: (void (^)(NSArray<JSAPIStateResource>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+        completionHandler: (void (^)(JSAPIPageResourceStateResource_* output, NSError* error)) handler;
 ```
 
 Get a list of a country's states
@@ -140,12 +150,16 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* countryCodeIso3 = @"countryCodeIso3_example"; // The iso3 code of the country
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
 JSAPILocationsApi*apiInstance = [[JSAPILocationsApi alloc] init];
 
 // Get a list of a country's states
 [apiInstance getCountryStatesWithCountryCodeIso3:countryCodeIso3
-          completionHandler: ^(NSArray<JSAPIStateResource>* output, NSError* error) {
+              size:size
+              page:page
+          completionHandler: ^(JSAPIPageResourceStateResource_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -160,10 +174,12 @@ JSAPILocationsApi*apiInstance = [[JSAPILocationsApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **countryCodeIso3** | **NSString***| The iso3 code of the country | 
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
 ### Return type
 
-[**NSArray<JSAPIStateResource>***](JSAPIStateResource.md)
+[**JSAPIPageResourceStateResource_***](JSAPIPageResourceStateResource_.md)
 
 ### Authorization
 

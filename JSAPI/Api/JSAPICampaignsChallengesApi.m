@@ -8,6 +8,7 @@
 #import "JSAPIPageResourceChallengeEventResource_.h"
 #import "JSAPIPageResourceChallengeResource_.h"
 #import "JSAPIPageResourceTemplateResource_.h"
+#import "JSAPIPatchResource.h"
 #import "JSAPIResult.h"
 #import "JSAPITemplateResource.h"
 
@@ -192,7 +193,7 @@ NSInteger kJSAPICampaignsChallengesApiMissingParamErrorCode = 234513;
 
 ///
 /// Create a challenge activity template
-/// Challenge Activity Templates define a type of challenge activity and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// Challenge Activity Templates define a type of challenge activity and the properties they have.<br /><b>Permissions Needed:</b> POST
 ///  @param challengeActivityTemplateResource The challengeActivity template resource object (optional)
 ///
 ///  @returns JSAPITemplateResource*
@@ -247,7 +248,7 @@ NSInteger kJSAPICampaignsChallengesApiMissingParamErrorCode = 234513;
 
 ///
 /// Create a challenge template
-/// Challenge Templates define a type of challenge and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// Challenge Templates define a type of challenge and the properties they have.<br /><b>Permissions Needed:</b> POST
 ///  @param challengeTemplateResource The challenge template resource object (optional)
 ///
 ///  @returns JSAPITemplateResource*
@@ -455,7 +456,7 @@ NSInteger kJSAPICampaignsChallengesApiMissingParamErrorCode = 234513;
 
 ///
 /// Delete a challenge activity template
-/// If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// If cascade = 'detach', it will force delete the template even if it's attached to other objects.<br /><b>Permissions Needed:</b> DELETE
 ///  @param _id The id of the template 
 ///
 ///  @param cascade The value needed to delete used templates (optional)
@@ -597,7 +598,7 @@ NSInteger kJSAPICampaignsChallengesApiMissingParamErrorCode = 234513;
 
 ///
 /// Delete a challenge template
-/// If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// If cascade = 'detach', it will force delete the template even if it's attached to other objects.<br /><b>Permissions Needed:</b> DELETE
 ///  @param _id The id of the template 
 ///
 ///  @param cascade The value needed to delete used templates (optional)
@@ -910,7 +911,7 @@ NSInteger kJSAPICampaignsChallengesApiMissingParamErrorCode = 234513;
 
 ///
 /// Get a single challenge activity template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or CHALLENGES_ADMIN
+/// <b>Permissions Needed:</b> GET
 ///  @param _id The id of the template 
 ///
 ///  @returns JSAPITemplateResource*
@@ -978,7 +979,7 @@ NSInteger kJSAPICampaignsChallengesApiMissingParamErrorCode = 234513;
 
 ///
 /// List and search challenge activity templates
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or CHALLENGES_ADMIN
+/// <b>Permissions Needed:</b> LIST
 ///  @param size The number of objects returned per page (optional, default to 25)
 ///
 ///  @param page The number of the page returned, starting with 1 (optional, default to 1)
@@ -1208,7 +1209,7 @@ NSInteger kJSAPICampaignsChallengesApiMissingParamErrorCode = 234513;
 
 ///
 /// Get a single challenge template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or CHALLENGES_ADMIN
+/// <b>Permissions Needed:</b> GET
 ///  @param _id The id of the template 
 ///
 ///  @returns JSAPITemplateResource*
@@ -1276,7 +1277,7 @@ NSInteger kJSAPICampaignsChallengesApiMissingParamErrorCode = 234513;
 
 ///
 /// List and search challenge templates
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or CHALLENGES_ADMIN
+/// <b>Permissions Needed:</b> LIST
 ///  @param size The number of objects returned per page (optional, default to 25)
 ///
 ///  @param page The number of the page returned, starting with 1 (optional, default to 1)
@@ -1599,15 +1600,18 @@ NSInteger kJSAPICampaignsChallengesApiMissingParamErrorCode = 234513;
 
 ///
 /// Update an challenge activity template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> PUT
 ///  @param _id The id of the template 
 ///
-///  @param challengeActivityTemplateResource The challengeActivity template resource object (optional)
+///  @param templatePatchResource The patch resource object (optional)
+///
+///  @param testValidation If true, this will test validation but not submit the patch request (optional)
 ///
 ///  @returns JSAPITemplateResource*
 ///
 -(NSURLSessionTask*) updateChallengeActivityTemplateWithId: (NSString*) _id
-    challengeActivityTemplateResource: (JSAPITemplateResource*) challengeActivityTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
     completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler {
     // verify the required parameter '_id' is set
     if (_id == nil) {
@@ -1628,6 +1632,9 @@ NSInteger kJSAPICampaignsChallengesApiMissingParamErrorCode = 234513;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (testValidation != nil) {
+        queryParams[@"test_validation"] = [testValidation isEqual:@(YES)] ? @"true" : @"false";
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -1648,10 +1655,10 @@ NSInteger kJSAPICampaignsChallengesApiMissingParamErrorCode = 234513;
     id bodyParam = nil;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *localVarFiles = [[NSMutableDictionary alloc] init];
-    bodyParam = challengeActivityTemplateResource;
+    bodyParam = templatePatchResource;
 
     return [self.apiClient requestWithPath: resourcePath
-                                    method: @"PUT"
+                                    method: @"PATCH"
                                 pathParams: pathParams
                                queryParams: queryParams
                                 formParams: formParams
@@ -1671,15 +1678,18 @@ NSInteger kJSAPICampaignsChallengesApiMissingParamErrorCode = 234513;
 
 ///
 /// Update a challenge template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> PUT
 ///  @param _id The id of the template 
 ///
-///  @param challengeTemplateResource The challenge template resource object (optional)
+///  @param templatePatchResource The patch resource object (optional)
+///
+///  @param testValidation If true, this will test validation but not submit the patch request (optional)
 ///
 ///  @returns JSAPITemplateResource*
 ///
 -(NSURLSessionTask*) updateChallengeTemplateWithId: (NSString*) _id
-    challengeTemplateResource: (JSAPITemplateResource*) challengeTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
     completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler {
     // verify the required parameter '_id' is set
     if (_id == nil) {
@@ -1700,6 +1710,9 @@ NSInteger kJSAPICampaignsChallengesApiMissingParamErrorCode = 234513;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (testValidation != nil) {
+        queryParams[@"test_validation"] = [testValidation isEqual:@(YES)] ? @"true" : @"false";
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -1720,10 +1733,10 @@ NSInteger kJSAPICampaignsChallengesApiMissingParamErrorCode = 234513;
     id bodyParam = nil;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *localVarFiles = [[NSMutableDictionary alloc] init];
-    bodyParam = challengeTemplateResource;
+    bodyParam = templatePatchResource;
 
     return [self.apiClient requestWithPath: resourcePath
-                                    method: @"PUT"
+                                    method: @"PATCH"
                                 pathParams: pathParams
                                queryParams: queryParams
                                 formParams: formParams

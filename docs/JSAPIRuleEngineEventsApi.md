@@ -1,6 +1,6 @@
 # JSAPIRuleEngineEventsApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -10,7 +10,7 @@ Method | HTTP request | Description
 # **sendBREEvent**
 ```objc
 -(NSURLSessionTask*) sendBREEventWithBreEvent: (JSAPIBreEvent*) breEvent
-        completionHandler: (void (^)(NSString* output, NSError* error)) handler;
+        completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler;
 ```
 
 Fire a new event, based on an existing trigger
@@ -34,7 +34,7 @@ JSAPIRuleEngineEventsApi*apiInstance = [[JSAPIRuleEngineEventsApi alloc] init];
 
 // Fire a new event, based on an existing trigger
 [apiInstance sendBREEventWithBreEvent:breEvent
-          completionHandler: ^(NSString* output, NSError* error) {
+          completionHandler: ^(JSAPIStringWrapper* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -52,7 +52,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**NSString***
+[**JSAPIStringWrapper***](JSAPIStringWrapper.md)
 
 ### Authorization
 

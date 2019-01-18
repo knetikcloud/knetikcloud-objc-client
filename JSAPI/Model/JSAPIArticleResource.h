@@ -16,10 +16,13 @@
 
 #import "JSAPINestedCategory.h"
 #import "JSAPIProperty.h"
+#import "JSAPISimpleUserResource.h"
 @protocol JSAPINestedCategory;
 @class JSAPINestedCategory;
 @protocol JSAPIProperty;
 @class JSAPIProperty;
+@protocol JSAPISimpleUserResource;
+@class JSAPISimpleUserResource;
 
 
 
@@ -43,7 +46,10 @@
 /* The date/time this resource was created in seconds since unix epoch [optional]
  */
 @property(nonatomic) NSNumber* createdDate;
-/* The id of the article [optional]
+/* The creator of the article. Default: caller [optional]
+ */
+@property(nonatomic) JSAPISimpleUserResource* creator;
+/* The id of the article. Default: random [optional]
  */
 @property(nonatomic) NSString* _id;
 /* The tags for the article [optional]

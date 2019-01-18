@@ -1,6 +1,6 @@
 # JSAPIRuleEngineRulesApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -129,7 +129,7 @@ void (empty response body)
 # **getBREExpressionAsString**
 ```objc
 -(NSURLSessionTask*) getBREExpressionAsStringWithExpression: (JSAPIExpressionObject_*) expression
-        completionHandler: (void (^)(NSString* output, NSError* error)) handler;
+        completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler;
 ```
 
 Returns a string representation of the provided expression
@@ -153,7 +153,7 @@ JSAPIRuleEngineRulesApi*apiInstance = [[JSAPIRuleEngineRulesApi alloc] init];
 
 // Returns a string representation of the provided expression
 [apiInstance getBREExpressionAsStringWithExpression:expression
-          completionHandler: ^(NSString* output, NSError* error) {
+          completionHandler: ^(JSAPIStringWrapper* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -171,7 +171,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**NSString***
+[**JSAPIStringWrapper***](JSAPIStringWrapper.md)
 
 ### Authorization
 

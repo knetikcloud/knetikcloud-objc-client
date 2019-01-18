@@ -1,6 +1,6 @@
 # JSAPICampaignsChallengesApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -25,8 +25,8 @@ Method | HTTP request | Description
 [**getChallenges**](JSAPICampaignsChallengesApi.md#getchallenges) | **GET** /challenges | Retrieve a list of challenges
 [**updateChallenge**](JSAPICampaignsChallengesApi.md#updatechallenge) | **PUT** /challenges/{id} | Update a challenge
 [**updateChallengeActivity**](JSAPICampaignsChallengesApi.md#updatechallengeactivity) | **PUT** /challenges/{challenge_id}/activities/{id} | Update a challenge activity
-[**updateChallengeActivityTemplate**](JSAPICampaignsChallengesApi.md#updatechallengeactivitytemplate) | **PUT** /challenge-activities/templates/{id} | Update an challenge activity template
-[**updateChallengeTemplate**](JSAPICampaignsChallengesApi.md#updatechallengetemplate) | **PUT** /challenges/templates/{id} | Update a challenge template
+[**updateChallengeActivityTemplate**](JSAPICampaignsChallengesApi.md#updatechallengeactivitytemplate) | **PATCH** /challenge-activities/templates/{id} | Update an challenge activity template
+[**updateChallengeTemplate**](JSAPICampaignsChallengesApi.md#updatechallengetemplate) | **PATCH** /challenges/templates/{id} | Update a challenge template
 
 
 # **createChallenge**
@@ -161,7 +161,7 @@ Name | Type | Description  | Notes
 
 Create a challenge activity template
 
-Challenge Activity Templates define a type of challenge activity and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+Challenge Activity Templates define a type of challenge activity and the properties they have.<br /><b>Permissions Needed:</b> POST
 
 ### Example 
 ```objc
@@ -219,7 +219,7 @@ Name | Type | Description  | Notes
 
 Create a challenge template
 
-Challenge Templates define a type of challenge and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+Challenge Templates define a type of challenge and the properties they have.<br /><b>Permissions Needed:</b> POST
 
 ### Example 
 ```objc
@@ -392,7 +392,7 @@ void (empty response body)
 
 Delete a challenge activity template
 
-If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+If cascade = 'detach', it will force delete the template even if it's attached to other objects.<br /><b>Permissions Needed:</b> DELETE
 
 ### Example 
 ```objc
@@ -506,7 +506,7 @@ void (empty response body)
 
 Delete a challenge template
 
-If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+If cascade = 'detach', it will force delete the template even if it's attached to other objects.<br /><b>Permissions Needed:</b> DELETE
 
 ### Example 
 ```objc
@@ -754,7 +754,7 @@ Name | Type | Description  | Notes
 
 Get a single challenge activity template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or CHALLENGES_ADMIN
+<b>Permissions Needed:</b> GET
 
 ### Example 
 ```objc
@@ -814,7 +814,7 @@ Name | Type | Description  | Notes
 
 List and search challenge activity templates
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or CHALLENGES_ADMIN
+<b>Permissions Needed:</b> LIST
 
 ### Example 
 ```objc
@@ -1018,7 +1018,7 @@ Name | Type | Description  | Notes
 
 Get a single challenge template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or CHALLENGES_ADMIN
+<b>Permissions Needed:</b> GET
 
 ### Example 
 ```objc
@@ -1078,7 +1078,7 @@ Name | Type | Description  | Notes
 
 List and search challenge templates
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or CHALLENGES_ADMIN
+<b>Permissions Needed:</b> LIST
 
 ### Example 
 ```objc
@@ -1344,13 +1344,14 @@ void (empty response body)
 # **updateChallengeActivityTemplate**
 ```objc
 -(NSURLSessionTask*) updateChallengeActivityTemplateWithId: (NSString*) _id
-    challengeActivityTemplateResource: (JSAPITemplateResource*) challengeActivityTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
         completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler;
 ```
 
 Update an challenge activity template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN
+<b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -1364,13 +1365,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* _id = @"_id_example"; // The id of the template
-JSAPITemplateResource* challengeActivityTemplateResource = [[JSAPITemplateResource alloc] init]; // The challengeActivity template resource object (optional)
+JSAPIPatchResource* templatePatchResource = [[JSAPIPatchResource alloc] init]; // The patch resource object (optional)
+NSNumber* testValidation = @true; // If true, this will test validation but not submit the patch request (optional)
 
 JSAPICampaignsChallengesApi*apiInstance = [[JSAPICampaignsChallengesApi alloc] init];
 
 // Update an challenge activity template
 [apiInstance updateChallengeActivityTemplateWithId:_id
-              challengeActivityTemplateResource:challengeActivityTemplateResource
+              templatePatchResource:templatePatchResource
+              testValidation:testValidation
           completionHandler: ^(JSAPITemplateResource* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
@@ -1386,7 +1389,8 @@ JSAPICampaignsChallengesApi*apiInstance = [[JSAPICampaignsChallengesApi alloc] i
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **_id** | **NSString***| The id of the template | 
- **challengeActivityTemplateResource** | [**JSAPITemplateResource***](JSAPITemplateResource.md)| The challengeActivity template resource object | [optional] 
+ **templatePatchResource** | [**JSAPIPatchResource***](JSAPIPatchResource.md)| The patch resource object | [optional] 
+ **testValidation** | **NSNumber***| If true, this will test validation but not submit the patch request | [optional] 
 
 ### Return type
 
@@ -1406,13 +1410,14 @@ Name | Type | Description  | Notes
 # **updateChallengeTemplate**
 ```objc
 -(NSURLSessionTask*) updateChallengeTemplateWithId: (NSString*) _id
-    challengeTemplateResource: (JSAPITemplateResource*) challengeTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
         completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler;
 ```
 
 Update a challenge template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN
+<b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -1426,13 +1431,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* _id = @"_id_example"; // The id of the template
-JSAPITemplateResource* challengeTemplateResource = [[JSAPITemplateResource alloc] init]; // The challenge template resource object (optional)
+JSAPIPatchResource* templatePatchResource = [[JSAPIPatchResource alloc] init]; // The patch resource object (optional)
+NSNumber* testValidation = @true; // If true, this will test validation but not submit the patch request (optional)
 
 JSAPICampaignsChallengesApi*apiInstance = [[JSAPICampaignsChallengesApi alloc] init];
 
 // Update a challenge template
 [apiInstance updateChallengeTemplateWithId:_id
-              challengeTemplateResource:challengeTemplateResource
+              templatePatchResource:templatePatchResource
+              testValidation:testValidation
           completionHandler: ^(JSAPITemplateResource* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
@@ -1448,7 +1455,8 @@ JSAPICampaignsChallengesApi*apiInstance = [[JSAPICampaignsChallengesApi alloc] i
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **_id** | **NSString***| The id of the template | 
- **challengeTemplateResource** | [**JSAPITemplateResource***](JSAPITemplateResource.md)| The challenge template resource object | [optional] 
+ **templatePatchResource** | [**JSAPIPatchResource***](JSAPIPatchResource.md)| The patch resource object | [optional] 
+ **testValidation** | **NSNumber***| If true, this will test validation but not submit the patch request | [optional] 
 
 ### Return type
 

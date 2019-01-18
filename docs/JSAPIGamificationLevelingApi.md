@@ -1,6 +1,6 @@
 # JSAPIGamificationLevelingApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -189,8 +189,9 @@ Name | Type | Description  | Notes
 
 # **getLevelTriggers**
 ```objc
--(NSURLSessionTask*) getLevelTriggersWithCompletionHandler: 
-        (void (^)(NSArray<JSAPIBreTriggerResource>* output, NSError* error)) handler;
+-(NSURLSessionTask*) getLevelTriggersWithSize: (NSNumber*) size
+    page: (NSNumber*) page
+        completionHandler: (void (^)(JSAPIPageResourceBreTriggerResource_* output, NSError* error)) handler;
 ```
 
 Get the list of triggers that can be used to trigger a leveling progress update
@@ -208,12 +209,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 [apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
 
 
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
 JSAPIGamificationLevelingApi*apiInstance = [[JSAPIGamificationLevelingApi alloc] init];
 
 // Get the list of triggers that can be used to trigger a leveling progress update
-[apiInstance getLevelTriggersWithCompletionHandler: 
-          ^(NSArray<JSAPIBreTriggerResource>* output, NSError* error) {
+[apiInstance getLevelTriggersWithSize:size
+              page:page
+          completionHandler: ^(JSAPIPageResourceBreTriggerResource_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -224,11 +228,15 @@ JSAPIGamificationLevelingApi*apiInstance = [[JSAPIGamificationLevelingApi alloc]
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
 ### Return type
 
-[**NSArray<JSAPIBreTriggerResource>***](JSAPIBreTriggerResource.md)
+[**JSAPIPageResourceBreTriggerResource_***](JSAPIPageResourceBreTriggerResource_.md)
 
 ### Authorization
 
@@ -577,7 +585,7 @@ void (empty response body)
 ```objc
 -(NSURLSessionTask*) updateLevelWithName: (NSString*) name
     varNewLevel: (JSAPILevelingResource*) varNewLevel
-        completionHandler: (void (^)(JSAPILevelingResource* output, NSError* error)) handler;
+        completionHandler: (void (^)(NSError* error)) handler;
 ```
 
 Update a level
@@ -603,10 +611,7 @@ JSAPIGamificationLevelingApi*apiInstance = [[JSAPIGamificationLevelingApi alloc]
 // Update a level
 [apiInstance updateLevelWithName:name
               varNewLevel:varNewLevel
-          completionHandler: ^(JSAPILevelingResource* output, NSError* error) {
-                        if (output) {
-                            NSLog(@"%@", output);
-                        }
+          completionHandler: ^(NSError* error) {
                         if (error) {
                             NSLog(@"Error calling JSAPIGamificationLevelingApi->updateLevel: %@", error);
                         }
@@ -622,7 +627,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**JSAPILevelingResource***](JSAPILevelingResource.md)
+void (empty response body)
 
 ### Authorization
 

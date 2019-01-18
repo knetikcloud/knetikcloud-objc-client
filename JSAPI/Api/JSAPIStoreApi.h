@@ -1,8 +1,9 @@
 #import <Foundation/Foundation.h>
-#import "JSAPIBehaviorDefinitionResource.h"
 #import "JSAPIInvoiceResource.h"
+#import "JSAPIPageResourceBehaviorDefinitionResource_.h"
 #import "JSAPIPageResourceStoreItemTemplateResource_.h"
 #import "JSAPIPageResourceStoreItem_.h"
+#import "JSAPIPatchResource.h"
 #import "JSAPIQuickBuyRequest.h"
 #import "JSAPIResult.h"
 #import "JSAPIStoreItem.h"
@@ -31,7 +32,7 @@ extern NSInteger kJSAPIStoreApiMissingParamErrorCode;
 -(instancetype) initWithApiClient:(JSAPIApiClient *)apiClient NS_DESIGNATED_INITIALIZER;
 
 /// Create an item template
-/// Item Templates define a type of item and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// Item Templates define a type of item and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> POST
 ///
 /// @param itemTemplateResource The new item template (optional)
 /// 
@@ -65,7 +66,7 @@ extern NSInteger kJSAPIStoreApiMissingParamErrorCode;
 
 
 /// Delete an item template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> DELETE
 ///
 /// @param _id The id of the template
 /// @param cascade force deleting the template if it&#39;s attached to other objects, cascade &#x3D; detach (optional)
@@ -101,6 +102,8 @@ extern NSInteger kJSAPIStoreApiMissingParamErrorCode;
 /// List available item behaviors
 /// <b>Permissions Needed:</b> ANY
 ///
+/// @param size The number of objects returned per page (optional) (default to 25)
+/// @param page The number of the page returned, starting with 1 (optional) (default to 1)
 /// 
 ///  code:200 message:"OK",
 ///  code:400 message:"Bad Request",
@@ -108,13 +111,14 @@ extern NSInteger kJSAPIStoreApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSArray<JSAPIBehaviorDefinitionResource>*
--(NSURLSessionTask*) getBehaviorsWithCompletionHandler: 
-    (void (^)(NSArray<JSAPIBehaviorDefinitionResource>* output, NSError* error)) handler;
+/// @return JSAPIPageResourceBehaviorDefinitionResource_*
+-(NSURLSessionTask*) getBehaviorsWithSize: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceBehaviorDefinitionResource_* output, NSError* error)) handler;
 
 
 /// Get a single item template
-/// Item Templates define a type of item and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// Item Templates define a type of item and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> GET
 ///
 /// @param _id The id of the template
 /// 
@@ -130,7 +134,7 @@ extern NSInteger kJSAPIStoreApiMissingParamErrorCode;
 
 
 /// List and search item templates
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> LIST
 ///
 /// @param size The number of objects returned per page (optional) (default to 25)
 /// @param page The number of the page returned, starting with 1 (optional) (default to 1)
@@ -231,20 +235,20 @@ extern NSInteger kJSAPIStoreApiMissingParamErrorCode;
 
 
 /// Update an item template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> PUT
 ///
 /// @param _id The id of the template
-/// @param itemTemplateResource The item template resource object (optional)
+/// @param templatePatchResource The patch resource object (optional)
+/// @param testValidation If true, this will test validation but not submit the patch request (optional)
 /// 
 ///  code:204 message:"No Content",
-///  code:400 message:"Bad Request",
 ///  code:401 message:"Unauthorized",
-///  code:403 message:"Forbidden",
-///  code:404 message:"Not Found"
+///  code:403 message:"Forbidden"
 ///
 /// @return JSAPIStoreItemTemplateResource*
 -(NSURLSessionTask*) updateItemTemplateWithId: (NSString*) _id
-    itemTemplateResource: (JSAPIStoreItemTemplateResource*) itemTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
     completionHandler: (void (^)(JSAPIStoreItemTemplateResource* output, NSError* error)) handler;
 
 

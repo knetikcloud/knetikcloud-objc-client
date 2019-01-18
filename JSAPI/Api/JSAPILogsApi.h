@@ -46,7 +46,7 @@ extern NSInteger kJSAPILogsApiMissingParamErrorCode;
 
 
 /// Returns a list of BRE event log entries
-/// <b>Permissions Needed:</b> BRE_RULE_ENGINE_EVENTS_ADMIN
+/// Logs are kept for 24 hours. <b>Permissions Needed:</b> BRE_RULE_ENGINE_EVENTS_ADMIN
 ///
 /// @param filterStartDate A comma separated string without spaces.  First value is the operator to search on, second value is the event log start date, a unix timestamp in seconds.  Allowed operators: (GT, LT, EQ, GOE, LOE). (optional)
 /// @param filterEventName Filter event logs by event name (optional)
@@ -90,7 +90,7 @@ extern NSInteger kJSAPILogsApiMissingParamErrorCode;
 
 
 /// Returns a list of forward log entries
-/// <b>Permissions Needed:</b> BRE_RULE_ENGINE_EVENTS_ADMIN
+/// Logs are kept for 24 hours. <b>Permissions Needed:</b> BRE_RULE_ENGINE_EVENTS_ADMIN
 ///
 /// @param filterStartDate A comma separated string without spaces.  First value is the operator to search on, second value is the log start date, a unix timestamp in seconds.  Allowed operators: (GT, LT, EQ, GOE, LOE). (optional)
 /// @param filterEndDate A comma separated string without spaces.  First value is the operator to search on, second value is the log end date, a unix timestamp in seconds.  Allowed operators: (GT, LT, EQ, GOE, LOE). (optional)
@@ -129,7 +129,7 @@ extern NSInteger kJSAPILogsApiMissingParamErrorCode;
 ///  code:404 message:"Not Found"
 ///
 /// @return JSAPIUserActionLog*
--(NSURLSessionTask*) getUserLogWithId: (NSString*) _id
+-(NSURLSessionTask*) getUserLogsWithId: (NSString*) _id
     completionHandler: (void (^)(JSAPIUserActionLog* output, NSError* error)) handler;
 
 
@@ -149,7 +149,7 @@ extern NSInteger kJSAPILogsApiMissingParamErrorCode;
 ///  code:404 message:"Not Found"
 ///
 /// @return JSAPIPageResourceUserActionLog_*
--(NSURLSessionTask*) getUserLogsWithFilterUser: (NSNumber*) filterUser
+-(NSURLSessionTask*) getUserLogs1WithFilterUser: (NSNumber*) filterUser
     filterActionName: (NSString*) filterActionName
     size: (NSNumber*) size
     page: (NSNumber*) page

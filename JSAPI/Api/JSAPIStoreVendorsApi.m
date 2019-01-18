@@ -4,6 +4,7 @@
 #import "JSAPIItemTemplateResource.h"
 #import "JSAPIPageResourceItemTemplateResource_.h"
 #import "JSAPIPageResourceVendorResource_.h"
+#import "JSAPIPatchResource.h"
 #import "JSAPIResult.h"
 #import "JSAPIVendorResource.h"
 
@@ -110,7 +111,7 @@ NSInteger kJSAPIStoreVendorsApiMissingParamErrorCode = 234513;
 
 ///
 /// Create a vendor template
-/// Vendor Templates define a type of vendor and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// Vendor Templates define a type of vendor and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> POST
 ///  @param vendorTemplateResource The new vendor template (optional)
 ///
 ///  @returns JSAPIItemTemplateResource*
@@ -233,7 +234,7 @@ NSInteger kJSAPIStoreVendorsApiMissingParamErrorCode = 234513;
 
 ///
 /// Delete a vendor template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> DELETE
 ///  @param _id The id of the template 
 ///
 ///  @param cascade force deleting the template if it's attached to other objects, cascade = detach (optional)
@@ -375,7 +376,7 @@ NSInteger kJSAPIStoreVendorsApiMissingParamErrorCode = 234513;
 
 ///
 /// Get a single vendor template
-/// Vendor Templates define a type of vendor and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// Vendor Templates define a type of vendor and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> GET
 ///  @param _id The id of the template 
 ///
 ///  @returns JSAPIItemTemplateResource*
@@ -443,7 +444,7 @@ NSInteger kJSAPIStoreVendorsApiMissingParamErrorCode = 234513;
 
 ///
 /// List and search vendor templates
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> LIST
 ///  @param size The number of objects returned per page (optional, default to 25)
 ///
 ///  @param page The number of the page returned, starting with 1 (optional, default to 1)
@@ -659,15 +660,18 @@ NSInteger kJSAPIStoreVendorsApiMissingParamErrorCode = 234513;
 
 ///
 /// Update a vendor template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> PUT
 ///  @param _id The id of the template 
 ///
-///  @param vendorTemplateResource The vendor template resource object (optional)
+///  @param templatePatchResource The patch resource object (optional)
+///
+///  @param testValidation If true, this will test validation but not submit the patch request (optional)
 ///
 ///  @returns JSAPIItemTemplateResource*
 ///
 -(NSURLSessionTask*) updateVendorTemplateWithId: (NSString*) _id
-    vendorTemplateResource: (JSAPIItemTemplateResource*) vendorTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
     completionHandler: (void (^)(JSAPIItemTemplateResource* output, NSError* error)) handler {
     // verify the required parameter '_id' is set
     if (_id == nil) {
@@ -688,6 +692,9 @@ NSInteger kJSAPIStoreVendorsApiMissingParamErrorCode = 234513;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (testValidation != nil) {
+        queryParams[@"test_validation"] = [testValidation isEqual:@(YES)] ? @"true" : @"false";
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -708,10 +715,10 @@ NSInteger kJSAPIStoreVendorsApiMissingParamErrorCode = 234513;
     id bodyParam = nil;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *localVarFiles = [[NSMutableDictionary alloc] init];
-    bodyParam = vendorTemplateResource;
+    bodyParam = templatePatchResource;
 
     return [self.apiClient requestWithPath: resourcePath
-                                    method: @"PUT"
+                                    method: @"PATCH"
                                 pathParams: pathParams
                                queryParams: queryParams
                                 formParams: formParams

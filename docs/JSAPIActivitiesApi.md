@@ -1,15 +1,15 @@
 # JSAPIActivitiesApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**addUser**](JSAPIActivitiesApi.md#adduser) | **POST** /activity-occurrences/{activity_occurrence_id}/users | Add a user to an occurrence
 [**createActivity**](JSAPIActivitiesApi.md#createactivity) | **POST** /activities | Create an activity
 [**createActivityOccurrence**](JSAPIActivitiesApi.md#createactivityoccurrence) | **POST** /activity-occurrences | Create a new activity occurrence. Ex: start a game
-[**createActivityTemplate**](JSAPIActivitiesApi.md#createactivitytemplate) | **POST** /activities/templates | Create a activity template
+[**createActivityTemplate**](JSAPIActivitiesApi.md#createactivitytemplate) | **POST** /activities/templates | Create an activity template
 [**deleteActivity**](JSAPIActivitiesApi.md#deleteactivity) | **DELETE** /activities/{id} | Delete an activity
-[**deleteActivityTemplate**](JSAPIActivitiesApi.md#deleteactivitytemplate) | **DELETE** /activities/templates/{id} | Delete a activity template
+[**deleteActivityTemplate**](JSAPIActivitiesApi.md#deleteactivitytemplate) | **DELETE** /activities/templates/{id} | Delete an activity template
 [**getActivities**](JSAPIActivitiesApi.md#getactivities) | **GET** /activities | List activity definitions
 [**getActivity**](JSAPIActivitiesApi.md#getactivity) | **GET** /activities/{id} | Get a single activity
 [**getActivityOccurrenceDetails**](JSAPIActivitiesApi.md#getactivityoccurrencedetails) | **GET** /activity-occurrences/{activity_occurrence_id} | Load a single activity occurrence details
@@ -22,7 +22,7 @@ Method | HTTP request | Description
 [**setUserStatus**](JSAPIActivitiesApi.md#setuserstatus) | **PUT** /activity-occurrences/{activity_occurrence_id}/users/{user_id}/status | Set a user&#39;s status within an occurrence
 [**updateActivity**](JSAPIActivitiesApi.md#updateactivity) | **PUT** /activities/{id} | Update an activity
 [**updateActivityOccurrenceStatus**](JSAPIActivitiesApi.md#updateactivityoccurrencestatus) | **PUT** /activity-occurrences/{activity_occurrence_id}/status | Update the status of an activity occurrence
-[**updateActivityTemplate**](JSAPIActivitiesApi.md#updateactivitytemplate) | **PUT** /activities/templates/{id} | Update an activity template
+[**updateActivityTemplate**](JSAPIActivitiesApi.md#updateactivitytemplate) | **PATCH** /activities/templates/{id} | Update an activity template
 
 
 # **addUser**
@@ -221,9 +221,9 @@ Name | Type | Description  | Notes
         completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler;
 ```
 
-Create a activity template
+Create an activity template
 
-Activity Templates define a type of activity and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+Activity Templates define a type of activity and the properties they have.<br /><b>Permissions Needed:</b> POST
 
 ### Example 
 ```objc
@@ -240,7 +240,7 @@ JSAPITemplateResource* activityTemplateResource = [[JSAPITemplateResource alloc]
 
 JSAPIActivitiesApi*apiInstance = [[JSAPIActivitiesApi alloc] init];
 
-// Create a activity template
+// Create an activity template
 [apiInstance createActivityTemplateWithActivityTemplateResource:activityTemplateResource
           completionHandler: ^(JSAPITemplateResource* output, NSError* error) {
                         if (output) {
@@ -335,9 +335,9 @@ void (empty response body)
         completionHandler: (void (^)(NSError* error)) handler;
 ```
 
-Delete a activity template
+Delete an activity template
 
-If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+If cascade = 'detach', it will force delete the template even if it's attached to other objects.<br /><b>Permissions Needed:</b> DELETE
 
 ### Example 
 ```objc
@@ -355,7 +355,7 @@ NSString* cascade = @"cascade_example"; // The value needed to delete used templ
 
 JSAPIActivitiesApi*apiInstance = [[JSAPIActivitiesApi alloc] init];
 
-// Delete a activity template
+// Delete an activity template
 [apiInstance deleteActivityTemplateWithId:_id
               cascade:cascade
           completionHandler: ^(NSError* error) {
@@ -589,7 +589,7 @@ Name | Type | Description  | Notes
 
 Get a single activity template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or ACTIVITIES_ADMIN
+<b>Permissions Needed:</b> GET
 
 ### Example 
 ```objc
@@ -649,7 +649,7 @@ Name | Type | Description  | Notes
 
 List and search activity templates
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or ACTIVITIES_ADMIN
+<b>Permissions Needed:</b> LIST
 
 ### Example 
 ```objc
@@ -1168,13 +1168,14 @@ void (empty response body)
 # **updateActivityTemplate**
 ```objc
 -(NSURLSessionTask*) updateActivityTemplateWithId: (NSString*) _id
-    activityTemplateResource: (JSAPITemplateResource*) activityTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
         completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler;
 ```
 
 Update an activity template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN
+<b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -1188,13 +1189,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* _id = @"_id_example"; // The id of the template
-JSAPITemplateResource* activityTemplateResource = [[JSAPITemplateResource alloc] init]; // The activity template resource object (optional)
+JSAPIPatchResource* templatePatchResource = [[JSAPIPatchResource alloc] init]; // The patch resource object (optional)
+NSNumber* testValidation = @true; // If true, this will test validation but not submit the patch request (optional)
 
 JSAPIActivitiesApi*apiInstance = [[JSAPIActivitiesApi alloc] init];
 
 // Update an activity template
 [apiInstance updateActivityTemplateWithId:_id
-              activityTemplateResource:activityTemplateResource
+              templatePatchResource:templatePatchResource
+              testValidation:testValidation
           completionHandler: ^(JSAPITemplateResource* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
@@ -1210,7 +1213,8 @@ JSAPIActivitiesApi*apiInstance = [[JSAPIActivitiesApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **_id** | **NSString***| The id of the template | 
- **activityTemplateResource** | [**JSAPITemplateResource***](JSAPITemplateResource.md)| The activity template resource object | [optional] 
+ **templatePatchResource** | [**JSAPIPatchResource***](JSAPIPatchResource.md)| The patch resource object | [optional] 
+ **testValidation** | **NSNumber***| If true, this will test validation but not submit the patch request | [optional] 
 
 ### Return type
 

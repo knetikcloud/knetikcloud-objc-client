@@ -28,7 +28,7 @@ extern NSInteger kJSAPIAuthUsersApiMissingParamErrorCode;
 /// Add a sid to a user
 /// No error returned if the user already has the sid. <b>Resources Needed:</b> ROLE_SUPER_ADMIN
 ///
-/// @param userId The resource type
+/// @param userId The user id
 /// @param sid The new sid for the user (optional)
 /// 
 ///  code:204 message:"No Content",
@@ -40,24 +40,6 @@ extern NSInteger kJSAPIAuthUsersApiMissingParamErrorCode;
 /// @return JSAPIUserSidResource*
 -(NSURLSessionTask*) addSidWithUserId: (NSNumber*) userId
     sid: (JSAPIUserSidResource*) sid
-    completionHandler: (void (^)(JSAPIUserSidResource* output, NSError* error)) handler;
-
-
-/// Get a user sid
-/// Http error 404 means the user does not have the sid<b>Resources Needed:</b> VIEW_ACCESS
-///
-/// @param userId The resource type
-/// @param sid The resource id
-/// 
-///  code:200 message:"OK",
-///  code:400 message:"Bad Request",
-///  code:401 message:"Unauthorized",
-///  code:403 message:"Forbidden",
-///  code:404 message:"Not Found"
-///
-/// @return JSAPIUserSidResource*
--(NSURLSessionTask*) getSidWithUserId: (NSNumber*) userId
-    sid: (NSString*) sid
     completionHandler: (void (^)(JSAPIUserSidResource* output, NSError* error)) handler;
 
 
@@ -76,11 +58,29 @@ extern NSInteger kJSAPIAuthUsersApiMissingParamErrorCode;
 ///  code:404 message:"Not Found"
 ///
 /// @return JSAPIPageResourceUserSidResource_*
--(NSURLSessionTask*) getSidsWithUserId: (NSNumber*) userId
+-(NSURLSessionTask*) getResources1WithUserId: (NSNumber*) userId
     size: (NSNumber*) size
     page: (NSNumber*) page
     order: (NSString*) order
     completionHandler: (void (^)(JSAPIPageResourceUserSidResource_* output, NSError* error)) handler;
+
+
+/// Get a user sid
+/// Http error 404 means the user does not have the sid<b>Resources Needed:</b> VIEW_ACCESS
+///
+/// @param userId The user id
+/// @param sid The security id
+/// 
+///  code:200 message:"OK",
+///  code:400 message:"Bad Request",
+///  code:401 message:"Unauthorized",
+///  code:403 message:"Forbidden",
+///  code:404 message:"Not Found"
+///
+/// @return JSAPIUserSidResource*
+-(NSURLSessionTask*) getSidWithUserId: (NSNumber*) userId
+    sid: (NSString*) sid
+    completionHandler: (void (^)(JSAPIUserSidResource* output, NSError* error)) handler;
 
 
 /// Remove a sid from a user

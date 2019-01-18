@@ -1,9 +1,9 @@
 #import "JSAPIGamificationLevelingApi.h"
 #import "JSAPIQueryParamCollection.h"
 #import "JSAPIApiClient.h"
-#import "JSAPIBreTriggerResource.h"
 #import "JSAPIIntWrapper.h"
 #import "JSAPILevelingResource.h"
+#import "JSAPIPageResourceBreTriggerResource_.h"
 #import "JSAPIPageResourceLevelingResource_.h"
 #import "JSAPIPageResourceUserLevelingResource_.h"
 #import "JSAPIResult.h"
@@ -249,15 +249,26 @@ NSInteger kJSAPIGamificationLevelingApiMissingParamErrorCode = 234513;
 ///
 /// Get the list of triggers that can be used to trigger a leveling progress update
 /// <b>Permissions Needed:</b> LEVELING_ADMIN
-///  @returns NSArray<JSAPIBreTriggerResource>*
+///  @param size The number of objects returned per page (optional, default to 25)
 ///
--(NSURLSessionTask*) getLevelTriggersWithCompletionHandler: 
-    (void (^)(NSArray<JSAPIBreTriggerResource>* output, NSError* error)) handler {
+///  @param page The number of the page returned, starting with 1 (optional, default to 1)
+///
+///  @returns JSAPIPageResourceBreTriggerResource_*
+///
+-(NSURLSessionTask*) getLevelTriggersWithSize: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceBreTriggerResource_* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/leveling/triggers"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (size != nil) {
+        queryParams[@"size"] = size;
+    }
+    if (page != nil) {
+        queryParams[@"page"] = page;
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -290,10 +301,10 @@ NSInteger kJSAPIGamificationLevelingApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSArray<JSAPIBreTriggerResource>*"
+                              responseType: @"JSAPIPageResourceBreTriggerResource_*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSArray<JSAPIBreTriggerResource>*)data, error);
+                                    handler((JSAPIPageResourceBreTriggerResource_*)data, error);
                                 }
                             }];
 }
@@ -735,18 +746,18 @@ NSInteger kJSAPIGamificationLevelingApiMissingParamErrorCode = 234513;
 ///
 ///  @param varNewLevel The level schema definition (optional)
 ///
-///  @returns JSAPILevelingResource*
+///  @returns void
 ///
 -(NSURLSessionTask*) updateLevelWithName: (NSString*) name
     varNewLevel: (JSAPILevelingResource*) varNewLevel
-    completionHandler: (void (^)(JSAPILevelingResource* output, NSError* error)) handler {
+    completionHandler: (void (^)(NSError* error)) handler {
     // verify the required parameter 'name' is set
     if (name == nil) {
         NSParameterAssert(name);
         if(handler) {
             NSDictionary * userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Missing required parameter '%@'", nil),@"name"] };
             NSError* error = [NSError errorWithDomain:kJSAPIGamificationLevelingApiErrorDomain code:kJSAPIGamificationLevelingApiMissingParamErrorCode userInfo:userInfo];
-            handler(nil, error);
+            handler(error);
         }
         return nil;
     }
@@ -792,10 +803,10 @@ NSInteger kJSAPIGamificationLevelingApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"JSAPILevelingResource*"
+                              responseType: nil
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((JSAPILevelingResource*)data, error);
+                                    handler(error);
                                 }
                             }];
 }

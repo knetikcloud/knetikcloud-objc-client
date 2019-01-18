@@ -2,6 +2,7 @@
 #import "JSAPIItemTemplateResource.h"
 #import "JSAPIPageResourceItemTemplateResource_.h"
 #import "JSAPIPageResourceVendorResource_.h"
+#import "JSAPIPatchResource.h"
 #import "JSAPIResult.h"
 #import "JSAPIVendorResource.h"
 #import "JSAPIApi.h"
@@ -44,7 +45,7 @@ extern NSInteger kJSAPIStoreVendorsApiMissingParamErrorCode;
 
 
 /// Create a vendor template
-/// Vendor Templates define a type of vendor and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// Vendor Templates define a type of vendor and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> POST
 ///
 /// @param vendorTemplateResource The new vendor template (optional)
 /// 
@@ -76,7 +77,7 @@ extern NSInteger kJSAPIStoreVendorsApiMissingParamErrorCode;
 
 
 /// Delete a vendor template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> DELETE
 ///
 /// @param _id The id of the template
 /// @param cascade force deleting the template if it&#39;s attached to other objects, cascade &#x3D; detach (optional)
@@ -110,7 +111,7 @@ extern NSInteger kJSAPIStoreVendorsApiMissingParamErrorCode;
 
 
 /// Get a single vendor template
-/// Vendor Templates define a type of vendor and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// Vendor Templates define a type of vendor and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> GET
 ///
 /// @param _id The id of the template
 /// 
@@ -126,7 +127,7 @@ extern NSInteger kJSAPIStoreVendorsApiMissingParamErrorCode;
 
 
 /// List and search vendor templates
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> LIST
 ///
 /// @param size The number of objects returned per page (optional) (default to 25)
 /// @param page The number of the page returned, starting with 1 (optional) (default to 1)
@@ -186,20 +187,20 @@ extern NSInteger kJSAPIStoreVendorsApiMissingParamErrorCode;
 
 
 /// Update a vendor template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> PUT
 ///
 /// @param _id The id of the template
-/// @param vendorTemplateResource The vendor template resource object (optional)
+/// @param templatePatchResource The patch resource object (optional)
+/// @param testValidation If true, this will test validation but not submit the patch request (optional)
 /// 
 ///  code:204 message:"No Content",
-///  code:400 message:"Bad Request",
 ///  code:401 message:"Unauthorized",
-///  code:403 message:"Forbidden",
-///  code:404 message:"Not Found"
+///  code:403 message:"Forbidden"
 ///
 /// @return JSAPIItemTemplateResource*
 -(NSURLSessionTask*) updateVendorTemplateWithId: (NSString*) _id
-    vendorTemplateResource: (JSAPIItemTemplateResource*) vendorTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
     completionHandler: (void (^)(JSAPIItemTemplateResource* output, NSError* error)) handler;
 
 

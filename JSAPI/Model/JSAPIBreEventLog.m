@@ -22,7 +22,7 @@
 
 + (NSDictionary *)modalDictionary {
 
-  return @{ @"customer": @"customer", @"eventId": @"event_id", @"eventName": @"event_name", @"eventStartDate": @"event_start_date", @"_id": @"id", @"parameters": @"parameters", @"rules": @"rules" };
+  return @{ @"age": @"age", @"customer": @"customer", @"eventExpansionDuration": @"event_expansion_duration", @"eventId": @"event_id", @"eventLoggingDuration": @"event_logging_duration", @"eventName": @"event_name", @"eventReceivedDate": @"event_received_date", @"eventStartDate": @"event_start_date", @"_id": @"id", @"parameters": @"parameters", @"rules": @"rules", @"runtime": @"runtime" };
 }
 
 /**
@@ -32,7 +32,7 @@
  */
 + (BOOL)propertyIsOptional:(NSString *)propertyName {
 
-  NSArray *optionalProperties = @[@"customer", @"eventId", @"eventName", @"eventStartDate", @"_id", @"parameters", @"rules"];
+  NSArray *optionalProperties = @[@"age", @"customer", @"eventExpansionDuration", @"eventId", @"eventLoggingDuration", @"eventName", @"eventReceivedDate", @"eventStartDate", @"_id", @"parameters", @"rules", @"runtime"];
 
   return [optionalProperties containsObject:propertyName];
 }

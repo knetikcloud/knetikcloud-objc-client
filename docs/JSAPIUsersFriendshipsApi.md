@@ -1,6 +1,6 @@
 # JSAPIUsersFriendshipsApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -148,7 +148,7 @@ Name | Type | Description  | Notes
 # **getInviteToken**
 ```objc
 -(NSURLSessionTask*) getInviteTokenWithUserId: (NSString*) userId
-        completionHandler: (void (^)(NSString* output, NSError* error)) handler;
+        completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler;
 ```
 
 Returns the invite token
@@ -172,7 +172,7 @@ JSAPIUsersFriendshipsApi*apiInstance = [[JSAPIUsersFriendshipsApi alloc] init];
 
 // Returns the invite token
 [apiInstance getInviteTokenWithUserId:userId
-          completionHandler: ^(NSString* output, NSError* error) {
+          completionHandler: ^(JSAPIStringWrapper* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -190,7 +190,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**NSString***
+[**JSAPIStringWrapper***](JSAPIStringWrapper.md)
 
 ### Authorization
 

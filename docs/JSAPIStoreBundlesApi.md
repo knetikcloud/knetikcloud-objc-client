@@ -1,6 +1,6 @@
 # JSAPIStoreBundlesApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -12,7 +12,7 @@ Method | HTTP request | Description
 [**getBundleTemplate**](JSAPIStoreBundlesApi.md#getbundletemplate) | **GET** /store/bundles/templates/{id} | Get a single bundle template
 [**getBundleTemplates**](JSAPIStoreBundlesApi.md#getbundletemplates) | **GET** /store/bundles/templates | List and search bundle templates
 [**updateBundleItem**](JSAPIStoreBundlesApi.md#updatebundleitem) | **PUT** /store/bundles/{id} | Update a bundle item
-[**updateBundleTemplate**](JSAPIStoreBundlesApi.md#updatebundletemplate) | **PUT** /store/bundles/templates/{id} | Update a bundle template
+[**updateBundleTemplate**](JSAPIStoreBundlesApi.md#updatebundletemplate) | **PATCH** /store/bundles/templates/{id} | Update a bundle template
 
 
 # **createBundleItem**
@@ -85,7 +85,7 @@ Name | Type | Description  | Notes
 
 Create a bundle template
 
-Bundle Templates define a type of bundle and the properties they have. <br><br><b>Permissions Needed:</b> BUNDLES_ADMIN
+Bundle Templates define a type of bundle and the properties they have.<br /><b>Permissions Needed:</b> POST
 
 ### Example 
 ```objc
@@ -199,7 +199,7 @@ void (empty response body)
 
 Delete a bundle template
 
-<b>Permissions Needed:</b> BUNDLES_ADMIN
+<b>Permissions Needed:</b> DELETE
 
 ### Example 
 ```objc
@@ -315,7 +315,7 @@ Name | Type | Description  | Notes
 
 Get a single bundle template
 
-Bundle Templates define a type of bundle and the properties they have. <br><br><b>Permissions Needed:</b> ANY
+Bundle Templates define a type of bundle and the properties they have.<br /><b>Permissions Needed:</b> GET
 
 ### Example 
 ```objc
@@ -375,7 +375,7 @@ Name | Type | Description  | Notes
 
 List and search bundle templates
 
-<b>Permissions Needed:</b> ANY
+<b>Permissions Needed:</b> LIST
 
 ### Example 
 ```objc
@@ -500,13 +500,14 @@ Name | Type | Description  | Notes
 # **updateBundleTemplate**
 ```objc
 -(NSURLSessionTask*) updateBundleTemplateWithId: (NSString*) _id
-    bundleTemplateResource: (JSAPIItemTemplateResource*) bundleTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
         completionHandler: (void (^)(JSAPIItemTemplateResource* output, NSError* error)) handler;
 ```
 
 Update a bundle template
 
-<b>Permissions Needed:</b> BUNDLES_ADMIN
+<b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -520,13 +521,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* _id = @"_id_example"; // The id of the template
-JSAPIItemTemplateResource* bundleTemplateResource = [[JSAPIItemTemplateResource alloc] init]; // The bundle template resource object (optional)
+JSAPIPatchResource* templatePatchResource = [[JSAPIPatchResource alloc] init]; // The patch resource object (optional)
+NSNumber* testValidation = @true; // If true, this will test validation but not submit the patch request (optional)
 
 JSAPIStoreBundlesApi*apiInstance = [[JSAPIStoreBundlesApi alloc] init];
 
 // Update a bundle template
 [apiInstance updateBundleTemplateWithId:_id
-              bundleTemplateResource:bundleTemplateResource
+              templatePatchResource:templatePatchResource
+              testValidation:testValidation
           completionHandler: ^(JSAPIItemTemplateResource* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
@@ -542,7 +545,8 @@ JSAPIStoreBundlesApi*apiInstance = [[JSAPIStoreBundlesApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **_id** | **NSString***| The id of the template | 
- **bundleTemplateResource** | [**JSAPIItemTemplateResource***](JSAPIItemTemplateResource.md)| The bundle template resource object | [optional] 
+ **templatePatchResource** | [**JSAPIPatchResource***](JSAPIPatchResource.md)| The patch resource object | [optional] 
+ **testValidation** | **NSNumber***| If true, this will test validation but not submit the patch request | [optional] 
 
 ### Return type
 

@@ -1,8 +1,9 @@
 #import <Foundation/Foundation.h>
-#import "JSAPICountryResource.h"
 #import "JSAPICurrencyResource.h"
+#import "JSAPIPageResourceCountryResource_.h"
+#import "JSAPIPageResourceStateResource_.h"
 #import "JSAPIResult.h"
-#import "JSAPIStateResource.h"
+#import "JSAPIStringWrapper.h"
 #import "JSAPIApi.h"
 
 /**
@@ -29,6 +30,8 @@ extern NSInteger kJSAPILocationsApiMissingParamErrorCode;
 /// Get a list of countries
 /// <b>Permissions Needed:</b> ANY
 ///
+/// @param size The number of objects returned per page (optional) (default to 25)
+/// @param page The number of the page returned, starting with 1 (optional) (default to 1)
 /// 
 ///  code:200 message:"OK",
 ///  code:400 message:"Bad Request",
@@ -36,9 +39,10 @@ extern NSInteger kJSAPILocationsApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSArray<JSAPICountryResource>*
--(NSURLSessionTask*) getCountriesWithCompletionHandler: 
-    (void (^)(NSArray<JSAPICountryResource>* output, NSError* error)) handler;
+/// @return JSAPIPageResourceCountryResource_*
+-(NSURLSessionTask*) getCountriesWithSize: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceCountryResource_* output, NSError* error)) handler;
 
 
 /// Get the iso3 code of your country
@@ -51,15 +55,17 @@ extern NSInteger kJSAPILocationsApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSString*
+/// @return JSAPIStringWrapper*
 -(NSURLSessionTask*) getCountryByGeoLocationWithCompletionHandler: 
-    (void (^)(NSString* output, NSError* error)) handler;
+    (void (^)(JSAPIStringWrapper* output, NSError* error)) handler;
 
 
 /// Get a list of a country's states
 /// <b>Permissions Needed:</b> ANY
 ///
 /// @param countryCodeIso3 The iso3 code of the country
+/// @param size The number of objects returned per page (optional) (default to 25)
+/// @param page The number of the page returned, starting with 1 (optional) (default to 1)
 /// 
 ///  code:200 message:"OK",
 ///  code:400 message:"Bad Request",
@@ -67,9 +73,11 @@ extern NSInteger kJSAPILocationsApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSArray<JSAPIStateResource>*
+/// @return JSAPIPageResourceStateResource_*
 -(NSURLSessionTask*) getCountryStatesWithCountryCodeIso3: (NSString*) countryCodeIso3
-    completionHandler: (void (^)(NSArray<JSAPIStateResource>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceStateResource_* output, NSError* error)) handler;
 
 
 /// Get the currency information of your country

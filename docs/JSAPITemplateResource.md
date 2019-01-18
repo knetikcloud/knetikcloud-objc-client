@@ -3,7 +3,6 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**allowAdditional** | **NSNumber*** | Whether to allow additional properties beyond those specified or not | [optional] 
 **createdDate** | **NSNumber*** | The date/time this resource was created in seconds since unix epoch | [optional] 
 **_id** | **NSString*** | The id of the template | [optional] 
 **name** | **NSString*** | The name of the template | 

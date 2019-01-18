@@ -1,6 +1,6 @@
 # JSAPIPaymentsXsollaApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -10,7 +10,7 @@ Method | HTTP request | Description
 # **createXsollaTokenUrl**
 ```objc
 -(NSURLSessionTask*) createXsollaTokenUrlWithRequest: (JSAPIXsollaPaymentRequest*) request
-        completionHandler: (void (^)(NSString* output, NSError* error)) handler;
+        completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler;
 ```
 
 Create a payment token that should be used to forward the user to Xsolla so they can complete payment
@@ -34,7 +34,7 @@ JSAPIPaymentsXsollaApi*apiInstance = [[JSAPIPaymentsXsollaApi alloc] init];
 
 // Create a payment token that should be used to forward the user to Xsolla so they can complete payment
 [apiInstance createXsollaTokenUrlWithRequest:request
-          completionHandler: ^(NSString* output, NSError* error) {
+          completionHandler: ^(JSAPIStringWrapper* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -52,7 +52,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**NSString***
+[**JSAPIStringWrapper***](JSAPIStringWrapper.md)
 
 ### Authorization
 

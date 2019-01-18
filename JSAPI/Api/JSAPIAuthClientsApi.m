@@ -2,8 +2,8 @@
 #import "JSAPIQueryParamCollection.h"
 #import "JSAPIApiClient.h"
 #import "JSAPIClientResource.h"
-#import "JSAPIGrantTypeResource.h"
 #import "JSAPIPageResourceClientResource_.h"
+#import "JSAPIPageResourceGrantTypeResource_.h"
 #import "JSAPIResult.h"
 
 
@@ -246,15 +246,26 @@ NSInteger kJSAPIAuthClientsApiMissingParamErrorCode = 234513;
 ///
 /// List available client grant types
 /// <b>Permissions Needed:</b> CLIENTS_ADMIN
-///  @returns NSArray<JSAPIGrantTypeResource>*
+///  @param size The number of objects returned per page (optional, default to 25)
 ///
--(NSURLSessionTask*) getClientGrantTypesWithCompletionHandler: 
-    (void (^)(NSArray<JSAPIGrantTypeResource>* output, NSError* error)) handler {
+///  @param page The number of the page returned, starting with 1 (optional, default to 1)
+///
+///  @returns JSAPIPageResourceGrantTypeResource_*
+///
+-(NSURLSessionTask*) getClientGrantTypesWithSize: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceGrantTypeResource_* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/auth/clients/grant-types"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (size != nil) {
+        queryParams[@"size"] = size;
+    }
+    if (page != nil) {
+        queryParams[@"page"] = page;
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -287,10 +298,10 @@ NSInteger kJSAPIAuthClientsApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSArray<JSAPIGrantTypeResource>*"
+                              responseType: @"JSAPIPageResourceGrantTypeResource_*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSArray<JSAPIGrantTypeResource>*)data, error);
+                                    handler((JSAPIPageResourceGrantTypeResource_*)data, error);
                                 }
                             }];
 }

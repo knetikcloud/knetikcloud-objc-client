@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "JSAPIClientResource.h"
-#import "JSAPIGrantTypeResource.h"
 #import "JSAPIPageResourceClientResource_.h"
+#import "JSAPIPageResourceGrantTypeResource_.h"
 #import "JSAPIResult.h"
 #import "JSAPIApi.h"
 
@@ -77,6 +77,8 @@ extern NSInteger kJSAPIAuthClientsApiMissingParamErrorCode;
 /// List available client grant types
 /// <b>Permissions Needed:</b> CLIENTS_ADMIN
 ///
+/// @param size The number of objects returned per page (optional) (default to 25)
+/// @param page The number of the page returned, starting with 1 (optional) (default to 1)
 /// 
 ///  code:200 message:"OK",
 ///  code:400 message:"Bad Request",
@@ -84,9 +86,10 @@ extern NSInteger kJSAPIAuthClientsApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSArray<JSAPIGrantTypeResource>*
--(NSURLSessionTask*) getClientGrantTypesWithCompletionHandler: 
-    (void (^)(NSArray<JSAPIGrantTypeResource>* output, NSError* error)) handler;
+/// @return JSAPIPageResourceGrantTypeResource_*
+-(NSURLSessionTask*) getClientGrantTypesWithSize: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceGrantTypeResource_* output, NSError* error)) handler;
 
 
 /// List and search clients

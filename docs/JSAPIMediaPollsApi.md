@@ -1,6 +1,6 @@
 # JSAPIMediaPollsApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -15,7 +15,7 @@ Method | HTTP request | Description
 [**getPollTemplates**](JSAPIMediaPollsApi.md#getpolltemplates) | **GET** /media/polls/templates | List and search poll templates
 [**getPolls**](JSAPIMediaPollsApi.md#getpolls) | **GET** /media/polls | List and search polls
 [**updatePoll**](JSAPIMediaPollsApi.md#updatepoll) | **PUT** /media/polls/{id} | Update an existing poll
-[**updatePollTemplate**](JSAPIMediaPollsApi.md#updatepolltemplate) | **PUT** /media/polls/templates/{id} | Update a poll template
+[**updatePollTemplate**](JSAPIMediaPollsApi.md#updatepolltemplate) | **PATCH** /media/polls/templates/{id} | Update a poll template
 
 
 # **answerPoll**
@@ -146,7 +146,7 @@ Name | Type | Description  | Notes
 
 Create a poll template
 
-Poll templates define a type of poll and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+Poll templates define a type of poll and the properties they have.<br /><b>Permissions Needed:</b> POST
 
 ### Example 
 ```objc
@@ -260,7 +260,7 @@ void (empty response body)
 
 Delete a poll template
 
-If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+If cascade = 'detach', it will force delete the template even if it's attached to other objects.<br /><b>Permissions Needed:</b> DELETE
 
 ### Example 
 ```objc
@@ -434,7 +434,7 @@ Name | Type | Description  | Notes
 
 Get a single poll template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or POLLS_ADMIN
+<b>Permissions Needed:</b> GET
 
 ### Example 
 ```objc
@@ -494,7 +494,7 @@ Name | Type | Description  | Notes
 
 List and search poll templates
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN or POLLS_ADMIN
+<b>Permissions Needed:</b> LIST
 
 ### Example 
 ```objc
@@ -693,13 +693,14 @@ Name | Type | Description  | Notes
 # **updatePollTemplate**
 ```objc
 -(NSURLSessionTask*) updatePollTemplateWithId: (NSString*) _id
-    pollTemplateResource: (JSAPITemplateResource*) pollTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
         completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler;
 ```
 
 Update a poll template
 
-<b>Permissions Needed:</b> TEMPLATE_ADMIN
+<b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -713,13 +714,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* _id = @"_id_example"; // The id of the template
-JSAPITemplateResource* pollTemplateResource = [[JSAPITemplateResource alloc] init]; // The poll template resource object (optional)
+JSAPIPatchResource* templatePatchResource = [[JSAPIPatchResource alloc] init]; // The patch resource object (optional)
+NSNumber* testValidation = @true; // If true, this will test validation but not submit the patch request (optional)
 
 JSAPIMediaPollsApi*apiInstance = [[JSAPIMediaPollsApi alloc] init];
 
 // Update a poll template
 [apiInstance updatePollTemplateWithId:_id
-              pollTemplateResource:pollTemplateResource
+              templatePatchResource:templatePatchResource
+              testValidation:testValidation
           completionHandler: ^(JSAPITemplateResource* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
@@ -735,7 +738,8 @@ JSAPIMediaPollsApi*apiInstance = [[JSAPIMediaPollsApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **_id** | **NSString***| The id of the template | 
- **pollTemplateResource** | [**JSAPITemplateResource***](JSAPITemplateResource.md)| The poll template resource object | [optional] 
+ **templatePatchResource** | [**JSAPIPatchResource***](JSAPIPatchResource.md)| The patch resource object | [optional] 
+ **testValidation** | **NSNumber***| If true, this will test validation but not submit the patch request | [optional] 
 
 ### Return type
 

@@ -25,6 +25,8 @@
 
 @property(nonatomic) NSString* _description;
 
+@property(nonatomic) NSNumber* itemId;
+
 @property(nonatomic) NSString* name;
 
 @property(nonatomic) NSString* sku;

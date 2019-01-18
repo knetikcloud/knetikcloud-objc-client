@@ -22,13 +22,10 @@
 
 @interface JSAPIDocumentRemoveRequest : JSAPIObject
 
-/* The id of the document [optional]
+/* The id of the document 
  */
 @property(nonatomic) NSString* _id;
-/* The id of the template if this document is based on a templated resource [optional]
- */
-@property(nonatomic) NSString* template;
-/* The type of document [optional]
+/* The type of document 
  */
 @property(nonatomic) NSString* type;
 

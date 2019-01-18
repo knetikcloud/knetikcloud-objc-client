@@ -1,8 +1,8 @@
 #import "JSAPIDispositionsApi.h"
 #import "JSAPIQueryParamCollection.h"
 #import "JSAPIApiClient.h"
-#import "JSAPIDispositionCount.h"
 #import "JSAPIDispositionResource.h"
+#import "JSAPIPageResourceDispositionCount_.h"
 #import "JSAPIPageResourceDispositionResource_.h"
 #import "JSAPIResult.h"
 
@@ -252,12 +252,18 @@ NSInteger kJSAPIDispositionsApiMissingParamErrorCode = 234513;
 ///
 ///  @param filterOwner Filter for dispositions from a specific user by id or 'me' (optional)
 ///
-///  @returns NSArray<JSAPIDispositionCount>*
+///  @param size The number of objects returned per page (optional, default to 25)
+///
+///  @param page The number of the page returned, starting with 1 (optional, default to 1)
+///
+///  @returns JSAPIPageResourceDispositionCount_*
 ///
 -(NSURLSessionTask*) getDispositionCountsWithFilterCreatedDate: (NSString*) filterCreatedDate
     filterContext: (NSString*) filterContext
     filterOwner: (NSString*) filterOwner
-    completionHandler: (void (^)(NSArray<JSAPIDispositionCount>* output, NSError* error)) handler {
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceDispositionCount_* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/dispositions/count"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
@@ -271,6 +277,12 @@ NSInteger kJSAPIDispositionsApiMissingParamErrorCode = 234513;
     }
     if (filterOwner != nil) {
         queryParams[@"filter_owner"] = filterOwner;
+    }
+    if (size != nil) {
+        queryParams[@"size"] = size;
+    }
+    if (page != nil) {
+        queryParams[@"page"] = page;
     }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
@@ -304,10 +316,10 @@ NSInteger kJSAPIDispositionsApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSArray<JSAPIDispositionCount>*"
+                              responseType: @"JSAPIPageResourceDispositionCount_*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSArray<JSAPIDispositionCount>*)data, error);
+                                    handler((JSAPIPageResourceDispositionCount_*)data, error);
                                 }
                             }];
 }

@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import "JSAPIActionResource.h"
+#import "JSAPIPageResourceActionResource_.h"
 #import "JSAPIResult.h"
 #import "JSAPIApi.h"
 
@@ -31,6 +31,8 @@ extern NSInteger kJSAPIRuleEngineActionsApiMissingParamErrorCode;
 /// @param filterName Filter for actions that have names containing the given string (optional)
 /// @param filterTags Filter for actions that have all of the given tags (comma separated list) (optional)
 /// @param filterSearch Filter for actions containing the given words somewhere within name, description and tags (optional)
+/// @param size The number of objects returned per page (optional) (default to 25)
+/// @param page The number of the page returned, starting with 1 (optional) (default to 1)
 /// 
 ///  code:200 message:"OK",
 ///  code:400 message:"Bad Request",
@@ -38,12 +40,14 @@ extern NSInteger kJSAPIRuleEngineActionsApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSArray<JSAPIActionResource>*
+/// @return JSAPIPageResourceActionResource_*
 -(NSURLSessionTask*) getBREActionsWithFilterCategory: (NSString*) filterCategory
     filterName: (NSString*) filterName
     filterTags: (NSString*) filterTags
     filterSearch: (NSString*) filterSearch
-    completionHandler: (void (^)(NSArray<JSAPIActionResource>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceActionResource_* output, NSError* error)) handler;
 
 
 

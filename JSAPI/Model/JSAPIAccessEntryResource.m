@@ -22,7 +22,7 @@
 
 + (NSDictionary *)modalDictionary {
 
-  return @{ @"actions": @"actions", @"sid": @"sid" };
+  return @{ @"actions": @"actions", @"fieldBlacklist": @"field_blacklist", @"sid": @"sid" };
 }
 
 /**
@@ -32,7 +32,7 @@
  */
 + (BOOL)propertyIsOptional:(NSString *)propertyName {
 
-  NSArray *optionalProperties = @[];
+  NSArray *optionalProperties = @[@"fieldBlacklist", ];
 
   return [optionalProperties containsObject:propertyName];
 }

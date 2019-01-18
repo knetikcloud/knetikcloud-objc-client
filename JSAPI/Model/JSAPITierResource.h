@@ -28,7 +28,7 @@
 /* A map of additional properties, keyed on the property name.  Must match the names and types defined in the template for this item type [optional]
  */
 @property(nonatomic) NSDictionary* additionalProperties;
-/* The name of the tier [optional]
+/* The name of the tier 
  */
 @property(nonatomic) NSString* name;
 /* The required progress for the tier 

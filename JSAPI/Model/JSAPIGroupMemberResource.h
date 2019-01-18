@@ -40,6 +40,9 @@
 /* Whether this membership is explicit (the user was added directly to the group) or implicit (the user was added only to one or more child groups) [optional]
  */
 @property(nonatomic) NSNumber* implicit;
+/* The group member's membership date as a unix timestamp [optional]
+ */
+@property(nonatomic) NSNumber* memberSince;
 /* The id of the membership entry [optional]
  */
 @property(nonatomic) NSNumber* membershipId;
@@ -52,6 +55,9 @@
 /* A template this member additional properties are validated against (private). May be null and no validation of properties will be done [optional]
  */
 @property(nonatomic) NSString* template;
+/* The date the group member's info was updated as a unix timestamp [optional]
+ */
+@property(nonatomic) NSNumber* updatedDate;
 /* The user 
  */
 @property(nonatomic) JSAPISimpleUserResource* user;

@@ -1,36 +1,24 @@
 # JSAPISearchApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**indexDocument**](JSAPISearchApi.md#indexdocument) | **POST** /search/documents | Adds a document to be indexed. For system use only.
-[**registerDefinition**](JSAPISearchApi.md#registerdefinition) | **POST** /search/definitions | Register a new index definition. For system use only.
-[**reindex**](JSAPISearchApi.md#reindex) | **POST** /search/reindex | Triggers a full re-indexing of all documents of the specified type. For system use only.
+[**reindexAll**](JSAPISearchApi.md#reindexall) | **POST** /search/reindex | Triggers a full re-indexing of all documents of the specified type. For system use only.
 [**removeDocument**](JSAPISearchApi.md#removedocument) | **DELETE** /search/documents | Remove a document from the index. For system use only.
 [**searchCountGET**](JSAPISearchApi.md#searchcountget) | **GET** /search/count/{type} | Count matches with no template
 [**searchCountPOST**](JSAPISearchApi.md#searchcountpost) | **POST** /search/count/{type} | Count matches with no template
-[**searchCountWithTemplateGET**](JSAPISearchApi.md#searchcountwithtemplateget) | **GET** /search/count/{type}/{template} | Count matches with a template
-[**searchCountWithTemplatePOST**](JSAPISearchApi.md#searchcountwithtemplatepost) | **POST** /search/count/{type}/{template} | Count matches with a template
 [**searchDocumentGET**](JSAPISearchApi.md#searchdocumentget) | **GET** /search/documents/{type}/{id} | Get document with no template
-[**searchDocumentWithTemplateGET**](JSAPISearchApi.md#searchdocumentwithtemplateget) | **GET** /search/documents/{type}/{template}/{id} | Get document with a template
 [**searchExplainGET**](JSAPISearchApi.md#searchexplainget) | **GET** /search/explain/{type}/{id} | Explain matches with no template
 [**searchExplainPOST**](JSAPISearchApi.md#searchexplainpost) | **POST** /search/explain/{type}/{id} | Explain matches with no template
-[**searchExplainWithTemplateGET**](JSAPISearchApi.md#searchexplainwithtemplateget) | **GET** /search/explain/{type}/{template}/{id} | Explain matches with a template
-[**searchExplainWithTemplatePOST**](JSAPISearchApi.md#searchexplainwithtemplatepost) | **POST** /search/explain/{type}/{template}/{id} | Explain matches with a template
 [**searchIndex**](JSAPISearchApi.md#searchindex) | **POST** /search/index/{type} | Search an index with no template
 [**searchIndexGET**](JSAPISearchApi.md#searchindexget) | **GET** /search/index/{type} | Search an index with no template
-[**searchIndexWithTemplateGET**](JSAPISearchApi.md#searchindexwithtemplateget) | **GET** /search/index/{type}/{template} | Search an index with a template
-[**searchIndexWithTemplatePOST**](JSAPISearchApi.md#searchindexwithtemplatepost) | **POST** /search/index/{type}/{template} | Search an index with a template
 [**searchIndicesGET**](JSAPISearchApi.md#searchindicesget) | **GET** /search/indices | Get indices
 [**searchMappingsGET**](JSAPISearchApi.md#searchmappingsget) | **GET** /search/mappings/{type} | Get mapping with no template
-[**searchMappingsWithTemplateGET**](JSAPISearchApi.md#searchmappingswithtemplateget) | **GET** /search/mappings/{type}/{template} | Get mapping with a template
 [**searchPublicIndex**](JSAPISearchApi.md#searchpublicindex) | **POST** /search/public/{type} | Search public index with no template
-[**searchPublicIndexWithTemplate**](JSAPISearchApi.md#searchpublicindexwithtemplate) | **POST** /search/public/{type}/{template} | Search public index with template
 [**searchValidateGET**](JSAPISearchApi.md#searchvalidateget) | **GET** /search/validate/{type} | Validate matches with no template
 [**searchValidatePOST**](JSAPISearchApi.md#searchvalidatepost) | **POST** /search/validate/{type} | Validate matches with no template
-[**searchValidateWithTemplateGET**](JSAPISearchApi.md#searchvalidatewithtemplateget) | **GET** /search/validate/{type}/{template} | Validate matches with a template
-[**searchValidateWithTemplatePOST**](JSAPISearchApi.md#searchvalidatewithtemplatepost) | **POST** /search/validate/{type}/{template} | Validate matches with a template
 
 
 # **indexDocument**
@@ -41,11 +29,16 @@ Method | HTTP request | Description
 
 Adds a document to be indexed. For system use only.
 
+<b>Permissions Needed:</b> SEARCH_MANAGEMENT
+
 ### Example 
 ```objc
 JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 // Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
 [apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
 
 
@@ -74,7 +67,7 @@ void (empty response body)
 
 ### Authorization
 
-[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant)
+[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
 
 ### HTTP request headers
 
@@ -83,13 +76,15 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **registerDefinition**
+# **reindexAll**
 ```objc
--(NSURLSessionTask*) registerDefinitionWithDefinition: (JSAPISearchObjectDefinition*) definition
+-(NSURLSessionTask*) reindexAllWithRequest: (JSAPIReindexRequest*) request
         completionHandler: (void (^)(NSError* error)) handler;
 ```
 
-Register a new index definition. For system use only.
+Triggers a full re-indexing of all documents of the specified type. For system use only.
+
+<b>Permissions Needed:</b> SEARCH_MANAGEMENT
 
 ### Example 
 ```objc
@@ -98,54 +93,7 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 // Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
 [apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
 
-
-JSAPISearchObjectDefinition* definition = [[JSAPISearchObjectDefinition alloc] init]; // definition
-
-JSAPISearchApi*apiInstance = [[JSAPISearchApi alloc] init];
-
-// Register a new index definition. For system use only.
-[apiInstance registerDefinitionWithDefinition:definition
-          completionHandler: ^(NSError* error) {
-                        if (error) {
-                            NSLog(@"Error calling JSAPISearchApi->registerDefinition: %@", error);
-                        }
-                    }];
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **definition** | [**JSAPISearchObjectDefinition***](JSAPISearchObjectDefinition.md)| definition | 
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **reindex**
-```objc
--(NSURLSessionTask*) reindexWithRequest: (JSAPIReindexRequest*) request
-        completionHandler: (void (^)(NSError* error)) handler;
-```
-
-Triggers a full re-indexing of all documents of the specified type. For system use only.
-
-### Example 
-```objc
-JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
 [apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
 
 
@@ -154,10 +102,10 @@ JSAPIReindexRequest* request = [[JSAPIReindexRequest alloc] init]; // request
 JSAPISearchApi*apiInstance = [[JSAPISearchApi alloc] init];
 
 // Triggers a full re-indexing of all documents of the specified type. For system use only.
-[apiInstance reindexWithRequest:request
+[apiInstance reindexAllWithRequest:request
           completionHandler: ^(NSError* error) {
                         if (error) {
-                            NSLog(@"Error calling JSAPISearchApi->reindex: %@", error);
+                            NSLog(@"Error calling JSAPISearchApi->reindexAll: %@", error);
                         }
                     }];
 ```
@@ -174,7 +122,7 @@ void (empty response body)
 
 ### Authorization
 
-[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant)
+[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
 
 ### HTTP request headers
 
@@ -191,11 +139,16 @@ void (empty response body)
 
 Remove a document from the index. For system use only.
 
+<b>Permissions Needed:</b> SEARCH_MANAGEMENT
+
 ### Example 
 ```objc
 JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 // Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
 [apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
 
 
@@ -224,7 +177,7 @@ void (empty response body)
 
 ### Authorization
 
-[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant)
+[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
 
 ### HTTP request headers
 
@@ -353,134 +306,6 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **searchCountWithTemplateGET**
-```objc
--(NSURLSessionTask*) searchCountWithTemplateGETWithType: (NSString*) type
-    template: (NSString*) template
-        completionHandler: (void (^)(NSObject* output, NSError* error)) handler;
-```
-
-Count matches with a template
-
-This is a 1 to 1 mapping of a ElasticSearch call to _count.  Further information can be found at their <a href='https://www.elastic.co/guide/en/elasticsearch/reference/current/search-count.html'>API guide</a>. <br><br><b>Permissions Needed:</b> SEARCH
-
-### Example 
-```objc
-JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-
-NSString* type = @"type_example"; // The index type
-NSString* template = @"template_example"; // The index template
-
-JSAPISearchApi*apiInstance = [[JSAPISearchApi alloc] init];
-
-// Count matches with a template
-[apiInstance searchCountWithTemplateGETWithType:type
-              template:template
-          completionHandler: ^(NSObject* output, NSError* error) {
-                        if (output) {
-                            NSLog(@"%@", output);
-                        }
-                        if (error) {
-                            NSLog(@"Error calling JSAPISearchApi->searchCountWithTemplateGET: %@", error);
-                        }
-                    }];
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **type** | **NSString***| The index type | 
- **template** | **NSString***| The index template | 
-
-### Return type
-
-**NSObject***
-
-### Authorization
-
-[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **searchCountWithTemplatePOST**
-```objc
--(NSURLSessionTask*) searchCountWithTemplatePOSTWithType: (NSString*) type
-    template: (NSString*) template
-    query: (NSObject*) query
-        completionHandler: (void (^)(NSObject* output, NSError* error)) handler;
-```
-
-Count matches with a template
-
-This is a 1 to 1 mapping of a ElasticSearch call to _count.  Further information can be found at their <a href='https://www.elastic.co/guide/en/elasticsearch/reference/current/search-count.html'>API guide</a>. <br><br><b>Permissions Needed:</b> SEARCH
-
-### Example 
-```objc
-JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-
-NSString* type = @"type_example"; // The index type
-NSString* template = @"template_example"; // The index template
-NSObject* query = NULL; // The query to be used for the search (optional)
-
-JSAPISearchApi*apiInstance = [[JSAPISearchApi alloc] init];
-
-// Count matches with a template
-[apiInstance searchCountWithTemplatePOSTWithType:type
-              template:template
-              query:query
-          completionHandler: ^(NSObject* output, NSError* error) {
-                        if (output) {
-                            NSLog(@"%@", output);
-                        }
-                        if (error) {
-                            NSLog(@"Error calling JSAPISearchApi->searchCountWithTemplatePOST: %@", error);
-                        }
-                    }];
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **type** | **NSString***| The index type | 
- **template** | **NSString***| The index template | 
- **query** | **NSObject***| The query to be used for the search | [optional] 
-
-### Return type
-
-**NSObject***
-
-### Authorization
-
-[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **searchDocumentGET**
 ```objc
 -(NSURLSessionTask*) searchDocumentGETWithType: (NSString*) type
@@ -527,72 +352,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **type** | **NSString***| The index type | 
  **_id** | **NSString***| The index id | 
-
-### Return type
-
-**NSObject***
-
-### Authorization
-
-[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **searchDocumentWithTemplateGET**
-```objc
--(NSURLSessionTask*) searchDocumentWithTemplateGETWithType: (NSString*) type
-    _id: (NSString*) _id
-    template: (NSString*) template
-        completionHandler: (void (^)(NSObject* output, NSError* error)) handler;
-```
-
-Get document with a template
-
-This is a 1 to 1 mapping of a ElasticSearch call.  Further information can be found at their <a href='https://www.elastic.co/guide/en/elasticsearch/reference/current/search-count.html'>API guide</a>. <br><br><b>Permissions Needed:</b> SEARCH
-
-### Example 
-```objc
-JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-
-NSString* type = @"type_example"; // The index type
-NSString* _id = @"_id_example"; // The index id
-NSString* template = @"template_example"; // The index template
-
-JSAPISearchApi*apiInstance = [[JSAPISearchApi alloc] init];
-
-// Get document with a template
-[apiInstance searchDocumentWithTemplateGETWithType:type
-              _id:_id
-              template:template
-          completionHandler: ^(NSObject* output, NSError* error) {
-                        if (output) {
-                            NSLog(@"%@", output);
-                        }
-                        if (error) {
-                            NSLog(@"Error calling JSAPISearchApi->searchDocumentWithTemplateGET: %@", error);
-                        }
-                    }];
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **type** | **NSString***| The index type | 
- **_id** | **NSString***| The index id | 
- **template** | **NSString***| The index template | 
 
 ### Return type
 
@@ -737,142 +496,6 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **searchExplainWithTemplateGET**
-```objc
--(NSURLSessionTask*) searchExplainWithTemplateGETWithType: (NSString*) type
-    _id: (NSString*) _id
-    template: (NSString*) template
-        completionHandler: (void (^)(NSObject* output, NSError* error)) handler;
-```
-
-Explain matches with a template
-
-This is a 1 to 1 mapping of a ElasticSearch call to _explain.  Further information can be found at their <a href='https://www.elastic.co/guide/en/elasticsearch/reference/current/search-count.html'>API guide</a>. <br><br><b>Permissions Needed:</b> SEARCH
-
-### Example 
-```objc
-JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-
-NSString* type = @"type_example"; // The index type
-NSString* _id = @"_id_example"; // The index id
-NSString* template = @"template_example"; // The index template
-
-JSAPISearchApi*apiInstance = [[JSAPISearchApi alloc] init];
-
-// Explain matches with a template
-[apiInstance searchExplainWithTemplateGETWithType:type
-              _id:_id
-              template:template
-          completionHandler: ^(NSObject* output, NSError* error) {
-                        if (output) {
-                            NSLog(@"%@", output);
-                        }
-                        if (error) {
-                            NSLog(@"Error calling JSAPISearchApi->searchExplainWithTemplateGET: %@", error);
-                        }
-                    }];
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **type** | **NSString***| The index type | 
- **_id** | **NSString***| The index id | 
- **template** | **NSString***| The index template | 
-
-### Return type
-
-**NSObject***
-
-### Authorization
-
-[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **searchExplainWithTemplatePOST**
-```objc
--(NSURLSessionTask*) searchExplainWithTemplatePOSTWithType: (NSString*) type
-    _id: (NSString*) _id
-    template: (NSString*) template
-    query: (NSObject*) query
-        completionHandler: (void (^)(NSObject* output, NSError* error)) handler;
-```
-
-Explain matches with a template
-
-This is a 1 to 1 mapping of a ElasticSearch call to _explain.  Further information can be found at their <a href='https://www.elastic.co/guide/en/elasticsearch/reference/current/search-count.html'>API guide</a>. <br><br><b>Permissions Needed:</b> SEARCH
-
-### Example 
-```objc
-JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-
-NSString* type = @"type_example"; // The index type
-NSString* _id = @"_id_example"; // The index id
-NSString* template = @"template_example"; // The index template
-NSObject* query = NULL; // The query to be used for the search (optional)
-
-JSAPISearchApi*apiInstance = [[JSAPISearchApi alloc] init];
-
-// Explain matches with a template
-[apiInstance searchExplainWithTemplatePOSTWithType:type
-              _id:_id
-              template:template
-              query:query
-          completionHandler: ^(NSObject* output, NSError* error) {
-                        if (output) {
-                            NSLog(@"%@", output);
-                        }
-                        if (error) {
-                            NSLog(@"Error calling JSAPISearchApi->searchExplainWithTemplatePOST: %@", error);
-                        }
-                    }];
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **type** | **NSString***| The index type | 
- **_id** | **NSString***| The index id | 
- **template** | **NSString***| The index template | 
- **query** | **NSObject***| The query to be used for the search | [optional] 
-
-### Return type
-
-**NSObject***
-
-### Authorization
-
-[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **searchIndex**
 ```objc
 -(NSURLSessionTask*) searchIndexWithType: (NSString*) type
@@ -993,134 +616,6 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **searchIndexWithTemplateGET**
-```objc
--(NSURLSessionTask*) searchIndexWithTemplateGETWithType: (NSString*) type
-    template: (NSString*) template
-        completionHandler: (void (^)(NSObject* output, NSError* error)) handler;
-```
-
-Search an index with a template
-
-This is a 1 to 1 mapping of a ElasticSearch call to _search.  Further information can be found at their <a href='https://www.elastic.co/guide/en/elasticsearch/reference/current/search.html'>API guide</a>. <br><br><b>Permissions Needed:</b> SEARCH
-
-### Example 
-```objc
-JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-
-NSString* type = @"type_example"; // The index type
-NSString* template = @"template_example"; // The index template
-
-JSAPISearchApi*apiInstance = [[JSAPISearchApi alloc] init];
-
-// Search an index with a template
-[apiInstance searchIndexWithTemplateGETWithType:type
-              template:template
-          completionHandler: ^(NSObject* output, NSError* error) {
-                        if (output) {
-                            NSLog(@"%@", output);
-                        }
-                        if (error) {
-                            NSLog(@"Error calling JSAPISearchApi->searchIndexWithTemplateGET: %@", error);
-                        }
-                    }];
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **type** | **NSString***| The index type | 
- **template** | **NSString***| The index template | 
-
-### Return type
-
-**NSObject***
-
-### Authorization
-
-[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **searchIndexWithTemplatePOST**
-```objc
--(NSURLSessionTask*) searchIndexWithTemplatePOSTWithType: (NSString*) type
-    template: (NSString*) template
-    query: (NSObject*) query
-        completionHandler: (void (^)(NSObject* output, NSError* error)) handler;
-```
-
-Search an index with a template
-
-This is a 1 to 1 mapping of a ElasticSearch call to _search.  Further information can be found at their <a href='https://www.elastic.co/guide/en/elasticsearch/reference/current/search.html'>API guide</a>. <br><br><b>Permissions Needed:</b> SEARCH
-
-### Example 
-```objc
-JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-
-NSString* type = @"type_example"; // The index type
-NSString* template = @"template_example"; // The index template
-NSObject* query = NULL; // The query to be used for the search (optional)
-
-JSAPISearchApi*apiInstance = [[JSAPISearchApi alloc] init];
-
-// Search an index with a template
-[apiInstance searchIndexWithTemplatePOSTWithType:type
-              template:template
-              query:query
-          completionHandler: ^(NSObject* output, NSError* error) {
-                        if (output) {
-                            NSLog(@"%@", output);
-                        }
-                        if (error) {
-                            NSLog(@"Error calling JSAPISearchApi->searchIndexWithTemplatePOST: %@", error);
-                        }
-                    }];
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **type** | **NSString***| The index type | 
- **template** | **NSString***| The index template | 
- **query** | **NSObject***| The query to be used for the search | [optional] 
-
-### Return type
-
-**NSObject***
-
-### Authorization
-
-[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **searchIndicesGET**
 ```objc
 -(NSURLSessionTask*) searchIndicesGETWithCompletionHandler: 
@@ -1233,68 +728,6 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **searchMappingsWithTemplateGET**
-```objc
--(NSURLSessionTask*) searchMappingsWithTemplateGETWithType: (NSString*) type
-    template: (NSString*) template
-        completionHandler: (void (^)(NSObject* output, NSError* error)) handler;
-```
-
-Get mapping with a template
-
-This is a 1 to 1 mapping of a ElasticSearch call to _mapping.  Further information can be found at their <a href='https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-mapping.html'>API guide</a>. <br><br><b>Permissions Needed:</b> SEARCH
-
-### Example 
-```objc
-JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-
-NSString* type = @"type_example"; // The index type
-NSString* template = @"template_example"; // The index template
-
-JSAPISearchApi*apiInstance = [[JSAPISearchApi alloc] init];
-
-// Get mapping with a template
-[apiInstance searchMappingsWithTemplateGETWithType:type
-              template:template
-          completionHandler: ^(NSObject* output, NSError* error) {
-                        if (output) {
-                            NSLog(@"%@", output);
-                        }
-                        if (error) {
-                            NSLog(@"Error calling JSAPISearchApi->searchMappingsWithTemplateGET: %@", error);
-                        }
-                    }];
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **type** | **NSString***| The index type | 
- **template** | **NSString***| The index template | 
-
-### Return type
-
-**NSObject***
-
-### Authorization
-
-[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **searchPublicIndex**
 ```objc
 -(NSURLSessionTask*) searchPublicIndexWithType: (NSString*) type
@@ -1343,76 +776,6 @@ JSAPISearchApi*apiInstance = [[JSAPISearchApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **type** | **NSString***| The index type | 
- **user** | **NSNumber***| A user to impersonate for security. Requires SEARCH permission for actual caller | [optional] 
- **query** | [**JSAPISearchQuery***](JSAPISearchQuery.md)| The query to be used for the search | [optional] 
-
-### Return type
-
-**NSObject***
-
-### Authorization
-
-[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **searchPublicIndexWithTemplate**
-```objc
--(NSURLSessionTask*) searchPublicIndexWithTemplateWithType: (NSString*) type
-    template: (NSString*) template
-    user: (NSNumber*) user
-    query: (JSAPISearchQuery*) query
-        completionHandler: (void (^)(NSObject* output, NSError* error)) handler;
-```
-
-Search public index with template
-
-Make an ElasticSearch query against a public index. Results filtered for records the caller has GET permission on.  Further information on query format can be found at their <a href='https://www.elastic.co/guide/en/elasticsearch/reference/current/search.html'>API guide</a>. <br><br><b>Permissions Needed:</b> SEARCH_ADMIN
-
-### Example 
-```objc
-JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-
-NSString* type = @"type_example"; // The index type
-NSString* template = @"template_example"; // The index type
-NSNumber* user = @56; // A user to impersonate for security. Requires SEARCH permission for actual caller (optional)
-JSAPISearchQuery* query = [[JSAPISearchQuery alloc] init]; // The query to be used for the search (optional)
-
-JSAPISearchApi*apiInstance = [[JSAPISearchApi alloc] init];
-
-// Search public index with template
-[apiInstance searchPublicIndexWithTemplateWithType:type
-              template:template
-              user:user
-              query:query
-          completionHandler: ^(NSObject* output, NSError* error) {
-                        if (output) {
-                            NSLog(@"%@", output);
-                        }
-                        if (error) {
-                            NSLog(@"Error calling JSAPISearchApi->searchPublicIndexWithTemplate: %@", error);
-                        }
-                    }];
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **type** | **NSString***| The index type | 
- **template** | **NSString***| The index type | 
  **user** | **NSNumber***| A user to impersonate for security. Requires SEARCH permission for actual caller | [optional] 
  **query** | [**JSAPISearchQuery***](JSAPISearchQuery.md)| The query to be used for the search | [optional] 
 
@@ -1534,134 +897,6 @@ JSAPISearchApi*apiInstance = [[JSAPISearchApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **type** | **NSString***| The index type | 
- **query** | **NSObject***| The query to be used for the search | [optional] 
-
-### Return type
-
-**NSObject***
-
-### Authorization
-
-[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **searchValidateWithTemplateGET**
-```objc
--(NSURLSessionTask*) searchValidateWithTemplateGETWithType: (NSString*) type
-    template: (NSString*) template
-        completionHandler: (void (^)(NSObject* output, NSError* error)) handler;
-```
-
-Validate matches with a template
-
-This is a 1 to 1 mapping of a ElasticSearch call to _validate/query.  Further information can be found at their <a href='https://www.elastic.co/guide/en/elasticsearch/reference/current/search-validate.html'>API guide</a>. <br><br><b>Permissions Needed:</b> SEARCH
-
-### Example 
-```objc
-JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-
-NSString* type = @"type_example"; // The index type
-NSString* template = @"template_example"; // The index template
-
-JSAPISearchApi*apiInstance = [[JSAPISearchApi alloc] init];
-
-// Validate matches with a template
-[apiInstance searchValidateWithTemplateGETWithType:type
-              template:template
-          completionHandler: ^(NSObject* output, NSError* error) {
-                        if (output) {
-                            NSLog(@"%@", output);
-                        }
-                        if (error) {
-                            NSLog(@"Error calling JSAPISearchApi->searchValidateWithTemplateGET: %@", error);
-                        }
-                    }];
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **type** | **NSString***| The index type | 
- **template** | **NSString***| The index template | 
-
-### Return type
-
-**NSObject***
-
-### Authorization
-
-[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **searchValidateWithTemplatePOST**
-```objc
--(NSURLSessionTask*) searchValidateWithTemplatePOSTWithType: (NSString*) type
-    template: (NSString*) template
-    query: (NSObject*) query
-        completionHandler: (void (^)(NSObject* output, NSError* error)) handler;
-```
-
-Validate matches with a template
-
-This is a 1 to 1 mapping of a ElasticSearch call to _validate/query.  Further information can be found at their <a href='https://www.elastic.co/guide/en/elasticsearch/reference/current/search-validate.html'>API guide</a>. <br><br><b>Permissions Needed:</b> SEARCH
-
-### Example 
-```objc
-JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-
-NSString* type = @"type_example"; // The index type
-NSString* template = @"template_example"; // The index template
-NSObject* query = NULL; // The query to be used for the search (optional)
-
-JSAPISearchApi*apiInstance = [[JSAPISearchApi alloc] init];
-
-// Validate matches with a template
-[apiInstance searchValidateWithTemplatePOSTWithType:type
-              template:template
-              query:query
-          completionHandler: ^(NSObject* output, NSError* error) {
-                        if (output) {
-                            NSLog(@"%@", output);
-                        }
-                        if (error) {
-                            NSLog(@"Error calling JSAPISearchApi->searchValidateWithTemplatePOST: %@", error);
-                        }
-                    }];
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **type** | **NSString***| The index type | 
- **template** | **NSString***| The index template | 
  **query** | **NSObject***| The query to be used for the search | [optional] 
 
 ### Return type

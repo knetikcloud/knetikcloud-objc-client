@@ -4,6 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **_description** | **NSString*** |  | [optional] 
+**itemId** | **NSNumber*** |  | [optional] 
 **name** | **NSString*** |  | [optional] 
 **sku** | **NSString*** |  | [optional] 
 **uniqueKey** | **NSString*** |  | [optional] 

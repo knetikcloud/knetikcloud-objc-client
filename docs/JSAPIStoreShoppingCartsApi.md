@@ -1,6 +1,6 @@
 # JSAPIStoreShoppingCartsApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -200,7 +200,7 @@ void (empty response body)
 ```objc
 -(NSURLSessionTask*) createCartWithOwner: (NSNumber*) owner
     currencyCode: (NSString*) currencyCode
-        completionHandler: (void (^)(NSString* output, NSError* error)) handler;
+        completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler;
 ```
 
 Create a cart
@@ -226,7 +226,7 @@ JSAPIStoreShoppingCartsApi*apiInstance = [[JSAPIStoreShoppingCartsApi alloc] ini
 // Create a cart
 [apiInstance createCartWithOwner:owner
               currencyCode:currencyCode
-          completionHandler: ^(NSString* output, NSError* error) {
+          completionHandler: ^(JSAPIStringWrapper* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -245,7 +245,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**NSString***
+[**JSAPIStringWrapper***](JSAPIStringWrapper.md)
 
 ### Authorization
 

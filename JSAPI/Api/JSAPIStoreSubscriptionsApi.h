@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "JSAPIPageResourceSubscriptionResource_.h"
 #import "JSAPIPageResourceSubscriptionTemplateResource_.h"
+#import "JSAPIPatchResource.h"
 #import "JSAPIResult.h"
 #import "JSAPISubscriptionResource.h"
 #import "JSAPISubscriptionTemplateResource.h"
@@ -44,7 +45,7 @@ extern NSInteger kJSAPIStoreSubscriptionsApiMissingParamErrorCode;
 
 
 /// Create a subscription template
-/// Subscription Templates define a type of subscription and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// Subscription Templates define a type of subscription and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> POST
 ///
 /// @param subscriptionTemplateResource The new subscription template (optional)
 /// 
@@ -78,7 +79,7 @@ extern NSInteger kJSAPIStoreSubscriptionsApiMissingParamErrorCode;
 
 
 /// Delete a subscription template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> DELETE
 ///
 /// @param _id The id of the template
 /// @param cascade force deleting the template if it&#39;s attached to other objects, cascade &#x3D; detach (optional)
@@ -112,7 +113,7 @@ extern NSInteger kJSAPIStoreSubscriptionsApiMissingParamErrorCode;
 
 
 /// Get a single subscription template
-/// Subscription Templates define a type of subscription and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// Subscription Templates define a type of subscription and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> GET
 ///
 /// @param _id The id of the template
 /// 
@@ -128,7 +129,7 @@ extern NSInteger kJSAPIStoreSubscriptionsApiMissingParamErrorCode;
 
 
 /// List and search subscription templates
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or SUBSCRIPTIONS_ADMIN
+/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or SUBSCRIPTIONS_ADMIN<br /><b>Permissions Needed:</b> LIST
 ///
 /// @param size The number of objects returned per page (optional) (default to 25)
 /// @param page The number of the page returned, starting with 1 (optional) (default to 1)
@@ -201,20 +202,20 @@ extern NSInteger kJSAPIStoreSubscriptionsApiMissingParamErrorCode;
 
 
 /// Update a subscription template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> PUT
 ///
 /// @param _id The id of the template
-/// @param subscriptionTemplateResource The subscription template resource object (optional)
+/// @param templatePatchResource The patch resource object (optional)
+/// @param testValidation If true, this will test validation but not submit the patch request (optional)
 /// 
 ///  code:204 message:"No Content",
-///  code:400 message:"Bad Request",
 ///  code:401 message:"Unauthorized",
-///  code:403 message:"Forbidden",
-///  code:404 message:"Not Found"
+///  code:403 message:"Forbidden"
 ///
 /// @return JSAPISubscriptionTemplateResource*
 -(NSURLSessionTask*) updateSubscriptionTemplateWithId: (NSString*) _id
-    subscriptionTemplateResource: (JSAPISubscriptionTemplateResource*) subscriptionTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
     completionHandler: (void (^)(JSAPISubscriptionTemplateResource* output, NSError* error)) handler;
 
 

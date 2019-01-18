@@ -1,6 +1,6 @@
 # JSAPIPaymentsApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -336,7 +336,7 @@ Name | Type | Description  | Notes
     size: (NSNumber*) size
     page: (NSNumber*) page
     order: (NSString*) order
-        completionHandler: (void (^)(NSArray<JSAPIPaymentMethodResource>* output, NSError* error)) handler;
+        completionHandler: (void (^)(JSAPIPageResourcePaymentMethodResource_* output, NSError* error)) handler;
 ```
 
 Get all payment methods for a user
@@ -374,7 +374,7 @@ JSAPIPaymentsApi*apiInstance = [[JSAPIPaymentsApi alloc] init];
               size:size
               page:page
               order:order
-          completionHandler: ^(NSArray<JSAPIPaymentMethodResource>* output, NSError* error) {
+          completionHandler: ^(JSAPIPageResourcePaymentMethodResource_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -399,7 +399,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**NSArray<JSAPIPaymentMethodResource>***](JSAPIPaymentMethodResource.md)
+[**JSAPIPageResourcePaymentMethodResource_***](JSAPIPageResourcePaymentMethodResource_.md)
 
 ### Authorization
 

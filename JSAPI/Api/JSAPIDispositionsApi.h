@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
-#import "JSAPIDispositionCount.h"
 #import "JSAPIDispositionResource.h"
+#import "JSAPIPageResourceDispositionCount_.h"
 #import "JSAPIPageResourceDispositionResource_.h"
 #import "JSAPIResult.h"
 #import "JSAPIApi.h"
@@ -80,6 +80,8 @@ extern NSInteger kJSAPIDispositionsApiMissingParamErrorCode;
 /// @param filterCreatedDate Filters invoices by creation date. Multiple values possible for range search. Format: filter_created_date&#x3D;OP,ts&amp;... where OP in (GT, LT, GOE, LOE, EQ) and ts is a unix timestamp in seconds. Ex: filter_created_date&#x3D;GT,1452154258,LT,1554254874 (optional)
 /// @param filterContext Filter for dispositions within a context type (games, articles, polls, etc). Optionally with a specific id like filter_context&#x3D;video:47 (optional)
 /// @param filterOwner Filter for dispositions from a specific user by id or &#39;me&#39; (optional)
+/// @param size The number of objects returned per page (optional) (default to 25)
+/// @param page The number of the page returned, starting with 1 (optional) (default to 1)
 /// 
 ///  code:200 message:"OK",
 ///  code:400 message:"Bad Request",
@@ -87,11 +89,13 @@ extern NSInteger kJSAPIDispositionsApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSArray<JSAPIDispositionCount>*
+/// @return JSAPIPageResourceDispositionCount_*
 -(NSURLSessionTask*) getDispositionCountsWithFilterCreatedDate: (NSString*) filterCreatedDate
     filterContext: (NSString*) filterContext
     filterOwner: (NSString*) filterOwner
-    completionHandler: (void (^)(NSArray<JSAPIDispositionCount>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceDispositionCount_* output, NSError* error)) handler;
 
 
 /// Returns a page of dispositions

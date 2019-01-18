@@ -1,6 +1,6 @@
 # JSAPIDispositionsApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -187,7 +187,9 @@ Name | Type | Description  | Notes
 -(NSURLSessionTask*) getDispositionCountsWithFilterCreatedDate: (NSString*) filterCreatedDate
     filterContext: (NSString*) filterContext
     filterOwner: (NSString*) filterOwner
-        completionHandler: (void (^)(NSArray<JSAPIDispositionCount>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+        completionHandler: (void (^)(JSAPIPageResourceDispositionCount_* output, NSError* error)) handler;
 ```
 
 Returns a list of disposition counts
@@ -208,6 +210,8 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 NSString* filterCreatedDate = @"filterCreatedDate_example"; // Filters invoices by creation date. Multiple values possible for range search. Format: filter_created_date=OP,ts&... where OP in (GT, LT, GOE, LOE, EQ) and ts is a unix timestamp in seconds. Ex: filter_created_date=GT,1452154258,LT,1554254874 (optional)
 NSString* filterContext = @"filterContext_example"; // Filter for dispositions within a context type (games, articles, polls, etc). Optionally with a specific id like filter_context=video:47 (optional)
 NSString* filterOwner = @"filterOwner_example"; // Filter for dispositions from a specific user by id or 'me' (optional)
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
 JSAPIDispositionsApi*apiInstance = [[JSAPIDispositionsApi alloc] init];
 
@@ -215,7 +219,9 @@ JSAPIDispositionsApi*apiInstance = [[JSAPIDispositionsApi alloc] init];
 [apiInstance getDispositionCountsWithFilterCreatedDate:filterCreatedDate
               filterContext:filterContext
               filterOwner:filterOwner
-          completionHandler: ^(NSArray<JSAPIDispositionCount>* output, NSError* error) {
+              size:size
+              page:page
+          completionHandler: ^(JSAPIPageResourceDispositionCount_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -232,10 +238,12 @@ Name | Type | Description  | Notes
  **filterCreatedDate** | **NSString***| Filters invoices by creation date. Multiple values possible for range search. Format: filter_created_date&#x3D;OP,ts&amp;... where OP in (GT, LT, GOE, LOE, EQ) and ts is a unix timestamp in seconds. Ex: filter_created_date&#x3D;GT,1452154258,LT,1554254874 | [optional] 
  **filterContext** | **NSString***| Filter for dispositions within a context type (games, articles, polls, etc). Optionally with a specific id like filter_context&#x3D;video:47 | [optional] 
  **filterOwner** | **NSString***| Filter for dispositions from a specific user by id or &#39;me&#39; | [optional] 
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
 ### Return type
 
-[**NSArray<JSAPIDispositionCount>***](JSAPIDispositionCount.md)
+[**JSAPIPageResourceDispositionCount_***](JSAPIPageResourceDispositionCount_.md)
 
 ### Authorization
 

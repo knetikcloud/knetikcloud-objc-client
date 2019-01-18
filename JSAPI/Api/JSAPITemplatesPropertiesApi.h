@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import "JSAPIPageResourcePropertyFieldListResource_.h"
 #import "JSAPIPropertyFieldListResource.h"
 #import "JSAPIResult.h"
 #import "JSAPIApi.h"
@@ -25,9 +26,11 @@ extern NSInteger kJSAPITemplatesPropertiesApiMissingParamErrorCode;
 -(instancetype) initWithApiClient:(JSAPIApiClient *)apiClient NS_DESIGNATED_INITIALIZER;
 
 /// Get details for a template property type
-/// <b>Permissions Needed:</b> ANY
+/// <b>Permissions Needed:</b> ANY<br /><b>Permissions Needed:</b> NONE
 ///
 /// @param type type
+/// @param size The number of objects returned per page (optional) (default to 25)
+/// @param page The number of the page returned, starting with 1 (optional) (default to 1)
 /// 
 ///  code:200 message:"OK",
 ///  code:400 message:"Bad Request",
@@ -37,11 +40,13 @@ extern NSInteger kJSAPITemplatesPropertiesApiMissingParamErrorCode;
 ///
 /// @return JSAPIPropertyFieldListResource*
 -(NSURLSessionTask*) getTemplatePropertyTypeWithType: (NSString*) type
+    size: (NSNumber*) size
+    page: (NSNumber*) page
     completionHandler: (void (^)(JSAPIPropertyFieldListResource* output, NSError* error)) handler;
 
 
 /// List template property types
-/// <b>Permissions Needed:</b> ANY
+/// <b>Permissions Needed:</b> ANY<br /><b>Permissions Needed:</b> NONE
 ///
 /// 
 ///  code:200 message:"OK",
@@ -50,9 +55,9 @@ extern NSInteger kJSAPITemplatesPropertiesApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSArray<JSAPIPropertyFieldListResource>*
+/// @return JSAPIPageResourcePropertyFieldListResource_*
 -(NSURLSessionTask*) getTemplatePropertyTypesWithCompletionHandler: 
-    (void (^)(NSArray<JSAPIPropertyFieldListResource>* output, NSError* error)) handler;
+    (void (^)(JSAPIPageResourcePropertyFieldListResource_* output, NSError* error)) handler;
 
 
 

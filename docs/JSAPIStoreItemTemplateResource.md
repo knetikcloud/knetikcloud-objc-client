@@ -3,7 +3,6 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**allowAdditional** | **NSNumber*** | Whether to allow additional properties beyond those specified or not | [optional] 
 **behaviors** | [**NSArray&lt;JSAPIItemBehaviorDefinitionResource&gt;***](JSAPIItemBehaviorDefinitionResource.md) | The customized behaviors that are required or default for this type of item | [optional] 
 **createdDate** | **NSNumber*** | The date/time this resource was created in seconds since unix epoch | [optional] 
 **_id** | **NSString*** | The id of the template | [optional] 

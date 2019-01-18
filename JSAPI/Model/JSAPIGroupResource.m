@@ -22,7 +22,7 @@
 
 + (NSDictionary *)modalDictionary {
 
-  return @{ @"additionalProperties": @"additional_properties", @"_description": @"description", @"memberCount": @"member_count", @"messageOfTheDay": @"message_of_the_day", @"name": @"name", @"parent": @"parent", @"status": @"status", @"subMemberCount": @"sub_member_count", @"tags": @"tags", @"template": @"template", @"uniqueName": @"unique_name" };
+  return @{ @"additionalProperties": @"additional_properties", @"createdDate": @"created_date", @"_description": @"description", @"memberCount": @"member_count", @"messageOfTheDay": @"message_of_the_day", @"name": @"name", @"parent": @"parent", @"status": @"status", @"subMemberCount": @"sub_member_count", @"tags": @"tags", @"template": @"template", @"uniqueName": @"unique_name", @"updatedDate": @"updated_date" };
 }
 
 /**
@@ -32,7 +32,7 @@
  */
 + (BOOL)propertyIsOptional:(NSString *)propertyName {
 
-  NSArray *optionalProperties = @[@"additionalProperties", @"_description", @"memberCount", @"messageOfTheDay", @"parent", @"status", @"subMemberCount", @"tags", @"template", @"uniqueName"];
+  NSArray *optionalProperties = @[@"additionalProperties", @"createdDate", @"_description", @"memberCount", @"messageOfTheDay", @"parent", @"status", @"subMemberCount", @"tags", @"template", @"uniqueName", @"updatedDate"];
 
   return [optionalProperties containsObject:propertyName];
 }

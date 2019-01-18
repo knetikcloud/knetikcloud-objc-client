@@ -70,21 +70,5 @@ extern NSInteger kJSAPIUtilMaintenanceApiMissingParamErrorCode;
     completionHandler: (void (^)(NSError* error)) handler;
 
 
-/// Update current maintenance info
-/// <b>Permissions Needed:</b> MAINTENANCE_ADMIN
-///
-/// @param maintenance The maintenance object (optional)
-/// 
-///  code:200 message:"OK",
-///  code:400 message:"Bad Request",
-///  code:401 message:"Unauthorized",
-///  code:403 message:"Forbidden",
-///  code:404 message:"Not Found"
-///
-/// @return void
--(NSURLSessionTask*) updateMaintenanceWithMaintenance: (JSAPIMaintenance*) maintenance
-    completionHandler: (void (^)(NSError* error)) handler;
-
-
 
 @end

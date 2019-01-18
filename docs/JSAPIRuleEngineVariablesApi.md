@@ -1,6 +1,6 @@
 # JSAPIRuleEngineVariablesApi
 
-All URIs are relative to *https://jsapi-integration.us-east-1.elasticbeanstalk.com*
+All URIs are relative to *https://devsandbox.knetikcloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -10,8 +10,9 @@ Method | HTTP request | Description
 
 # **getBREVariableTypes**
 ```objc
--(NSURLSessionTask*) getBREVariableTypesWithCompletionHandler: 
-        (void (^)(NSArray<JSAPIVariableTypeResource>* output, NSError* error)) handler;
+-(NSURLSessionTask*) getBREVariableTypesWithSize: (NSNumber*) size
+    page: (NSNumber*) page
+        completionHandler: (void (^)(JSAPIPageResourceVariableTypeResource_* output, NSError* error)) handler;
 ```
 
 Get a list of variable types available
@@ -29,12 +30,15 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 [apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
 
 
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 
 JSAPIRuleEngineVariablesApi*apiInstance = [[JSAPIRuleEngineVariablesApi alloc] init];
 
 // Get a list of variable types available
-[apiInstance getBREVariableTypesWithCompletionHandler: 
-          ^(NSArray<JSAPIVariableTypeResource>* output, NSError* error) {
+[apiInstance getBREVariableTypesWithSize:size
+              page:page
+          completionHandler: ^(JSAPIPageResourceVariableTypeResource_* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
                         }
@@ -45,11 +49,15 @@ JSAPIRuleEngineVariablesApi*apiInstance = [[JSAPIRuleEngineVariablesApi alloc] i
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
 
 ### Return type
 
-[**NSArray<JSAPIVariableTypeResource>***](JSAPIVariableTypeResource.md)
+[**JSAPIPageResourceVariableTypeResource_***](JSAPIPageResourceVariableTypeResource_.md)
 
 ### Authorization
 

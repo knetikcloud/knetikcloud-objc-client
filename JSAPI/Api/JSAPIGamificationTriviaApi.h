@@ -1,10 +1,14 @@
 #import <Foundation/Foundation.h>
 #import "JSAPIAnswerResource.h"
-#import "JSAPIDeltaResource.h"
 #import "JSAPIImportJobResource.h"
+#import "JSAPILongWrapper.h"
+#import "JSAPIPageResourceAnswerResource_.h"
+#import "JSAPIPageResourceDeltaResource_.h"
 #import "JSAPIPageResourceImportJobResource_.h"
 #import "JSAPIPageResourceQuestionResource_.h"
 #import "JSAPIPageResourceQuestionTemplateResource_.h"
+#import "JSAPIPageResourceString_.h"
+#import "JSAPIPatchResource.h"
 #import "JSAPIQuestionResource.h"
 #import "JSAPIQuestionTemplateResource.h"
 #import "JSAPIResult.h"
@@ -133,7 +137,7 @@ extern NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode;
 
 
 /// Create a question template
-/// Question templates define a type of question and the properties they have. <br><br><b>Permissions Needed:</b> TRIVIA_ADMIN
+/// Question templates define a type of question and the properties they have. <br><br><b>Permissions Needed:</b> TRIVIA_ADMIN<br /><b>Permissions Needed:</b> POST
 ///
 /// @param questionTemplateResource The question template resource object (optional)
 /// 
@@ -199,7 +203,7 @@ extern NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode;
 
 
 /// Delete a question template
-/// If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> DELETE
 ///
 /// @param _id The id of the template
 /// @param cascade The value needed to delete used templates (optional)
@@ -298,6 +302,8 @@ extern NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode;
 /// <b>Permissions Needed:</b> TRIVIA_ADMIN
 ///
 /// @param questionId The id of the question
+/// @param size The number of objects returned per page (optional) (default to 25)
+/// @param page The number of the page returned, starting with 1 (optional) (default to 1)
 /// 
 ///  code:200 message:"OK",
 ///  code:400 message:"Bad Request",
@@ -305,15 +311,19 @@ extern NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSArray<JSAPIAnswerResource>*
+/// @return JSAPIPageResourceAnswerResource_*
 -(NSURLSessionTask*) getQuestionAnswersWithQuestionId: (NSString*) questionId
-    completionHandler: (void (^)(NSArray<JSAPIAnswerResource>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceAnswerResource_* output, NSError* error)) handler;
 
 
 /// List question deltas in ascending order of updated date
 /// The 'since' parameter is important to avoid getting a full list of all questions. Implementors should make sure they pass the updated date of the last resource loaded, not the date of the last request, in order to avoid gaps. <br><br><b>Permissions Needed:</b> TRIVIA_ADMIN
 ///
 /// @param since Timestamp in seconds (optional)
+/// @param size The number of objects returned per page (optional) (default to 25)
+/// @param page The number of the page returned, starting with 1 (optional) (default to 1)
 /// 
 ///  code:200 message:"OK",
 ///  code:400 message:"Bad Request",
@@ -321,15 +331,19 @@ extern NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSArray<JSAPIDeltaResource>*
+/// @return JSAPIPageResourceDeltaResource_*
 -(NSURLSessionTask*) getQuestionDeltasWithSince: (NSNumber*) since
-    completionHandler: (void (^)(NSArray<JSAPIDeltaResource>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceDeltaResource_* output, NSError* error)) handler;
 
 
 /// List the tags for a question
 /// <b>Permissions Needed:</b> TRIVIA_ADMIN
 ///
 /// @param _id The id of the question
+/// @param size The number of objects returned per page (optional) (default to 25)
+/// @param page The number of the page returned, starting with 1 (optional) (default to 1)
 /// 
 ///  code:200 message:"OK",
 ///  code:400 message:"Bad Request",
@@ -337,13 +351,15 @@ extern NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSArray<NSString*>*
+/// @return JSAPIPageResourceString_*
 -(NSURLSessionTask*) getQuestionTagsWithId: (NSString*) _id
-    completionHandler: (void (^)(NSArray<NSString*>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceString_* output, NSError* error)) handler;
 
 
 /// Get a single question template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or TRIVIA_ADMIN
+/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or TRIVIA_ADMIN<br /><b>Permissions Needed:</b> GET
 ///
 /// @param _id The id of the template
 /// 
@@ -359,7 +375,7 @@ extern NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode;
 
 
 /// List and search question templates
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or TRIVIA_ADMIN
+/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or TRIVIA_ADMIN<br /><b>Permissions Needed:</b> LIST
 ///
 /// @param size The number of objects returned per page (optional) (default to 25)
 /// @param page The number of the page returned, starting with 1 (optional) (default to 1)
@@ -431,7 +447,7 @@ extern NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSNumber*
+/// @return JSAPILongWrapper*
 -(NSURLSessionTask*) getQuestionsCountWithFilterSearch: (NSString*) filterSearch
     filterIdset: (NSString*) filterIdset
     filterCategory: (NSString*) filterCategory
@@ -439,7 +455,7 @@ extern NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode;
     filterTagset: (NSString*) filterTagset
     filterType: (NSString*) filterType
     filterPublished: (NSNumber*) filterPublished
-    completionHandler: (void (^)(NSNumber* output, NSError* error)) handler;
+    completionHandler: (void (^)(JSAPILongWrapper* output, NSError* error)) handler;
 
 
 /// Start processing an import job
@@ -516,6 +532,8 @@ extern NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode;
 /// @param filterSearch Filter for tags starting with the given text (optional)
 /// @param filterCategory Filter for tags on questions from a specific category (optional)
 /// @param filterImportId Filter for tags on questions from a specific import job (optional)
+/// @param size The number of objects returned per page (optional) (default to 25)
+/// @param page The number of the page returned, starting with 1 (optional) (default to 1)
 /// 
 ///  code:200 message:"OK",
 ///  code:400 message:"Bad Request",
@@ -523,11 +541,13 @@ extern NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return NSArray<NSString*>*
+/// @return JSAPIPageResourceString_*
 -(NSURLSessionTask*) searchQuestionTagsWithFilterSearch: (NSString*) filterSearch
     filterCategory: (NSString*) filterCategory
     filterImportId: (NSNumber*) filterImportId
-    completionHandler: (void (^)(NSArray<NSString*>* output, NSError* error)) handler;
+    size: (NSNumber*) size
+    page: (NSNumber*) page
+    completionHandler: (void (^)(JSAPIPageResourceString_* output, NSError* error)) handler;
 
 
 /// Update an import job
@@ -587,20 +607,20 @@ extern NSInteger kJSAPIGamificationTriviaApiMissingParamErrorCode;
 
 
 /// Update a question template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> TEMPLATE_ADMIN<br /><b>Permissions Needed:</b> PUT
 ///
 /// @param _id The id of the template
-/// @param questionTemplateResource The question template resource object (optional)
+/// @param templatePatchResource The patch resource object (optional)
+/// @param testValidation If true, this will test validation but not submit the patch request (optional)
 /// 
 ///  code:204 message:"No Content",
-///  code:400 message:"Bad Request",
 ///  code:401 message:"Unauthorized",
-///  code:403 message:"Forbidden",
-///  code:404 message:"Not Found"
+///  code:403 message:"Forbidden"
 ///
 /// @return JSAPIQuestionTemplateResource*
 -(NSURLSessionTask*) updateQuestionTemplateWithId: (NSString*) _id
-    questionTemplateResource: (JSAPIQuestionTemplateResource*) questionTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
     completionHandler: (void (^)(JSAPIQuestionTemplateResource* output, NSError* error)) handler;
 
 

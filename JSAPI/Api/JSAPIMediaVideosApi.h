@@ -9,6 +9,7 @@
 #import "JSAPIPageResourceTemplateResource_.h"
 #import "JSAPIPageResourceVideoRelationshipResource_.h"
 #import "JSAPIPageResourceVideoResource_.h"
+#import "JSAPIPatchResource.h"
 #import "JSAPIResult.h"
 #import "JSAPIStringWrapper.h"
 #import "JSAPITemplateResource.h"
@@ -162,7 +163,7 @@ extern NSInteger kJSAPIMediaVideosApiMissingParamErrorCode;
 
 
 /// Create a video template
-/// Video Templates define a type of video and the properties they have. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// Video Templates define a type of video and the properties they have.<br /><b>Permissions Needed:</b> POST
 ///
 /// @param videoTemplateResource The video template resource object (optional)
 /// 
@@ -264,7 +265,7 @@ extern NSInteger kJSAPIMediaVideosApiMissingParamErrorCode;
 
 
 /// Delete a video template
-/// If cascade = 'detach', it will force delete the template even if it's attached to other objects. <br><br><b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// If cascade = 'detach', it will force delete the template even if it's attached to other objects.<br /><b>Permissions Needed:</b> DELETE
 ///
 /// @param _id The id of the template
 /// @param cascade The value needed to delete used templates (optional)
@@ -382,7 +383,7 @@ extern NSInteger kJSAPIMediaVideosApiMissingParamErrorCode;
 
 
 /// Get a single video template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or VIDEOS_ADMIN
+/// <b>Permissions Needed:</b> GET
 ///
 /// @param _id The id of the template
 /// 
@@ -398,7 +399,7 @@ extern NSInteger kJSAPIMediaVideosApiMissingParamErrorCode;
 
 
 /// List and search video templates
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN or VIDEOS_ADMIN
+/// <b>Permissions Needed:</b> LIST
 ///
 /// @param size The number of objects returned per page (optional) (default to 25)
 /// @param page The number of the page returned, starting with 1 (optional) (default to 1)
@@ -556,20 +557,20 @@ extern NSInteger kJSAPIMediaVideosApiMissingParamErrorCode;
 
 
 /// Update a video template
-/// <b>Permissions Needed:</b> TEMPLATE_ADMIN
+/// <b>Permissions Needed:</b> PUT
 ///
 /// @param _id The id of the template
-/// @param videoTemplateResource The video template resource object (optional)
+/// @param templatePatchResource The patch resource object (optional)
+/// @param testValidation If true, this will test validation but not submit the patch request (optional)
 /// 
 ///  code:204 message:"No Content",
-///  code:400 message:"Bad Request",
 ///  code:401 message:"Unauthorized",
-///  code:403 message:"Forbidden",
-///  code:404 message:"Not Found"
+///  code:403 message:"Forbidden"
 ///
 /// @return JSAPITemplateResource*
 -(NSURLSessionTask*) updateVideoTemplateWithId: (NSString*) _id
-    videoTemplateResource: (JSAPITemplateResource*) videoTemplateResource
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
     completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler;
 
 

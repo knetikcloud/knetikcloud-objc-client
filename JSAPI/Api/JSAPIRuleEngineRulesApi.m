@@ -6,6 +6,7 @@
 #import "JSAPIExpressionObject_.h"
 #import "JSAPIPageResourceBreRule_.h"
 #import "JSAPIResult.h"
+#import "JSAPIStringWrapper.h"
 
 
 @interface JSAPIRuleEngineRulesApi ()
@@ -181,10 +182,10 @@ NSInteger kJSAPIRuleEngineRulesApiMissingParamErrorCode = 234513;
 /// <b>Permissions Needed:</b> BRE_RULE_ENGINE_RULES_ADMIN
 ///  @param expression The expression (optional)
 ///
-///  @returns NSString*
+///  @returns JSAPIStringWrapper*
 ///
 -(NSURLSessionTask*) getBREExpressionAsStringWithExpression: (JSAPIExpressionObject_*) expression
-    completionHandler: (void (^)(NSString* output, NSError* error)) handler {
+    completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/bre/rules/expression-as-string"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
@@ -223,10 +224,10 @@ NSInteger kJSAPIRuleEngineRulesApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSString*"
+                              responseType: @"JSAPIStringWrapper*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSString*)data, error);
+                                    handler((JSAPIStringWrapper*)data, error);
                                 }
                             }];
 }
