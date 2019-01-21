@@ -23,6 +23,7 @@ Method | HTTP request | Description
 [**getGroupTemplate**](JSAPIUsersGroupsApi.md#getgrouptemplate) | **GET** /users/groups/templates/{id} | Get a single group template
 [**getGroupTemplates**](JSAPIUsersGroupsApi.md#getgrouptemplates) | **GET** /users/groups/templates | List and search group templates
 [**getGroupsForUser**](JSAPIUsersGroupsApi.md#getgroupsforuser) | **GET** /users/{user_id}/groups | List groups a user is in
+[**inviteToGroup**](JSAPIUsersGroupsApi.md#invitetogroup) | **POST** /users/groups/{unique_name}/invite | Invite to group
 [**listGroups**](JSAPIUsersGroupsApi.md#listgroups) | **GET** /users/groups | List and search groups
 [**postGroupMessage**](JSAPIUsersGroupsApi.md#postgroupmessage) | **POST** /users/groups/{unique_name}/messages | Send a group message
 [**removeGroupMember**](JSAPIUsersGroupsApi.md#removegroupmember) | **DELETE** /users/groups/{unique_name}/members/{user_id} | Removes a user from a group
@@ -1208,6 +1209,68 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **inviteToGroup**
+```objc
+-(NSURLSessionTask*) inviteToGroupWithUniqueName: (NSString*) uniqueName
+    request: (JSAPIVerificationRequest*) request
+        completionHandler: (void (^)(JSAPIVerificationRequest* output, NSError* error)) handler;
+```
+
+Invite to group
+
+This will create a verification for joining the group which uses the 'group_invite' template and sets the additional_property 'group' with the unique name
+
+### Example 
+```objc
+JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+
+NSString* uniqueName = @"uniqueName_example"; // The group unique name
+JSAPIVerificationRequest* request = [[JSAPIVerificationRequest alloc] init]; // The id of the user to invite (optional)
+
+JSAPIUsersGroupsApi*apiInstance = [[JSAPIUsersGroupsApi alloc] init];
+
+// Invite to group
+[apiInstance inviteToGroupWithUniqueName:uniqueName
+              request:request
+          completionHandler: ^(JSAPIVerificationRequest* output, NSError* error) {
+                        if (output) {
+                            NSLog(@"%@", output);
+                        }
+                        if (error) {
+                            NSLog(@"Error calling JSAPIUsersGroupsApi->inviteToGroup: %@", error);
+                        }
+                    }];
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **uniqueName** | **NSString***| The group unique name | 
+ **request** | [**JSAPIVerificationRequest***](JSAPIVerificationRequest.md)| The id of the user to invite | [optional] 
+
+### Return type
+
+[**JSAPIVerificationRequest***](JSAPIVerificationRequest.md)
+
+### Authorization
+
+[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

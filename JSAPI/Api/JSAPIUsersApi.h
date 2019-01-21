@@ -227,6 +227,7 @@ extern NSInteger kJSAPIUsersApiMissingParamErrorCode;
 /// Finish resetting a user's password using the secret provided from the password-reset endpoint.  Password should be in plain text and will be encrypted on receipt. Use SSL for security. <br><br><b>Permissions Needed:</b> ANY<br /><b>Permissions Needed:</b> NONE
 ///
 /// @param _id The id of the user
+/// @param test If true, test for valid code without changing password or burning code (optional) (default to false)
 /// @param varNewPasswordRequest The new password request object (optional)
 /// 
 ///  code:204 message:"No Content",
@@ -237,6 +238,7 @@ extern NSInteger kJSAPIUsersApiMissingParamErrorCode;
 ///
 /// @return void
 -(NSURLSessionTask*) passwordResetWithId: (NSNumber*) _id
+    test: (NSNumber*) test
     varNewPasswordRequest: (JSAPINewPasswordRequest*) varNewPasswordRequest
     completionHandler: (void (^)(NSError* error)) handler;
 

@@ -1279,6 +1279,7 @@ Class | Method | HTTP request | Description
 *JSAPIUsersGroupsApi* | [**getGroupTemplate**](docs/JSAPIUsersGroupsApi.md#getgrouptemplate) | **GET** /users/groups/templates/{id} | Get a single group template
 *JSAPIUsersGroupsApi* | [**getGroupTemplates**](docs/JSAPIUsersGroupsApi.md#getgrouptemplates) | **GET** /users/groups/templates | List and search group templates
 *JSAPIUsersGroupsApi* | [**getGroupsForUser**](docs/JSAPIUsersGroupsApi.md#getgroupsforuser) | **GET** /users/{user_id}/groups | List groups a user is in
+*JSAPIUsersGroupsApi* | [**inviteToGroup**](docs/JSAPIUsersGroupsApi.md#invitetogroup) | **POST** /users/groups/{unique_name}/invite | Invite to group
 *JSAPIUsersGroupsApi* | [**listGroups**](docs/JSAPIUsersGroupsApi.md#listgroups) | **GET** /users/groups | List and search groups
 *JSAPIUsersGroupsApi* | [**postGroupMessage**](docs/JSAPIUsersGroupsApi.md#postgroupmessage) | **POST** /users/groups/{unique_name}/messages | Send a group message
 *JSAPIUsersGroupsApi* | [**removeGroupMember**](docs/JSAPIUsersGroupsApi.md#removegroupmember) | **DELETE** /users/groups/{unique_name}/members/{user_id} | Removes a user from a group

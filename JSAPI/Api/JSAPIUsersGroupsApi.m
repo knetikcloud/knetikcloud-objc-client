@@ -15,6 +15,7 @@
 #import "JSAPIStringWrapper.h"
 #import "JSAPITemplateResource.h"
 #import "JSAPIValueWrapperBoolean_.h"
+#import "JSAPIVerificationRequest.h"
 
 
 @interface JSAPIUsersGroupsApi ()
@@ -1470,6 +1471,78 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
                                     handler((JSAPIPageResourceString_*)data, error);
+                                }
+                            }];
+}
+
+///
+/// Invite to group
+/// This will create a verification for joining the group which uses the 'group_invite' template and sets the additional_property 'group' with the unique name
+///  @param uniqueName The group unique name 
+///
+///  @param request The id of the user to invite (optional)
+///
+///  @returns JSAPIVerificationRequest*
+///
+-(NSURLSessionTask*) inviteToGroupWithUniqueName: (NSString*) uniqueName
+    request: (JSAPIVerificationRequest*) request
+    completionHandler: (void (^)(JSAPIVerificationRequest* output, NSError* error)) handler {
+    // verify the required parameter 'uniqueName' is set
+    if (uniqueName == nil) {
+        NSParameterAssert(uniqueName);
+        if(handler) {
+            NSDictionary * userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Missing required parameter '%@'", nil),@"uniqueName"] };
+            NSError* error = [NSError errorWithDomain:kJSAPIUsersGroupsApiErrorDomain code:kJSAPIUsersGroupsApiMissingParamErrorCode userInfo:userInfo];
+            handler(nil, error);
+        }
+        return nil;
+    }
+
+    NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/users/groups/{unique_name}/invite"];
+
+    NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
+    if (uniqueName != nil) {
+        pathParams[@"unique_name"] = uniqueName;
+    }
+
+    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
+    [headerParams addEntriesFromDictionary:self.defaultHeaders];
+    // HTTP header `Accept`
+    NSString *acceptHeader = [self.apiClient.sanitizer selectHeaderAccept:@[@"application/json"]];
+    if(acceptHeader.length > 0) {
+        headerParams[@"Accept"] = acceptHeader;
+    }
+
+    // response content type
+    NSString *responseContentType = [[acceptHeader componentsSeparatedByString:@", "] firstObject] ?: @"";
+
+    // request content type
+    NSString *requestContentType = [self.apiClient.sanitizer selectHeaderContentType:@[@"application/json"]];
+
+    // Authentication setting
+    NSArray *authSettings = @[@"oauth2_client_credentials_grant", @"oauth2_password_grant"];
+
+    id bodyParam = nil;
+    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *localVarFiles = [[NSMutableDictionary alloc] init];
+    bodyParam = request;
+
+    return [self.apiClient requestWithPath: resourcePath
+                                    method: @"POST"
+                                pathParams: pathParams
+                               queryParams: queryParams
+                                formParams: formParams
+                                     files: localVarFiles
+                                      body: bodyParam
+                              headerParams: headerParams
+                              authSettings: authSettings
+                        requestContentType: requestContentType
+                       responseContentType: responseContentType
+                              responseType: @"JSAPIVerificationRequest*"
+                           completionBlock: ^(id data, NSError *error) {
+                                if(handler) {
+                                    handler((JSAPIVerificationRequest*)data, error);
                                 }
                             }];
 }

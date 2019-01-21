@@ -631,6 +631,7 @@ Name | Type | Description  | Notes
 # **passwordReset**
 ```objc
 -(NSURLSessionTask*) passwordResetWithId: (NSNumber*) _id
+    test: (NSNumber*) test
     varNewPasswordRequest: (JSAPINewPasswordRequest*) varNewPasswordRequest
         completionHandler: (void (^)(NSError* error)) handler;
 ```
@@ -651,12 +652,14 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSNumber* _id = @56; // The id of the user
+NSNumber* test = @false; // If true, test for valid code without changing password or burning code (optional) (default to false)
 JSAPINewPasswordRequest* varNewPasswordRequest = [[JSAPINewPasswordRequest alloc] init]; // The new password request object (optional)
 
 JSAPIUsersApi*apiInstance = [[JSAPIUsersApi alloc] init];
 
 // Choose a new password after a reset
 [apiInstance passwordResetWithId:_id
+              test:test
               varNewPasswordRequest:varNewPasswordRequest
           completionHandler: ^(NSError* error) {
                         if (error) {
@@ -670,6 +673,7 @@ JSAPIUsersApi*apiInstance = [[JSAPIUsersApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **_id** | **NSNumber***| The id of the user | 
+ **test** | **NSNumber***| If true, test for valid code without changing password or burning code | [optional] [default to false]
  **varNewPasswordRequest** | [**JSAPINewPasswordRequest***](JSAPINewPasswordRequest.md)| The new password request object | [optional] 
 
 ### Return type

@@ -784,11 +784,14 @@ NSInteger kJSAPIUsersApiMissingParamErrorCode = 234513;
 /// Finish resetting a user's password using the secret provided from the password-reset endpoint.  Password should be in plain text and will be encrypted on receipt. Use SSL for security. <br><br><b>Permissions Needed:</b> ANY<br /><b>Permissions Needed:</b> NONE
 ///  @param _id The id of the user 
 ///
+///  @param test If true, test for valid code without changing password or burning code (optional, default to false)
+///
 ///  @param varNewPasswordRequest The new password request object (optional)
 ///
 ///  @returns void
 ///
 -(NSURLSessionTask*) passwordResetWithId: (NSNumber*) _id
+    test: (NSNumber*) test
     varNewPasswordRequest: (JSAPINewPasswordRequest*) varNewPasswordRequest
     completionHandler: (void (^)(NSError* error)) handler {
     // verify the required parameter '_id' is set
@@ -810,6 +813,9 @@ NSInteger kJSAPIUsersApiMissingParamErrorCode = 234513;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (test != nil) {
+        queryParams[@"test"] = [test isEqual:@(YES)] ? @"true" : @"false";
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`

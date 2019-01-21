@@ -13,6 +13,7 @@
 #import "JSAPIStringWrapper.h"
 #import "JSAPITemplateResource.h"
 #import "JSAPIValueWrapperBoolean_.h"
+#import "JSAPIVerificationRequest.h"
 #import "JSAPIApi.h"
 
 /**
@@ -382,6 +383,24 @@ extern NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode;
     page: (NSNumber*) page
     filterChildren: (NSNumber*) filterChildren
     completionHandler: (void (^)(JSAPIPageResourceString_* output, NSError* error)) handler;
+
+
+/// Invite to group
+/// This will create a verification for joining the group which uses the 'group_invite' template and sets the additional_property 'group' with the unique name
+///
+/// @param uniqueName The group unique name
+/// @param request The id of the user to invite (optional)
+/// 
+///  code:201 message:"Created",
+///  code:400 message:"Bad Request",
+///  code:401 message:"Unauthorized",
+///  code:403 message:"Forbidden",
+///  code:404 message:"Not Found"
+///
+/// @return JSAPIVerificationRequest*
+-(NSURLSessionTask*) inviteToGroupWithUniqueName: (NSString*) uniqueName
+    request: (JSAPIVerificationRequest*) request
+    completionHandler: (void (^)(JSAPIVerificationRequest* output, NSError* error)) handler;
 
 
 /// List and search groups
