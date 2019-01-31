@@ -3,6 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**forceSoftness** | **NSNumber*** |  | [optional] 
 **name** | **NSString*** |  | [optional] 
 **type** | **NSString*** |  | [optional] 
 

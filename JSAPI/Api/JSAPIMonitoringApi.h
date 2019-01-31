@@ -243,6 +243,22 @@ extern NSInteger kJSAPIMonitoringApiMissingParamErrorCode;
     completionHandler: (void (^)(JSAPIPageResourceMonitoringMetricResource_* output, NSError* error)) handler;
 
 
+/// Post a metric datapoint batch
+/// Only works with counter and gauge metrics. Re-submit the entire batch in case of failure. <br><br><b>Permissions Needed:</b> RECORD<br /><b>Permissions Needed:</b> POST
+///
+/// @param batch The metric datapoints (optional)
+/// 
+///  code:200 message:"OK",
+///  code:400 message:"Bad Request",
+///  code:401 message:"Unauthorized",
+///  code:403 message:"Forbidden",
+///  code:404 message:"Not Found"
+///
+/// @return void
+-(NSURLSessionTask*) postBatchWithBatch: (NSArray<JSAPIMonitoringMetricDatapointResource>*) batch
+    completionHandler: (void (^)(NSError* error)) handler;
+
+
 /// Post a metric datapoint
 /// Only works with counter and gauge metrics. <br><br><b>Permissions Needed:</b> RECORD<br /><b>Permissions Needed:</b> RECORD
 ///

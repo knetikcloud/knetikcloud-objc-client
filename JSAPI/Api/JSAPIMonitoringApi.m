@@ -871,6 +871,61 @@ NSInteger kJSAPIMonitoringApiMissingParamErrorCode = 234513;
 }
 
 ///
+/// Post a metric datapoint batch
+/// Only works with counter and gauge metrics. Re-submit the entire batch in case of failure. <br><br><b>Permissions Needed:</b> RECORD<br /><b>Permissions Needed:</b> POST
+///  @param batch The metric datapoints (optional)
+///
+///  @returns void
+///
+-(NSURLSessionTask*) postBatchWithBatch: (NSArray<JSAPIMonitoringMetricDatapointResource>*) batch
+    completionHandler: (void (^)(NSError* error)) handler {
+    NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/monitoring/metrics/datapoints"];
+
+    NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
+
+    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
+    [headerParams addEntriesFromDictionary:self.defaultHeaders];
+    // HTTP header `Accept`
+    NSString *acceptHeader = [self.apiClient.sanitizer selectHeaderAccept:@[@"application/json"]];
+    if(acceptHeader.length > 0) {
+        headerParams[@"Accept"] = acceptHeader;
+    }
+
+    // response content type
+    NSString *responseContentType = [[acceptHeader componentsSeparatedByString:@", "] firstObject] ?: @"";
+
+    // request content type
+    NSString *requestContentType = [self.apiClient.sanitizer selectHeaderContentType:@[@"application/json"]];
+
+    // Authentication setting
+    NSArray *authSettings = @[@"oauth2_client_credentials_grant", @"oauth2_password_grant"];
+
+    id bodyParam = nil;
+    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *localVarFiles = [[NSMutableDictionary alloc] init];
+    bodyParam = batch;
+
+    return [self.apiClient requestWithPath: resourcePath
+                                    method: @"POST"
+                                pathParams: pathParams
+                               queryParams: queryParams
+                                formParams: formParams
+                                     files: localVarFiles
+                                      body: bodyParam
+                              headerParams: headerParams
+                              authSettings: authSettings
+                        requestContentType: requestContentType
+                       responseContentType: responseContentType
+                              responseType: nil
+                           completionBlock: ^(id data, NSError *error) {
+                                if(handler) {
+                                    handler(error);
+                                }
+                            }];
+}
+
+///
 /// Post a metric datapoint
 /// Only works with counter and gauge metrics. <br><br><b>Permissions Needed:</b> RECORD<br /><b>Permissions Needed:</b> RECORD
 ///  @param _id The metric id 

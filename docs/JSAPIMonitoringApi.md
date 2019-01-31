@@ -16,6 +16,7 @@ Method | HTTP request | Description
 [**getIncidents**](JSAPIMonitoringApi.md#getincidents) | **GET** /monitoring/incidents | List and search incidents
 [**getMetric**](JSAPIMonitoringApi.md#getmetric) | **GET** /monitoring/metrics/{id} | Get a single metric
 [**getMetrics**](JSAPIMonitoringApi.md#getmetrics) | **GET** /monitoring/metrics | List and search metrics
+[**postBatch**](JSAPIMonitoringApi.md#postbatch) | **POST** /monitoring/metrics/datapoints | Post a metric datapoint batch
 [**postDatapoint**](JSAPIMonitoringApi.md#postdatapoint) | **POST** /monitoring/metrics/{id}/datapoints | Post a metric datapoint
 [**receiveEvent**](JSAPIMonitoringApi.md#receiveevent) | **POST** /monitoring/incidents | Report an incident event
 [**startRecordMetric**](JSAPIMonitoringApi.md#startrecordmetric) | **POST** /monitoring/metrics/{id}/start | Start recording a metric
@@ -743,6 +744,61 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **postBatch**
+```objc
+-(NSURLSessionTask*) postBatchWithBatch: (NSArray<JSAPIMonitoringMetricDatapointResource>*) batch
+        completionHandler: (void (^)(NSError* error)) handler;
+```
+
+Post a metric datapoint batch
+
+Only works with counter and gauge metrics. Re-submit the entire batch in case of failure. <br><br><b>Permissions Needed:</b> RECORD<br /><b>Permissions Needed:</b> POST
+
+### Example 
+```objc
+JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+
+NSArray<JSAPIMonitoringMetricDatapointResource>* batch = @[[[JSAPIMonitoringMetricDatapointResource alloc] init]]; // The metric datapoints (optional)
+
+JSAPIMonitoringApi*apiInstance = [[JSAPIMonitoringApi alloc] init];
+
+// Post a metric datapoint batch
+[apiInstance postBatchWithBatch:batch
+          completionHandler: ^(NSError* error) {
+                        if (error) {
+                            NSLog(@"Error calling JSAPIMonitoringApi->postBatch: %@", error);
+                        }
+                    }];
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **batch** | [**NSArray&lt;JSAPIMonitoringMetricDatapointResource&gt;***](JSAPIMonitoringMetricDatapointResource.md)| The metric datapoints | [optional] 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

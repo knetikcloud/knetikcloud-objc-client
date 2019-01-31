@@ -46,6 +46,9 @@
 /* Whether to include numbers, if the code is auto-generated. Default: true [optional]
  */
 @property(nonatomic) NSNumber* includeNumbers;
+/* The originating user of the request, filled at  [optional]
+ */
+@property(nonatomic) JSAPISimpleUserResource* originator;
 /* An optional user that is expected to respond [optional]
  */
 @property(nonatomic) JSAPISimpleUserResource* targetUser;

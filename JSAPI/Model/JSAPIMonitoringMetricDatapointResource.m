@@ -22,7 +22,7 @@
 
 + (NSDictionary *)modalDictionary {
 
-  return @{ @"dimensions": @"dimensions", @"timestamp": @"timestamp", @"value": @"value" };
+  return @{ @"dimensions": @"dimensions", @"_id": @"id", @"timestamp": @"timestamp", @"value": @"value" };
 }
 
 /**
@@ -32,7 +32,7 @@
  */
 + (BOOL)propertyIsOptional:(NSString *)propertyName {
 
-  NSArray *optionalProperties = @[@"dimensions", @"timestamp", ];
+  NSArray *optionalProperties = @[@"dimensions", @"_id", @"timestamp", ];
 
   return [optionalProperties containsObject:propertyName];
 }

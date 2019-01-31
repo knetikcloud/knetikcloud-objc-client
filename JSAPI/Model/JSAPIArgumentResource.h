@@ -23,6 +23,8 @@
 @interface JSAPIArgumentResource : JSAPIObject
 
 
+@property(nonatomic) NSNumber* forceSoftness;
+
 @property(nonatomic) NSString* name;
 
 @property(nonatomic) NSString* type;

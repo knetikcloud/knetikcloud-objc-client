@@ -25,6 +25,9 @@
 /* Dimensions giving context to the datapoint. Map of keys to values (example: {\"location\": \"USA\", \"user\": \"75\"}). Cannot include the | symbol [optional]
  */
 @property(nonatomic) NSDictionary<NSString*, NSString*>* dimensions;
+/* The id of the metric. Required for batch endpoint [optional]
+ */
+@property(nonatomic) NSString* _id;
 /* The unix timestamp in seconds the datapoint occurred, default: now [optional]
  */
 @property(nonatomic) NSNumber* timestamp;
