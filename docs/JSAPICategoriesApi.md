@@ -251,6 +251,7 @@ void (empty response body)
 ```objc
 -(NSURLSessionTask*) getCategoriesWithFilterSearch: (NSString*) filterSearch
     filterActive: (NSNumber*) filterActive
+    filterTemplate: (NSString*) filterTemplate
     size: (NSNumber*) size
     page: (NSNumber*) page
     order: (NSString*) order
@@ -274,6 +275,7 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 NSString* filterSearch = @"filterSearch_example"; // Filter for categories whose names begin with provided string (optional)
 NSNumber* filterActive = @true; // Filter for categories that are specifically active or inactive (optional)
+NSString* filterTemplate = @"filterTemplate_example"; // Filter for categories with a specific template (optional)
 NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
 NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 NSString* order = @"id:ASC"; // A comma separated list of sorting requirements in priority order, each entry matching PROPERTY_NAME:[ASC|DESC] (optional) (default to id:ASC)
@@ -283,6 +285,7 @@ JSAPICategoriesApi*apiInstance = [[JSAPICategoriesApi alloc] init];
 // List and search categories with optional filters
 [apiInstance getCategoriesWithFilterSearch:filterSearch
               filterActive:filterActive
+              filterTemplate:filterTemplate
               size:size
               page:page
               order:order
@@ -302,6 +305,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **filterSearch** | **NSString***| Filter for categories whose names begin with provided string | [optional] 
  **filterActive** | **NSNumber***| Filter for categories that are specifically active or inactive | [optional] 
+ **filterTemplate** | **NSString***| Filter for categories with a specific template | [optional] 
  **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
  **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
  **order** | **NSString***| A comma separated list of sorting requirements in priority order, each entry matching PROPERTY_NAME:[ASC|DESC] | [optional] [default to id:ASC]

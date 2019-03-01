@@ -314,6 +314,8 @@ NSInteger kJSAPICategoriesApiMissingParamErrorCode = 234513;
 ///
 ///  @param filterActive Filter for categories that are specifically active or inactive (optional)
 ///
+///  @param filterTemplate Filter for categories with a specific template (optional)
+///
 ///  @param size The number of objects returned per page (optional, default to 25)
 ///
 ///  @param page The number of the page returned, starting with 1 (optional, default to 1)
@@ -324,6 +326,7 @@ NSInteger kJSAPICategoriesApiMissingParamErrorCode = 234513;
 ///
 -(NSURLSessionTask*) getCategoriesWithFilterSearch: (NSString*) filterSearch
     filterActive: (NSNumber*) filterActive
+    filterTemplate: (NSString*) filterTemplate
     size: (NSNumber*) size
     page: (NSNumber*) page
     order: (NSString*) order
@@ -338,6 +341,9 @@ NSInteger kJSAPICategoriesApiMissingParamErrorCode = 234513;
     }
     if (filterActive != nil) {
         queryParams[@"filter_active"] = [filterActive isEqual:@(YES)] ? @"true" : @"false";
+    }
+    if (filterTemplate != nil) {
+        queryParams[@"filter_template"] = filterTemplate;
     }
     if (size != nil) {
         queryParams[@"size"] = size;

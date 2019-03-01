@@ -238,6 +238,80 @@ NSInteger kJSAPIMonitoringApiMissingParamErrorCode = 234513;
 }
 
 ///
+/// Delete a metric datapoint
+/// Only works for counter and guage type. <b>Permissions Needed:</b> RECORD<br /><b>Permissions Needed:</b> RECORD
+///  @param _id The metric id 
+///
+///  @param dimensions The dimensions of the specific datapoint to delete, in the form key1:value1,key2:val2 (optional)
+///
+///  @returns void
+///
+-(NSURLSessionTask*) deleteDatapointWithId: (NSString*) _id
+    dimensions: (NSString*) dimensions
+    completionHandler: (void (^)(NSError* error)) handler {
+    // verify the required parameter '_id' is set
+    if (_id == nil) {
+        NSParameterAssert(_id);
+        if(handler) {
+            NSDictionary * userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Missing required parameter '%@'", nil),@"_id"] };
+            NSError* error = [NSError errorWithDomain:kJSAPIMonitoringApiErrorDomain code:kJSAPIMonitoringApiMissingParamErrorCode userInfo:userInfo];
+            handler(error);
+        }
+        return nil;
+    }
+
+    NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/monitoring/metrics/{id}/datapoints"];
+
+    NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
+    if (_id != nil) {
+        pathParams[@"id"] = _id;
+    }
+
+    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (dimensions != nil) {
+        queryParams[@"dimensions"] = dimensions;
+    }
+    NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
+    [headerParams addEntriesFromDictionary:self.defaultHeaders];
+    // HTTP header `Accept`
+    NSString *acceptHeader = [self.apiClient.sanitizer selectHeaderAccept:@[@"application/json"]];
+    if(acceptHeader.length > 0) {
+        headerParams[@"Accept"] = acceptHeader;
+    }
+
+    // response content type
+    NSString *responseContentType = [[acceptHeader componentsSeparatedByString:@", "] firstObject] ?: @"";
+
+    // request content type
+    NSString *requestContentType = [self.apiClient.sanitizer selectHeaderContentType:@[]];
+
+    // Authentication setting
+    NSArray *authSettings = @[@"oauth2_client_credentials_grant", @"oauth2_password_grant"];
+
+    id bodyParam = nil;
+    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *localVarFiles = [[NSMutableDictionary alloc] init];
+
+    return [self.apiClient requestWithPath: resourcePath
+                                    method: @"DELETE"
+                                pathParams: pathParams
+                               queryParams: queryParams
+                                formParams: formParams
+                                     files: localVarFiles
+                                      body: bodyParam
+                              headerParams: headerParams
+                              authSettings: authSettings
+                        requestContentType: requestContentType
+                       responseContentType: responseContentType
+                              responseType: nil
+                           completionBlock: ^(id data, NSError *error) {
+                                if(handler) {
+                                    handler(error);
+                                }
+                            }];
+}
+
+///
 /// End an existing incident
 /// Does not delete the incident, but marks it as resolved by setting the end date.<b>Permissions Needed:</b> DELETE<br /><b>Permissions Needed:</b> DELETE
 ///  @param _id The incident id 
@@ -872,7 +946,7 @@ NSInteger kJSAPIMonitoringApiMissingParamErrorCode = 234513;
 
 ///
 /// Post a metric datapoint batch
-/// Only works with counter and gauge metrics. Re-submit the entire batch in case of failure. <br><br><b>Permissions Needed:</b> RECORD<br /><b>Permissions Needed:</b> POST
+/// Only works with counter and gauge metrics. Re-submit the entire batch in case of failure. <br><br><b>Permissions Needed:</b> RECORD<br /><b>Permissions Needed:</b> NONE
 ///  @param batch The metric datapoints (optional)
 ///
 ///  @returns void

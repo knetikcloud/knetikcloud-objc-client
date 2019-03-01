@@ -1477,7 +1477,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 
 ///
 /// Invite to group
-/// This will create a verification for joining the group which uses the 'group_invite' template and sets the additional_property 'group' with the unique name
+/// This will create a verification for joining the group which uses the 'group_invite' template and sets the additional_property 'group' with the unique name<br /><b>Permissions Needed:</b> INVITE
 ///  @param uniqueName The group unique name 
 ///
 ///  @param request The id of the user to invite (optional)

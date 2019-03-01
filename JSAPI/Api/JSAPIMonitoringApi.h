@@ -81,6 +81,24 @@ extern NSInteger kJSAPIMonitoringApiMissingParamErrorCode;
     completionHandler: (void (^)(NSError* error)) handler;
 
 
+/// Delete a metric datapoint
+/// Only works for counter and guage type. <b>Permissions Needed:</b> RECORD<br /><b>Permissions Needed:</b> RECORD
+///
+/// @param _id The metric id
+/// @param dimensions The dimensions of the specific datapoint to delete, in the form key1:value1,key2:val2 (optional)
+/// 
+///  code:200 message:"OK",
+///  code:400 message:"Bad Request",
+///  code:401 message:"Unauthorized",
+///  code:403 message:"Forbidden",
+///  code:404 message:"Not Found"
+///
+/// @return void
+-(NSURLSessionTask*) deleteDatapointWithId: (NSString*) _id
+    dimensions: (NSString*) dimensions
+    completionHandler: (void (^)(NSError* error)) handler;
+
+
 /// End an existing incident
 /// Does not delete the incident, but marks it as resolved by setting the end date.<b>Permissions Needed:</b> DELETE<br /><b>Permissions Needed:</b> DELETE
 ///
@@ -244,7 +262,7 @@ extern NSInteger kJSAPIMonitoringApiMissingParamErrorCode;
 
 
 /// Post a metric datapoint batch
-/// Only works with counter and gauge metrics. Re-submit the entire batch in case of failure. <br><br><b>Permissions Needed:</b> RECORD<br /><b>Permissions Needed:</b> POST
+/// Only works with counter and gauge metrics. Re-submit the entire batch in case of failure. <br><br><b>Permissions Needed:</b> RECORD<br /><b>Permissions Needed:</b> NONE
 ///
 /// @param batch The metric datapoints (optional)
 /// 

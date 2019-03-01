@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**createAlert**](JSAPIMonitoringApi.md#createalert) | **POST** /monitoring/alerts | Create a new alert
 [**createMetric**](JSAPIMonitoringApi.md#createmetric) | **POST** /monitoring/metrics | Create a new metric
 [**deleteAlert**](JSAPIMonitoringApi.md#deletealert) | **DELETE** /monitoring/alerts/{id} | Delete an existing alert
+[**deleteDatapoint**](JSAPIMonitoringApi.md#deletedatapoint) | **DELETE** /monitoring/metrics/{id}/datapoints | Delete a metric datapoint
 [**deleteIncident**](JSAPIMonitoringApi.md#deleteincident) | **DELETE** /monitoring/incidents/{id} | End an existing incident
 [**deleteMetric**](JSAPIMonitoringApi.md#deletemetric) | **DELETE** /monitoring/metrics/{id} | Delete an existing metric
 [**getAlert**](JSAPIMonitoringApi.md#getalert) | **GET** /monitoring/alerts/{id} | Get a single alert
@@ -180,6 +181,65 @@ JSAPIMonitoringApi*apiInstance = [[JSAPIMonitoringApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **_id** | **NSString***| The alert id | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **deleteDatapoint**
+```objc
+-(NSURLSessionTask*) deleteDatapointWithId: (NSString*) _id
+    dimensions: (NSString*) dimensions
+        completionHandler: (void (^)(NSError* error)) handler;
+```
+
+Delete a metric datapoint
+
+Only works for counter and guage type. <b>Permissions Needed:</b> RECORD<br /><b>Permissions Needed:</b> RECORD
+
+### Example 
+```objc
+JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+
+NSString* _id = @"_id_example"; // The metric id
+NSString* dimensions = @"dimensions_example"; // The dimensions of the specific datapoint to delete, in the form key1:value1,key2:val2 (optional)
+
+JSAPIMonitoringApi*apiInstance = [[JSAPIMonitoringApi alloc] init];
+
+// Delete a metric datapoint
+[apiInstance deleteDatapointWithId:_id
+              dimensions:dimensions
+          completionHandler: ^(NSError* error) {
+                        if (error) {
+                            NSLog(@"Error calling JSAPIMonitoringApi->deleteDatapoint: %@", error);
+                        }
+                    }];
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **_id** | **NSString***| The metric id | 
+ **dimensions** | **NSString***| The dimensions of the specific datapoint to delete, in the form key1:value1,key2:val2 | [optional] 
 
 ### Return type
 
@@ -756,7 +816,7 @@ Name | Type | Description  | Notes
 
 Post a metric datapoint batch
 
-Only works with counter and gauge metrics. Re-submit the entire batch in case of failure. <br><br><b>Permissions Needed:</b> RECORD<br /><b>Permissions Needed:</b> POST
+Only works with counter and gauge metrics. Re-submit the entire batch in case of failure. <br><br><b>Permissions Needed:</b> RECORD<br /><b>Permissions Needed:</b> NONE
 
 ### Example 
 ```objc
