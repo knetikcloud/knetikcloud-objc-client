@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **_id** | **NSString*** | The id of the notification type. Default: random | [optional] 
 **name** | **NSString*** | The name of the notification type | 
 **smsTemplateId** | **NSString*** | The id of a message template to resolve the SMS message. If null, no sms message wil be sent | [optional] 
+**templateId** | **NSString*** | The id of a message template to resolve the basic message (for user retrieval). If null, message wil be blank | [optional] 
 **updatedDate** | **NSNumber*** | The date the type was last updated, as a unix timestamp in seconds | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

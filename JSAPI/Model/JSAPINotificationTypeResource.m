@@ -22,7 +22,7 @@
 
 + (NSDictionary *)modalDictionary {
 
-  return @{ @"createdDate": @"created_date", @"emailBodyTemplateExternal": @"email_body_template_external", @"emailBodyTemplateId": @"email_body_template_id", @"emailSubjectTemplateId": @"email_subject_template_id", @"_id": @"id", @"name": @"name", @"smsTemplateId": @"sms_template_id", @"updatedDate": @"updated_date" };
+  return @{ @"createdDate": @"created_date", @"emailBodyTemplateExternal": @"email_body_template_external", @"emailBodyTemplateId": @"email_body_template_id", @"emailSubjectTemplateId": @"email_subject_template_id", @"_id": @"id", @"name": @"name", @"smsTemplateId": @"sms_template_id", @"templateId": @"template_id", @"updatedDate": @"updated_date" };
 }
 
 /**
@@ -32,7 +32,7 @@
  */
 + (BOOL)propertyIsOptional:(NSString *)propertyName {
 
-  NSArray *optionalProperties = @[@"createdDate", @"emailBodyTemplateExternal", @"emailBodyTemplateId", @"emailSubjectTemplateId", @"_id", @"smsTemplateId", @"updatedDate"];
+  NSArray *optionalProperties = @[@"createdDate", @"emailBodyTemplateExternal", @"emailBodyTemplateId", @"emailSubjectTemplateId", @"_id", @"smsTemplateId", @"templateId", @"updatedDate"];
 
   return [optionalProperties containsObject:propertyName];
 }

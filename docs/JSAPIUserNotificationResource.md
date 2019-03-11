@@ -4,6 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **data** | **NSObject*** | The data to send and fill templates | [optional] 
+**message** | **NSString*** | The resolved message, if template provided in the notification ype | [optional] 
 **notificationId** | **NSString*** | The id of the notification | 
 **notificationTypeId** | **NSString*** | The id of the notification type | 
 **recipient** | **NSString*** | The id of the recipient, dependent on the recipient_type. The user&#39;s id or the topic&#39;s id | 

@@ -25,6 +25,9 @@
 /* The data to send to websockets. Also used to fill in the templates [optional]
  */
 @property(nonatomic) NSObject* data;
+/* The resolved message template, if configured on the notification type [optional]
+ */
+@property(nonatomic) NSString* message;
 /* The id of this individual notification. Default: random [optional]
  */
 @property(nonatomic) NSString* notificationId;

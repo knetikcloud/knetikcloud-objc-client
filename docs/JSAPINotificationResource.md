@@ -4,6 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **data** | **NSObject*** | The data to send to websockets. Also used to fill in the templates | [optional] 
+**message** | **NSString*** | The resolved message template, if configured on the notification type | [optional] 
 **notificationId** | **NSString*** | The id of this individual notification. Default: random | [optional] 
 **notificationTypeId** | **NSString*** | The id of the notification type which will define message templates | 
 **recipient** | **NSString*** | The id of the recipient, dependent on the recipient_type. The user&#39;s id or the topic&#39;s id | 

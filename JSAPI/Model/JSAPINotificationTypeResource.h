@@ -43,6 +43,9 @@
 /* The id of a message template to resolve the SMS message. If null, no sms message wil be sent [optional]
  */
 @property(nonatomic) NSString* smsTemplateId;
+/* The id of a message template to resolve the basic message (for user retrieval). If null, message wil be blank [optional]
+ */
+@property(nonatomic) NSString* templateId;
 /* The date the type was last updated, as a unix timestamp in seconds [optional]
  */
 @property(nonatomic) NSNumber* updatedDate;

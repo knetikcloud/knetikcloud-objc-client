@@ -25,6 +25,9 @@
 /* The data to send and fill templates [optional]
  */
 @property(nonatomic) NSObject* data;
+/* The resolved message, if template provided in the notification ype [optional]
+ */
+@property(nonatomic) NSString* message;
 /* The id of the notification 
  */
 @property(nonatomic) NSString* notificationId;

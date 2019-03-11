@@ -22,7 +22,7 @@
 
 + (NSDictionary *)modalDictionary {
 
-  return @{ @"data": @"data", @"notificationId": @"notification_id", @"notificationTypeId": @"notification_type_id", @"recipient": @"recipient", @"recipientType": @"recipient_type", @"retrieveDate": @"retrieve_date", @"sendDate": @"send_date", @"status": @"status", @"userId": @"user_id" };
+  return @{ @"data": @"data", @"message": @"message", @"notificationId": @"notification_id", @"notificationTypeId": @"notification_type_id", @"recipient": @"recipient", @"recipientType": @"recipient_type", @"retrieveDate": @"retrieve_date", @"sendDate": @"send_date", @"status": @"status", @"userId": @"user_id" };
 }
 
 /**
@@ -32,7 +32,7 @@
  */
 + (BOOL)propertyIsOptional:(NSString *)propertyName {
 
-  NSArray *optionalProperties = @[@"data", @"retrieveDate", @"sendDate", @"status", ];
+  NSArray *optionalProperties = @[@"data", @"message", @"retrieveDate", @"sendDate", @"status", ];
 
   return [optionalProperties containsObject:propertyName];
 }
