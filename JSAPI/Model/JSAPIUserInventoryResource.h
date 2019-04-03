@@ -49,6 +49,9 @@
 /* The type hint of the item [optional]
  */
 @property(nonatomic) NSString* itemTypeHint;
+/* Optional notes about the item [optional]
+ */
+@property(nonatomic) NSString* notes;
 /* The status of the inventory. Pending inventory is not yet ready for use. Inactive inventory has expired or been used up [optional]
  */
 @property(nonatomic) NSString* status;

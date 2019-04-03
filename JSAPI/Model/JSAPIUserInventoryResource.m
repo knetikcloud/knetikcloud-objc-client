@@ -22,7 +22,7 @@
 
 + (NSDictionary *)modalDictionary {
 
-  return @{ @"behaviorData": @"behavior_data", @"createdDate": @"created_date", @"expires": @"expires", @"_id": @"id", @"invoiceId": @"invoice_id", @"itemId": @"item_id", @"itemName": @"item_name", @"itemTypeHint": @"item_type_hint", @"status": @"status", @"updatedDate": @"updated_date", @"user": @"user" };
+  return @{ @"behaviorData": @"behavior_data", @"createdDate": @"created_date", @"expires": @"expires", @"_id": @"id", @"invoiceId": @"invoice_id", @"itemId": @"item_id", @"itemName": @"item_name", @"itemTypeHint": @"item_type_hint", @"notes": @"notes", @"status": @"status", @"updatedDate": @"updated_date", @"user": @"user" };
 }
 
 /**
@@ -32,7 +32,7 @@
  */
 + (BOOL)propertyIsOptional:(NSString *)propertyName {
 
-  NSArray *optionalProperties = @[@"behaviorData", @"createdDate", @"expires", @"_id", @"invoiceId", @"itemId", @"itemName", @"itemTypeHint", @"status", @"updatedDate", @"user"];
+  NSArray *optionalProperties = @[@"behaviorData", @"createdDate", @"expires", @"_id", @"invoiceId", @"itemId", @"itemName", @"itemTypeHint", @"notes", @"status", @"updatedDate", @"user"];
 
   return [optionalProperties containsObject:propertyName];
 }

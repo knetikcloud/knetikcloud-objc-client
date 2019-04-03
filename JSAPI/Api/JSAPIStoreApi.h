@@ -5,6 +5,7 @@
 #import "JSAPIPageResourceStoreItem_.h"
 #import "JSAPIPatchResource.h"
 #import "JSAPIQuickBuyRequest.h"
+#import "JSAPIQuickPaidRequest.h"
 #import "JSAPIResult.h"
 #import "JSAPIStoreItem.h"
 #import "JSAPIStoreItemTemplateResource.h"
@@ -231,6 +232,22 @@ extern NSInteger kJSAPIStoreApiMissingParamErrorCode;
 ///
 /// @return JSAPIInvoiceResource*
 -(NSURLSessionTask*) quickBuyWithQuickBuyRequest: (JSAPIQuickBuyRequest*) quickBuyRequest
+    completionHandler: (void (^)(JSAPIInvoiceResource* output, NSError* error)) handler;
+
+
+/// One-step purchase when already paid
+/// Used to create and automatically mark paid an invoice. Must not be an item that requires shipping. PAYMENTS_ADMIN permission is required if user ID is specified and is not the ID of the currently logged in user. <br><br><b>Permissions Needed:</b> PAYMENTS_USER and owner, or PAYMENTS_ADMIN
+///
+/// @param quickPaidRequest Quick buy details (optional)
+/// 
+///  code:200 message:"Item has been purchased, invoice provided in response",
+///  code:400 message:"Bad Request",
+///  code:401 message:"Unauthorized",
+///  code:403 message:"Forbidden",
+///  code:404 message:"Not Found"
+///
+/// @return JSAPIInvoiceResource*
+-(NSURLSessionTask*) quickPaidWithQuickPaidRequest: (JSAPIQuickPaidRequest*) quickPaidRequest
     completionHandler: (void (^)(JSAPIInvoiceResource* output, NSError* error)) handler;
 
 

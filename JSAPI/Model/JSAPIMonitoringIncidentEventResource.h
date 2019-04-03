@@ -40,9 +40,6 @@
 /* The new status of the alert level 
  */
 @property(nonatomic) NSString* status;
-/* The value that triggered the alarm [optional]
- */
-@property(nonatomic) NSString* triggerValue;
 
 + (NSDictionary *)modalDictionary;
 

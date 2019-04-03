@@ -14,6 +14,7 @@ Method | HTTP request | Description
 [**getStoreItem**](JSAPIStoreApi.md#getstoreitem) | **GET** /store/items/{id} | Get a single store item
 [**getStoreItems**](JSAPIStoreApi.md#getstoreitems) | **GET** /store/items | List and search store items
 [**quickBuy**](JSAPIStoreApi.md#quickbuy) | **POST** /store/quick-buy | One-step purchase and pay for a single SKU item from a user&#39;s wallet
+[**quickPaid**](JSAPIStoreApi.md#quickpaid) | **POST** /store/quick-paid | One-step purchase when already paid
 [**updateItemTemplate**](JSAPIStoreApi.md#updateitemtemplate) | **PATCH** /store/items/templates/{id} | Update an item template
 [**updateStoreItem**](JSAPIStoreApi.md#updatestoreitem) | **PUT** /store/items/{id} | Update a store item
 
@@ -660,6 +661,64 @@ JSAPIStoreApi*apiInstance = [[JSAPIStoreApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **quickBuyRequest** | [**JSAPIQuickBuyRequest***](JSAPIQuickBuyRequest.md)| Quick buy details | [optional] 
+
+### Return type
+
+[**JSAPIInvoiceResource***](JSAPIInvoiceResource.md)
+
+### Authorization
+
+[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **quickPaid**
+```objc
+-(NSURLSessionTask*) quickPaidWithQuickPaidRequest: (JSAPIQuickPaidRequest*) quickPaidRequest
+        completionHandler: (void (^)(JSAPIInvoiceResource* output, NSError* error)) handler;
+```
+
+One-step purchase when already paid
+
+Used to create and automatically mark paid an invoice. Must not be an item that requires shipping. PAYMENTS_ADMIN permission is required if user ID is specified and is not the ID of the currently logged in user. <br><br><b>Permissions Needed:</b> PAYMENTS_USER and owner, or PAYMENTS_ADMIN
+
+### Example 
+```objc
+JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+
+JSAPIQuickPaidRequest* quickPaidRequest = [[JSAPIQuickPaidRequest alloc] init]; // Quick buy details (optional)
+
+JSAPIStoreApi*apiInstance = [[JSAPIStoreApi alloc] init];
+
+// One-step purchase when already paid
+[apiInstance quickPaidWithQuickPaidRequest:quickPaidRequest
+          completionHandler: ^(JSAPIInvoiceResource* output, NSError* error) {
+                        if (output) {
+                            NSLog(@"%@", output);
+                        }
+                        if (error) {
+                            NSLog(@"Error calling JSAPIStoreApi->quickPaid: %@", error);
+                        }
+                    }];
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **quickPaidRequest** | [**JSAPIQuickPaidRequest***](JSAPIQuickPaidRequest.md)| Quick buy details | [optional] 
 
 ### Return type
 

@@ -17,29 +17,35 @@
 
 
 
-@protocol JSAPICartItemRequest
+@protocol JSAPIQuickPaidRequest
 @end
 
-@interface JSAPICartItemRequest : JSAPIObject
+@interface JSAPIQuickPaidRequest : JSAPIObject
 
-/* The affiliate key of the item [optional]
- */
-@property(nonatomic) NSString* affiliateKey;
-/* The catalog SKU of the item 
- */
-@property(nonatomic) NSString* catalogSku;
-/* The id of a user that this is being gifted to [optional]
+/* An optional target user to give the item to as a gift 
  */
 @property(nonatomic) NSNumber* giftTarget;
-/* Notes about this item purchase [optional]
+/* An optional note to add to the item [optional]
  */
-@property(nonatomic) NSString* notes;
+@property(nonatomic) NSString* itemNotes;
+/* The amount already paid. Must match final price to complete purchase. Minimum 0 
+ */
+@property(nonatomic) NSNumber* paidAmount;
 /* Override the price of an item, if the behavior configuration permits it. Do not send if taking standard pricing. Minimum 0 [optional]
  */
 @property(nonatomic) NSNumber* priceOverride;
-/* The quantity of the item 
+/* SKU of item being purchased 
  */
-@property(nonatomic) NSNumber* quantity;
+@property(nonatomic) NSString* sku;
+/* Transaction details [optional]
+ */
+@property(nonatomic) NSString* transactionDetails;
+/* Transaction type 
+ */
+@property(nonatomic) NSString* transactionType;
+/* ID of the user making the purchase. If null, currently logged in user will be used. [optional]
+ */
+@property(nonatomic) NSNumber* userId;
 
 + (NSDictionary *)modalDictionary;
 

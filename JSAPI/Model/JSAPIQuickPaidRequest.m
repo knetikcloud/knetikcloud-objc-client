@@ -1,6 +1,6 @@
-#import "JSAPIMonitoringMetricRecordResource.h"
+#import "JSAPIQuickPaidRequest.h"
 
-@implementation JSAPIMonitoringMetricRecordResource
+@implementation JSAPIQuickPaidRequest
 
 - (instancetype)init {
   self = [super init];
@@ -22,7 +22,7 @@
 
 + (NSDictionary *)modalDictionary {
 
-  return @{ @"dimensions": @"dimensions" };
+  return @{ @"giftTarget": @"gift_target", @"itemNotes": @"item_notes", @"paidAmount": @"paid_amount", @"priceOverride": @"price_override", @"sku": @"sku", @"transactionDetails": @"transaction_details", @"transactionType": @"transaction_type", @"userId": @"user_id" };
 }
 
 /**
@@ -32,7 +32,7 @@
  */
 + (BOOL)propertyIsOptional:(NSString *)propertyName {
 
-  NSArray *optionalProperties = @[@"dimensions"];
+  NSArray *optionalProperties = @[@"itemNotes", @"priceOverride", @"transactionDetails", @"userId"];
 
   return [optionalProperties containsObject:propertyName];
 }

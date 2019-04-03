@@ -22,7 +22,7 @@
 
 + (NSDictionary *)modalDictionary {
 
-  return @{ @"affiliateKey": @"affiliate_key", @"catalogSku": @"catalog_sku", @"priceOverride": @"price_override", @"quantity": @"quantity" };
+  return @{ @"affiliateKey": @"affiliate_key", @"catalogSku": @"catalog_sku", @"giftTarget": @"gift_target", @"notes": @"notes", @"priceOverride": @"price_override", @"quantity": @"quantity" };
 }
 
 /**
@@ -32,7 +32,7 @@
  */
 + (BOOL)propertyIsOptional:(NSString *)propertyName {
 
-  NSArray *optionalProperties = @[@"affiliateKey", @"priceOverride", ];
+  NSArray *optionalProperties = @[@"affiliateKey", @"giftTarget", @"notes", @"priceOverride", ];
 
   return [optionalProperties containsObject:propertyName];
 }

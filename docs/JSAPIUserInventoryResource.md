@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **itemId** | **NSNumber*** | The id of the item | [optional] 
 **itemName** | **NSString*** | The name of the item | [optional] 
 **itemTypeHint** | **NSString*** | The type hint of the item | [optional] 
+**notes** | **NSString*** | Optional notes about the item | [optional] 
 **status** | **NSString*** | The status of the inventory. Pending inventory is not yet ready for use. Inactive inventory has expired or been used up | [optional] 
 **updatedDate** | **NSNumber*** | The date/time this resource was last updated in seconds since epoch | [optional] 
 **user** | [**JSAPISimpleUserResource***](JSAPISimpleUserResource.md) | The id of the user this inventory belongs to | [optional] 

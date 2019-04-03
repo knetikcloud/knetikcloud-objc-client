@@ -3,7 +3,6 @@
 #import "JSAPIMonitoringIncidentEventResource.h"
 #import "JSAPIMonitoringIncidentResource.h"
 #import "JSAPIMonitoringMetricDatapointResource.h"
-#import "JSAPIMonitoringMetricRecordResource.h"
 #import "JSAPIMonitoringMetricResource.h"
 #import "JSAPIPageResourceMonitoringAlertResource_.h"
 #import "JSAPIPageResourceMonitoringIncidentEventResource_.h"
@@ -309,42 +308,6 @@ extern NSInteger kJSAPIMonitoringApiMissingParamErrorCode;
 /// @return JSAPIMonitoringIncidentResource*
 -(NSURLSessionTask*) receiveEventWithIncidentResource: (JSAPIMonitoringIncidentEventResource*) incidentResource
     completionHandler: (void (^)(JSAPIMonitoringIncidentResource* output, NSError* error)) handler;
-
-
-/// Start recording a metric
-/// Only works with delta and timer metrics. <br><br><b>Permissions Needed:</b> RECORD<br /><b>Permissions Needed:</b> RECORD
-///
-/// @param _id The metric id
-/// @param metricRecord The metric record (optional)
-/// 
-///  code:200 message:"OK",
-///  code:400 message:"Bad Request",
-///  code:401 message:"Unauthorized",
-///  code:403 message:"Forbidden",
-///  code:404 message:"Not Found"
-///
-/// @return void
--(NSURLSessionTask*) startRecordMetricWithId: (NSString*) _id
-    metricRecord: (JSAPIMonitoringMetricRecordResource*) metricRecord
-    completionHandler: (void (^)(NSError* error)) handler;
-
-
-/// Stop recording a metric
-/// Only works with delta and timer metrics. <br><br><b>Permissions Needed:</b> RECORD<br /><b>Permissions Needed:</b> RECORD
-///
-/// @param _id The metric id
-/// @param metricRecord The metric record (optional)
-/// 
-///  code:200 message:"OK",
-///  code:400 message:"Bad Request",
-///  code:401 message:"Unauthorized",
-///  code:403 message:"Forbidden",
-///  code:404 message:"Not Found"
-///
-/// @return void
--(NSURLSessionTask*) stopRecordMetricWithId: (NSString*) _id
-    metricRecord: (JSAPIMonitoringMetricRecordResource*) metricRecord
-    completionHandler: (void (^)(NSError* error)) handler;
 
 
 /// Update an existing alert

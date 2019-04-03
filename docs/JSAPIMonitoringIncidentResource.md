@@ -10,7 +10,6 @@ Name | Type | Description | Notes
 **insufficientData** | **NSNumber*** | Whether the most recent check for any level had too little data to determine status, and alert level missing_data_policy is &#39;missing&#39; | [optional] 
 **levels** | [**NSArray&lt;JSAPIMonitoringIncidentLevelResource&gt;***](JSAPIMonitoringIncidentLevelResource.md) | The statuses of each level | 
 **startDate** | **NSNumber*** | The startDate as a unix timestamp in seconds the incident first started | [optional] 
-**triggerValue** | **NSString*** | The value that triggered the incident | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

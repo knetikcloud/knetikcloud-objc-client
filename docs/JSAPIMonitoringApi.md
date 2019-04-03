@@ -20,8 +20,6 @@ Method | HTTP request | Description
 [**postBatch**](JSAPIMonitoringApi.md#postbatch) | **POST** /monitoring/metrics/datapoints | Post a metric datapoint batch
 [**postDatapoint**](JSAPIMonitoringApi.md#postdatapoint) | **POST** /monitoring/metrics/{id}/datapoints | Post a metric datapoint
 [**receiveEvent**](JSAPIMonitoringApi.md#receiveevent) | **POST** /monitoring/incidents | Report an incident event
-[**startRecordMetric**](JSAPIMonitoringApi.md#startrecordmetric) | **POST** /monitoring/metrics/{id}/start | Start recording a metric
-[**stopRecordMetric**](JSAPIMonitoringApi.md#stoprecordmetric) | **POST** /monitoring/metrics/{id}/stop | Stop recording a metric
 [**updateAlert**](JSAPIMonitoringApi.md#updatealert) | **PUT** /monitoring/alerts/{id} | Update an existing alert
 [**updateMetric**](JSAPIMonitoringApi.md#updatemetric) | **PUT** /monitoring/metrics/{id} | Update an existing metric
 
@@ -968,124 +966,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**JSAPIMonitoringIncidentResource***](JSAPIMonitoringIncidentResource.md)
-
-### Authorization
-
-[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **startRecordMetric**
-```objc
--(NSURLSessionTask*) startRecordMetricWithId: (NSString*) _id
-    metricRecord: (JSAPIMonitoringMetricRecordResource*) metricRecord
-        completionHandler: (void (^)(NSError* error)) handler;
-```
-
-Start recording a metric
-
-Only works with delta and timer metrics. <br><br><b>Permissions Needed:</b> RECORD<br /><b>Permissions Needed:</b> RECORD
-
-### Example 
-```objc
-JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-
-NSString* _id = @"_id_example"; // The metric id
-JSAPIMonitoringMetricRecordResource* metricRecord = [[JSAPIMonitoringMetricRecordResource alloc] init]; // The metric record (optional)
-
-JSAPIMonitoringApi*apiInstance = [[JSAPIMonitoringApi alloc] init];
-
-// Start recording a metric
-[apiInstance startRecordMetricWithId:_id
-              metricRecord:metricRecord
-          completionHandler: ^(NSError* error) {
-                        if (error) {
-                            NSLog(@"Error calling JSAPIMonitoringApi->startRecordMetric: %@", error);
-                        }
-                    }];
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **_id** | **NSString***| The metric id | 
- **metricRecord** | [**JSAPIMonitoringMetricRecordResource***](JSAPIMonitoringMetricRecordResource.md)| The metric record | [optional] 
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **stopRecordMetric**
-```objc
--(NSURLSessionTask*) stopRecordMetricWithId: (NSString*) _id
-    metricRecord: (JSAPIMonitoringMetricRecordResource*) metricRecord
-        completionHandler: (void (^)(NSError* error)) handler;
-```
-
-Stop recording a metric
-
-Only works with delta and timer metrics. <br><br><b>Permissions Needed:</b> RECORD<br /><b>Permissions Needed:</b> RECORD
-
-### Example 
-```objc
-JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
-
-NSString* _id = @"_id_example"; // The metric id
-JSAPIMonitoringMetricRecordResource* metricRecord = [[JSAPIMonitoringMetricRecordResource alloc] init]; // The metric record (optional)
-
-JSAPIMonitoringApi*apiInstance = [[JSAPIMonitoringApi alloc] init];
-
-// Stop recording a metric
-[apiInstance stopRecordMetricWithId:_id
-              metricRecord:metricRecord
-          completionHandler: ^(NSError* error) {
-                        if (error) {
-                            NSLog(@"Error calling JSAPIMonitoringApi->stopRecordMetric: %@", error);
-                        }
-                    }];
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **_id** | **NSString***| The metric id | 
- **metricRecord** | [**JSAPIMonitoringMetricRecordResource***](JSAPIMonitoringMetricRecordResource.md)| The metric record | [optional] 
-
-### Return type
-
-void (empty response body)
 
 ### Authorization
 

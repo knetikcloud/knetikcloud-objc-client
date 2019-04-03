@@ -49,9 +49,6 @@
 /* The startDate as a unix timestamp in seconds the incident first started [optional]
  */
 @property(nonatomic) NSNumber* startDate;
-/* The value that triggered the incident 
- */
-@property(nonatomic) NSString* triggerValue;
 
 + (NSDictionary *)modalDictionary;
 

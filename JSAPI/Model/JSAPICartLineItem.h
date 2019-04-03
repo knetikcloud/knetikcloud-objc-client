@@ -32,9 +32,13 @@
 
 @property(nonatomic) JSAPIDiscount* discount;
 
+@property(nonatomic) NSNumber* giftTarget;
+
 @property(nonatomic) NSNumber* lineTotal;
 
 @property(nonatomic) NSString* name;
+
+@property(nonatomic) NSString* notes;
 
 @property(nonatomic) NSNumber* originalLineTotal;
 

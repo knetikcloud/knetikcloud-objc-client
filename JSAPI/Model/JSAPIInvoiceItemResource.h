@@ -32,6 +32,8 @@
 
 @property(nonatomic) JSAPIDiscount* discount;
 
+@property(nonatomic) NSNumber* giftTarget;
+
 @property(nonatomic) NSNumber* _id;
 
 @property(nonatomic) NSNumber* invoiceId;
@@ -39,6 +41,8 @@
 @property(nonatomic) NSNumber* itemId;
 
 @property(nonatomic) NSString* itemName;
+
+@property(nonatomic) NSString* notes;
 
 @property(nonatomic) NSNumber* originalTotalPrice;
 
