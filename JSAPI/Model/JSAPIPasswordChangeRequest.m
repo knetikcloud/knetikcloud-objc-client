@@ -1,6 +1,6 @@
-#import "JSAPIQuickPaidRequest.h"
+#import "JSAPIPasswordChangeRequest.h"
 
-@implementation JSAPIQuickPaidRequest
+@implementation JSAPIPasswordChangeRequest
 
 - (instancetype)init {
   self = [super init];
@@ -22,7 +22,7 @@
 
 + (NSDictionary *)modalDictionary {
 
-  return @{ @"additionalProperties": @"additional_properties", @"giftTarget": @"gift_target", @"itemNotes": @"item_notes", @"paidAmount": @"paid_amount", @"priceOverride": @"price_override", @"sku": @"sku", @"template": @"template", @"transactionDetails": @"transaction_details", @"transactionType": @"transaction_type", @"userId": @"user_id" };
+  return @{ @"currentPassword": @"current_password", @"value": @"value" };
 }
 
 /**
@@ -32,7 +32,7 @@
  */
 + (BOOL)propertyIsOptional:(NSString *)propertyName {
 
-  NSArray *optionalProperties = @[@"additionalProperties", @"itemNotes", @"priceOverride", @"template", @"transactionDetails", @"userId"];
+  NSArray *optionalProperties = @[@"currentPassword", ];
 
   return [optionalProperties containsObject:propertyName];
 }

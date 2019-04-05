@@ -14,6 +14,9 @@
 */
 
 
+#import "JSAPIProperty.h"
+@protocol JSAPIProperty;
+@class JSAPIProperty;
 
 
 
@@ -22,6 +25,9 @@
 
 @interface JSAPIQuickPaidRequest : JSAPIObject
 
+/* A map of additional properties, keyed on the property name (private). Must match the names and types defined in the template for this invoice type, or be an extra not from the template [optional]
+ */
+@property(nonatomic) NSDictionary* additionalProperties;
 /* An optional target user to give the item to as a gift 
  */
 @property(nonatomic) NSNumber* giftTarget;
@@ -37,6 +43,9 @@
 /* SKU of item being purchased 
  */
 @property(nonatomic) NSString* sku;
+/* An invoice template this invoice is validated against (private). May be null and no validation of properties will be done [optional]
+ */
+@property(nonatomic) NSString* template;
 /* Transaction details [optional]
  */
 @property(nonatomic) NSString* transactionDetails;

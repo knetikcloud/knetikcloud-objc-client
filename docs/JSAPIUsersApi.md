@@ -871,13 +871,13 @@ void (empty response body)
 # **setPassword**
 ```objc
 -(NSURLSessionTask*) setPasswordWithId: (NSNumber*) _id
-    password: (JSAPIStringWrapper*) password
+    passwordRequest: (JSAPIPasswordChangeRequest*) passwordRequest
         completionHandler: (void (^)(NSError* error)) handler;
 ```
 
 Set a user's password
 
-Password should be in plain text and will be encrypted on receipt. Use SSL for security. <br><br><b>Permissions Needed:</b> PUT<br /><b>Permissions Needed:</b> PUT
+Password should be in plain text and will be encrypted on receipt. Use SSL for security. If not USERS_ADMIN, the correct current password must be supplied as wellPUT<br /><b>Permissions Needed:</b> PUT
 
 ### Example 
 ```objc
@@ -891,13 +891,13 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSNumber* _id = @56; // The id of the user
-JSAPIStringWrapper* password = [[JSAPIStringWrapper alloc] init]; // The new plain text password (optional)
+JSAPIPasswordChangeRequest* passwordRequest = [[JSAPIPasswordChangeRequest alloc] init]; // request body for password change (optional)
 
 JSAPIUsersApi*apiInstance = [[JSAPIUsersApi alloc] init];
 
 // Set a user's password
 [apiInstance setPasswordWithId:_id
-              password:password
+              passwordRequest:passwordRequest
           completionHandler: ^(NSError* error) {
                         if (error) {
                             NSLog(@"Error calling JSAPIUsersApi->setPassword: %@", error);
@@ -910,7 +910,7 @@ JSAPIUsersApi*apiInstance = [[JSAPIUsersApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **_id** | **NSNumber***| The id of the user | 
- **password** | [**JSAPIStringWrapper***](JSAPIStringWrapper.md)| The new plain text password | [optional] 
+ **passwordRequest** | [**JSAPIPasswordChangeRequest***](JSAPIPasswordChangeRequest.md)| request body for password change | [optional] 
 
 ### Return type
 

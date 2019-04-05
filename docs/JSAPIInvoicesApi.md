@@ -5,9 +5,13 @@ All URIs are relative to *https://devsandbox.knetikcloud.com*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createInvoice**](JSAPIInvoicesApi.md#createinvoice) | **POST** /invoices | Create an invoice
+[**createInvoiceTemplate**](JSAPIInvoicesApi.md#createinvoicetemplate) | **POST** /invoices/templates | Create a invoice template
+[**deleteInvoiceTemplate**](JSAPIInvoicesApi.md#deleteinvoicetemplate) | **DELETE** /invoices/templates/{id} | Delete a invoice template
 [**getFulFillmentStatuses**](JSAPIInvoicesApi.md#getfulfillmentstatuses) | **GET** /invoices/fulfillment-statuses | Lists available fulfillment statuses
 [**getInvoice**](JSAPIInvoicesApi.md#getinvoice) | **GET** /invoices/{id} | Retrieve an invoice
 [**getInvoiceLogs**](JSAPIInvoicesApi.md#getinvoicelogs) | **GET** /invoices/{id}/logs | List invoice logs
+[**getInvoiceTemplate**](JSAPIInvoicesApi.md#getinvoicetemplate) | **GET** /invoices/templates/{id} | Get a single invoice template
+[**getInvoiceTemplates**](JSAPIInvoicesApi.md#getinvoicetemplates) | **GET** /invoices/templates | List and search invoice templates
 [**getInvoices**](JSAPIInvoicesApi.md#getinvoices) | **GET** /invoices | Retrieve invoices
 [**getPaymentStatuses**](JSAPIInvoicesApi.md#getpaymentstatuses) | **GET** /invoices/payment-statuses | Lists available payment statuses
 [**payInvoice**](JSAPIInvoicesApi.md#payinvoice) | **POST** /invoices/{id}/payments | Pay an invoice using a saved payment method
@@ -17,6 +21,7 @@ Method | HTTP request | Description
 [**setOrderNotes**](JSAPIInvoicesApi.md#setordernotes) | **PUT** /invoices/{id}/order-notes | Set the order notes of an invoice
 [**setPaymentStatus**](JSAPIInvoicesApi.md#setpaymentstatus) | **PUT** /invoices/{id}/payment-status | Set the payment status of an invoice
 [**updateBillingInfo**](JSAPIInvoicesApi.md#updatebillinginfo) | **PUT** /invoices/{id}/billing-address | Set or update billing info
+[**updateInvoiceTemplate**](JSAPIInvoicesApi.md#updateinvoicetemplate) | **PATCH** /invoices/templates/{id} | Update a invoice template
 
 
 # **createInvoice**
@@ -73,6 +78,123 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **createInvoiceTemplate**
+```objc
+-(NSURLSessionTask*) createInvoiceTemplateWithInvoiceTemplateResource: (JSAPITemplateResource*) invoiceTemplateResource
+        completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler;
+```
+
+Create a invoice template
+
+Invoice templates define a type of invoice and the properties they have.
+
+### Example 
+```objc
+JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+
+JSAPITemplateResource* invoiceTemplateResource = [[JSAPITemplateResource alloc] init]; // The invoice template resource object (optional)
+
+JSAPIInvoicesApi*apiInstance = [[JSAPIInvoicesApi alloc] init];
+
+// Create a invoice template
+[apiInstance createInvoiceTemplateWithInvoiceTemplateResource:invoiceTemplateResource
+          completionHandler: ^(JSAPITemplateResource* output, NSError* error) {
+                        if (output) {
+                            NSLog(@"%@", output);
+                        }
+                        if (error) {
+                            NSLog(@"Error calling JSAPIInvoicesApi->createInvoiceTemplate: %@", error);
+                        }
+                    }];
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **invoiceTemplateResource** | [**JSAPITemplateResource***](JSAPITemplateResource.md)| The invoice template resource object | [optional] 
+
+### Return type
+
+[**JSAPITemplateResource***](JSAPITemplateResource.md)
+
+### Authorization
+
+[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **deleteInvoiceTemplate**
+```objc
+-(NSURLSessionTask*) deleteInvoiceTemplateWithId: (NSString*) _id
+    cascade: (NSString*) cascade
+        completionHandler: (void (^)(NSError* error)) handler;
+```
+
+Delete a invoice template
+
+If cascade = 'detach', it will force delete the template even if it's attached to other objects.
+
+### Example 
+```objc
+JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+
+NSString* _id = @"_id_example"; // The id of the template
+NSString* cascade = @"cascade_example"; // The value needed to delete used templates (optional)
+
+JSAPIInvoicesApi*apiInstance = [[JSAPIInvoicesApi alloc] init];
+
+// Delete a invoice template
+[apiInstance deleteInvoiceTemplateWithId:_id
+              cascade:cascade
+          completionHandler: ^(NSError* error) {
+                        if (error) {
+                            NSLog(@"Error calling JSAPIInvoicesApi->deleteInvoiceTemplate: %@", error);
+                        }
+                    }];
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **_id** | **NSString***| The id of the template | 
+ **cascade** | **NSString***| The value needed to delete used templates | [optional] 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -251,6 +373,126 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**JSAPIPageResourceInvoiceLogEntry_***](JSAPIPageResourceInvoiceLogEntry_.md)
+
+### Authorization
+
+[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getInvoiceTemplate**
+```objc
+-(NSURLSessionTask*) getInvoiceTemplateWithId: (NSString*) _id
+        completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler;
+```
+
+Get a single invoice template
+
+### Example 
+```objc
+JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+
+NSString* _id = @"_id_example"; // The id of the template
+
+JSAPIInvoicesApi*apiInstance = [[JSAPIInvoicesApi alloc] init];
+
+// Get a single invoice template
+[apiInstance getInvoiceTemplateWithId:_id
+          completionHandler: ^(JSAPITemplateResource* output, NSError* error) {
+                        if (output) {
+                            NSLog(@"%@", output);
+                        }
+                        if (error) {
+                            NSLog(@"Error calling JSAPIInvoicesApi->getInvoiceTemplate: %@", error);
+                        }
+                    }];
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **_id** | **NSString***| The id of the template | 
+
+### Return type
+
+[**JSAPITemplateResource***](JSAPITemplateResource.md)
+
+### Authorization
+
+[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getInvoiceTemplates**
+```objc
+-(NSURLSessionTask*) getInvoiceTemplatesWithSize: (NSNumber*) size
+    page: (NSNumber*) page
+    order: (NSString*) order
+        completionHandler: (void (^)(JSAPIPageResourceTemplateResource_* output, NSError* error)) handler;
+```
+
+List and search invoice templates
+
+### Example 
+```objc
+JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+
+NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
+NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
+NSString* order = @"id:ASC"; // A comma separated list of sorting requirements in priority order, each entry matching PROPERTY_NAME:[ASC|DESC] (optional) (default to id:ASC)
+
+JSAPIInvoicesApi*apiInstance = [[JSAPIInvoicesApi alloc] init];
+
+// List and search invoice templates
+[apiInstance getInvoiceTemplatesWithSize:size
+              page:page
+              order:order
+          completionHandler: ^(JSAPIPageResourceTemplateResource_* output, NSError* error) {
+                        if (output) {
+                            NSLog(@"%@", output);
+                        }
+                        if (error) {
+                            NSLog(@"Error calling JSAPIInvoicesApi->getInvoiceTemplates: %@", error);
+                        }
+                    }];
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
+ **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
+ **order** | **NSString***| A comma separated list of sorting requirements in priority order, each entry matching PROPERTY_NAME:[ASC|DESC] | [optional] [default to id:ASC]
+
+### Return type
+
+[**JSAPIPageResourceTemplateResource_***](JSAPIPageResourceTemplateResource_.md)
 
 ### Authorization
 
@@ -860,6 +1102,70 @@ Name | Type | Description  | Notes
 ### Return type
 
 void (empty response body)
+
+### Authorization
+
+[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **updateInvoiceTemplate**
+```objc
+-(NSURLSessionTask*) updateInvoiceTemplateWithId: (NSString*) _id
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
+        completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler;
+```
+
+Update a invoice template
+
+### Example 
+```objc
+JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+
+NSString* _id = @"_id_example"; // The id of the template
+JSAPIPatchResource* templatePatchResource = [[JSAPIPatchResource alloc] init]; // The patch resource object (optional)
+NSNumber* testValidation = @true; // If true, this will test validation but not submit the patch request (optional)
+
+JSAPIInvoicesApi*apiInstance = [[JSAPIInvoicesApi alloc] init];
+
+// Update a invoice template
+[apiInstance updateInvoiceTemplateWithId:_id
+              templatePatchResource:templatePatchResource
+              testValidation:testValidation
+          completionHandler: ^(JSAPITemplateResource* output, NSError* error) {
+                        if (output) {
+                            NSLog(@"%@", output);
+                        }
+                        if (error) {
+                            NSLog(@"Error calling JSAPIInvoicesApi->updateInvoiceTemplate: %@", error);
+                        }
+                    }];
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **_id** | **NSString***| The id of the template | 
+ **templatePatchResource** | [**JSAPIPatchResource***](JSAPIPatchResource.md)| The patch resource object | [optional] 
+ **testValidation** | **NSNumber***| If true, this will test validation but not submit the patch request | [optional] 
+
+### Return type
+
+[**JSAPITemplateResource***](JSAPITemplateResource.md)
 
 ### Authorization
 

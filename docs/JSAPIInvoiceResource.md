@@ -3,6 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**additionalProperties** | [**NSDictionary***](JSAPIProperty.md) | A map of additional properties, keyed on the property name (private). Must match the names and types defined in the template for this invoice type, or be an extra not from the template | [optional] 
 **billingAddress1** | **NSString*** | Line one of the customer&#39;s billing address | [optional] 
 **billingAddress2** | **NSString*** | Line two of the customer&#39;s billing address | [optional] 
 **billingCityName** | **NSString*** | The city for the customer&#39;s billing address | [optional] 
@@ -41,6 +42,7 @@ Name | Type | Description | Notes
 **sort** | **NSNumber*** | A number to use in sorting items. default 500. | [optional] 
 **stateTax** | **NSNumber*** | The amount of state tax added | [optional] 
 **subtotal** | **NSNumber*** | The sum price of all items before shipping, coupons and tax | [optional] 
+**template** | **NSString*** | An invoice template this invoice is validated against (private). May be null and no validation of properties will be done | [optional] 
 **updatedDate** | **NSNumber*** | The date the invoice was last updated, unix timestamp in seconds | [optional] 
 **user** | [**JSAPISimpleUserResource***](JSAPISimpleUserResource.md) | The owner of the invoice | [optional] 
 **vendorId** | **NSNumber*** | The id of the vendor | [optional] 

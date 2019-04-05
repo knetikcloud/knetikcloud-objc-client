@@ -6,6 +6,7 @@
 #import "JSAPIPageResourceString_.h"
 #import "JSAPIPageResourceTemplateResource_.h"
 #import "JSAPIPageResourceUserBaseResource_.h"
+#import "JSAPIPasswordChangeRequest.h"
 #import "JSAPIPasswordResetRequest.h"
 #import "JSAPIPatchResource.h"
 #import "JSAPIResult.h"
@@ -296,10 +297,10 @@ extern NSInteger kJSAPIUsersApiMissingParamErrorCode;
 
 
 /// Set a user's password
-/// Password should be in plain text and will be encrypted on receipt. Use SSL for security. <br><br><b>Permissions Needed:</b> PUT<br /><b>Permissions Needed:</b> PUT
+/// Password should be in plain text and will be encrypted on receipt. Use SSL for security. If not USERS_ADMIN, the correct current password must be supplied as wellPUT<br /><b>Permissions Needed:</b> PUT
 ///
 /// @param _id The id of the user
-/// @param password The new plain text password (optional)
+/// @param passwordRequest request body for password change (optional)
 /// 
 ///  code:200 message:"OK",
 ///  code:400 message:"Bad Request",
@@ -309,7 +310,7 @@ extern NSInteger kJSAPIUsersApiMissingParamErrorCode;
 ///
 /// @return void
 -(NSURLSessionTask*) setPasswordWithId: (NSNumber*) _id
-    password: (JSAPIStringWrapper*) password
+    passwordRequest: (JSAPIPasswordChangeRequest*) passwordRequest
     completionHandler: (void (^)(NSError* error)) handler;
 
 

@@ -15,9 +15,12 @@
 
 
 #import "JSAPIInvoiceItemResource.h"
+#import "JSAPIProperty.h"
 #import "JSAPISimpleUserResource.h"
 @protocol JSAPIInvoiceItemResource;
 @class JSAPIInvoiceItemResource;
+@protocol JSAPIProperty;
+@class JSAPIProperty;
 @protocol JSAPISimpleUserResource;
 @class JSAPISimpleUserResource;
 
@@ -28,6 +31,9 @@
 
 @interface JSAPIInvoiceResource : JSAPIObject
 
+/* A map of additional properties, keyed on the property name (private). Must match the names and types defined in the template for this invoice type, or be an extra not from the template [optional]
+ */
+@property(nonatomic) NSDictionary* additionalProperties;
 /* Line one of the customer's billing address [optional]
  */
 @property(nonatomic) NSString* billingAddress1;
@@ -142,6 +148,9 @@
 /* The sum price of all items before shipping, coupons and tax [optional]
  */
 @property(nonatomic) NSNumber* subtotal;
+/* An invoice template this invoice is validated against (private). May be null and no validation of properties will be done [optional]
+ */
+@property(nonatomic) NSString* template;
 /* The date the invoice was last updated, unix timestamp in seconds [optional]
  */
 @property(nonatomic) NSNumber* updatedDate;

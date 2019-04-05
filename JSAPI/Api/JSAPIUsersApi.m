@@ -8,6 +8,7 @@
 #import "JSAPIPageResourceString_.h"
 #import "JSAPIPageResourceTemplateResource_.h"
 #import "JSAPIPageResourceUserBaseResource_.h"
+#import "JSAPIPasswordChangeRequest.h"
 #import "JSAPIPasswordResetRequest.h"
 #import "JSAPIPatchResource.h"
 #import "JSAPIResult.h"
@@ -1071,15 +1072,15 @@ NSInteger kJSAPIUsersApiMissingParamErrorCode = 234513;
 
 ///
 /// Set a user's password
-/// Password should be in plain text and will be encrypted on receipt. Use SSL for security. <br><br><b>Permissions Needed:</b> PUT<br /><b>Permissions Needed:</b> PUT
+/// Password should be in plain text and will be encrypted on receipt. Use SSL for security. If not USERS_ADMIN, the correct current password must be supplied as wellPUT<br /><b>Permissions Needed:</b> PUT
 ///  @param _id The id of the user 
 ///
-///  @param password The new plain text password (optional)
+///  @param passwordRequest request body for password change (optional)
 ///
 ///  @returns void
 ///
 -(NSURLSessionTask*) setPasswordWithId: (NSNumber*) _id
-    password: (JSAPIStringWrapper*) password
+    passwordRequest: (JSAPIPasswordChangeRequest*) passwordRequest
     completionHandler: (void (^)(NSError* error)) handler {
     // verify the required parameter '_id' is set
     if (_id == nil) {
@@ -1120,7 +1121,7 @@ NSInteger kJSAPIUsersApiMissingParamErrorCode = 234513;
     id bodyParam = nil;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *localVarFiles = [[NSMutableDictionary alloc] init];
-    bodyParam = password;
+    bodyParam = passwordRequest;
 
     return [self.apiClient requestWithPath: resourcePath
                                     method: @"PUT"

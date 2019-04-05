@@ -6,9 +6,12 @@
 #import "JSAPIPageResourceInvoiceLogEntry_.h"
 #import "JSAPIPageResourceInvoiceResource_.h"
 #import "JSAPIPageResourceString_.h"
+#import "JSAPIPageResourceTemplateResource_.h"
+#import "JSAPIPatchResource.h"
 #import "JSAPIPayBySavedMethodRequest.h"
 #import "JSAPIResult.h"
 #import "JSAPIStringWrapper.h"
+#import "JSAPITemplateResource.h"
 #import "JSAPIApi.h"
 
 /**
@@ -46,6 +49,40 @@ extern NSInteger kJSAPIInvoicesApiMissingParamErrorCode;
 /// @return NSArray<JSAPIInvoiceResource>*
 -(NSURLSessionTask*) createInvoiceWithReq: (JSAPIInvoiceCreateRequest*) req
     completionHandler: (void (^)(NSArray<JSAPIInvoiceResource>* output, NSError* error)) handler;
+
+
+/// Create a invoice template
+/// Invoice templates define a type of invoice and the properties they have.
+///
+/// @param invoiceTemplateResource The invoice template resource object (optional)
+/// 
+///  code:201 message:"Created",
+///  code:400 message:"Bad Request",
+///  code:401 message:"Unauthorized",
+///  code:403 message:"Forbidden",
+///  code:404 message:"Not Found"
+///
+/// @return JSAPITemplateResource*
+-(NSURLSessionTask*) createInvoiceTemplateWithInvoiceTemplateResource: (JSAPITemplateResource*) invoiceTemplateResource
+    completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler;
+
+
+/// Delete a invoice template
+/// If cascade = 'detach', it will force delete the template even if it's attached to other objects.
+///
+/// @param _id The id of the template
+/// @param cascade The value needed to delete used templates (optional)
+/// 
+///  code:204 message:"No Content",
+///  code:400 message:"Bad Request",
+///  code:401 message:"Unauthorized",
+///  code:403 message:"Forbidden",
+///  code:404 message:"Not Found"
+///
+/// @return void
+-(NSURLSessionTask*) deleteInvoiceTemplateWithId: (NSString*) _id
+    cascade: (NSString*) cascade
+    completionHandler: (void (^)(NSError* error)) handler;
 
 
 /// Lists available fulfillment statuses
@@ -100,6 +137,42 @@ extern NSInteger kJSAPIInvoicesApiMissingParamErrorCode;
     size: (NSNumber*) size
     page: (NSNumber*) page
     completionHandler: (void (^)(JSAPIPageResourceInvoiceLogEntry_* output, NSError* error)) handler;
+
+
+/// Get a single invoice template
+/// 
+///
+/// @param _id The id of the template
+/// 
+///  code:200 message:"OK",
+///  code:400 message:"Bad Request",
+///  code:401 message:"Unauthorized",
+///  code:403 message:"Forbidden",
+///  code:404 message:"Not Found"
+///
+/// @return JSAPITemplateResource*
+-(NSURLSessionTask*) getInvoiceTemplateWithId: (NSString*) _id
+    completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler;
+
+
+/// List and search invoice templates
+/// 
+///
+/// @param size The number of objects returned per page (optional) (default to 25)
+/// @param page The number of the page returned, starting with 1 (optional) (default to 1)
+/// @param order A comma separated list of sorting requirements in priority order, each entry matching PROPERTY_NAME:[ASC|DESC] (optional) (default to id:ASC)
+/// 
+///  code:200 message:"OK",
+///  code:400 message:"Bad Request",
+///  code:401 message:"Unauthorized",
+///  code:403 message:"Forbidden",
+///  code:404 message:"Not Found"
+///
+/// @return JSAPIPageResourceTemplateResource_*
+-(NSURLSessionTask*) getInvoiceTemplatesWithSize: (NSNumber*) size
+    page: (NSNumber*) page
+    order: (NSString*) order
+    completionHandler: (void (^)(JSAPIPageResourceTemplateResource_* output, NSError* error)) handler;
 
 
 /// Retrieve invoices
@@ -298,6 +371,24 @@ extern NSInteger kJSAPIInvoicesApiMissingParamErrorCode;
 -(NSURLSessionTask*) updateBillingInfoWithId: (NSNumber*) _id
     billingInfoRequest: (JSAPIAddressResource*) billingInfoRequest
     completionHandler: (void (^)(NSError* error)) handler;
+
+
+/// Update a invoice template
+/// 
+///
+/// @param _id The id of the template
+/// @param templatePatchResource The patch resource object (optional)
+/// @param testValidation If true, this will test validation but not submit the patch request (optional)
+/// 
+///  code:204 message:"No Content",
+///  code:401 message:"Unauthorized",
+///  code:403 message:"Forbidden"
+///
+/// @return JSAPITemplateResource*
+-(NSURLSessionTask*) updateInvoiceTemplateWithId: (NSString*) _id
+    templatePatchResource: (JSAPIPatchResource*) templatePatchResource
+    testValidation: (NSNumber*) testValidation
+    completionHandler: (void (^)(JSAPITemplateResource* output, NSError* error)) handler;
 
 
 
