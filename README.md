@@ -421,7 +421,6 @@ Import the following:
 #import <JSAPI/JSAPIUserLevelingResource.h>
 #import <JSAPI/JSAPIUserNotificationResource.h>
 #import <JSAPI/JSAPIUserNotificationStatusWrapper.h>
-#import <JSAPI/JSAPIUserRelationshipReferenceResource.h>
 #import <JSAPI/JSAPIUserRelationshipResource.h>
 #import <JSAPI/JSAPIUserResource.h>
 #import <JSAPI/JSAPIUserSidResource.h>
@@ -1250,6 +1249,7 @@ Class | Method | HTTP request | Description
 *JSAPIUsersApi* | [**passwordReset**](docs/JSAPIUsersApi.md#passwordreset) | **PUT** /users/{id}/password-reset | Choose a new password after a reset
 *JSAPIUsersApi* | [**postUserMessage**](docs/JSAPIUsersApi.md#postusermessage) | **POST** /users/{recipient_id}/messages | Send a user message
 *JSAPIUsersApi* | [**registerUser**](docs/JSAPIUsersApi.md#registeruser) | **POST** /users | Register a new user
+*JSAPIUsersApi* | [**registerUserCuentas**](docs/JSAPIUsersApi.md#registerusercuentas) | **POST** /users/cuentas | Register a new cuentas user
 *JSAPIUsersApi* | [**removeUserTag**](docs/JSAPIUsersApi.md#removeusertag) | **DELETE** /users/{user_id}/tags/{tag} | Remove a tag from a user
 *JSAPIUsersApi* | [**setPassword**](docs/JSAPIUsersApi.md#setpassword) | **PUT** /users/{id}/password | Set a user&#39;s password
 *JSAPIUsersApi* | [**startPasswordReset**](docs/JSAPIUsersApi.md#startpasswordreset) | **POST** /users/{id}/password-reset | Reset a user&#39;s password
@@ -1733,7 +1733,6 @@ Class | Method | HTTP request | Description
  - [JSAPIUserLevelingResource](docs/JSAPIUserLevelingResource.md)
  - [JSAPIUserNotificationResource](docs/JSAPIUserNotificationResource.md)
  - [JSAPIUserNotificationStatusWrapper](docs/JSAPIUserNotificationStatusWrapper.md)
- - [JSAPIUserRelationshipReferenceResource](docs/JSAPIUserRelationshipReferenceResource.md)
  - [JSAPIUserRelationshipResource](docs/JSAPIUserRelationshipResource.md)
  - [JSAPIUserResource](docs/JSAPIUserResource.md)
  - [JSAPIUserSidResource](docs/JSAPIUserSidResource.md)

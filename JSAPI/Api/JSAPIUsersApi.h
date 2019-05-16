@@ -278,6 +278,22 @@ extern NSInteger kJSAPIUsersApiMissingParamErrorCode;
     completionHandler: (void (^)(JSAPIUserResource* output, NSError* error)) handler;
 
 
+/// Register a new cuentas user
+/// Password should be in plain text and will be encrypted on receipt. Use SSL for security.<br /><b>Permissions Needed:</b> NONE
+///
+/// @param userResource The user resource object (optional)
+/// 
+///  code:200 message:"OK",
+///  code:400 message:"Bad Request",
+///  code:401 message:"Unauthorized",
+///  code:403 message:"Forbidden",
+///  code:404 message:"Not Found"
+///
+/// @return JSAPIUserResource*
+-(NSURLSessionTask*) registerUserCuentasWithUserResource: (JSAPIUserResource*) userResource
+    completionHandler: (void (^)(JSAPIUserResource* output, NSError* error)) handler;
+
+
 /// Remove a tag from a user
 /// <b>Permissions Needed:</b> USERS_ADMIN
 ///

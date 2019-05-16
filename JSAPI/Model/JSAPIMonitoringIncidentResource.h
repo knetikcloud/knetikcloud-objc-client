@@ -46,6 +46,9 @@
 /* The statuses of each level 
  */
 @property(nonatomic) NSArray<JSAPIMonitoringIncidentLevelResource>* levels;
+/* The value of the merge_label from the alert [optional]
+ */
+@property(nonatomic) NSString* mergeValue;
 /* The startDate as a unix timestamp in seconds the incident first started [optional]
  */
 @property(nonatomic) NSNumber* startDate;

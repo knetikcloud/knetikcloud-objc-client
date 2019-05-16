@@ -986,6 +986,61 @@ NSInteger kJSAPIUsersApiMissingParamErrorCode = 234513;
 }
 
 ///
+/// Register a new cuentas user
+/// Password should be in plain text and will be encrypted on receipt. Use SSL for security.<br /><b>Permissions Needed:</b> NONE
+///  @param userResource The user resource object (optional)
+///
+///  @returns JSAPIUserResource*
+///
+-(NSURLSessionTask*) registerUserCuentasWithUserResource: (JSAPIUserResource*) userResource
+    completionHandler: (void (^)(JSAPIUserResource* output, NSError* error)) handler {
+    NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/users/cuentas"];
+
+    NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
+
+    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
+    [headerParams addEntriesFromDictionary:self.defaultHeaders];
+    // HTTP header `Accept`
+    NSString *acceptHeader = [self.apiClient.sanitizer selectHeaderAccept:@[@"application/json"]];
+    if(acceptHeader.length > 0) {
+        headerParams[@"Accept"] = acceptHeader;
+    }
+
+    // response content type
+    NSString *responseContentType = [[acceptHeader componentsSeparatedByString:@", "] firstObject] ?: @"";
+
+    // request content type
+    NSString *requestContentType = [self.apiClient.sanitizer selectHeaderContentType:@[@"application/json"]];
+
+    // Authentication setting
+    NSArray *authSettings = @[@"oauth2_client_credentials_grant", @"oauth2_password_grant"];
+
+    id bodyParam = nil;
+    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *localVarFiles = [[NSMutableDictionary alloc] init];
+    bodyParam = userResource;
+
+    return [self.apiClient requestWithPath: resourcePath
+                                    method: @"POST"
+                                pathParams: pathParams
+                               queryParams: queryParams
+                                formParams: formParams
+                                     files: localVarFiles
+                                      body: bodyParam
+                              headerParams: headerParams
+                              authSettings: authSettings
+                        requestContentType: requestContentType
+                       responseContentType: responseContentType
+                              responseType: @"JSAPIUserResource*"
+                           completionBlock: ^(id data, NSError *error) {
+                                if(handler) {
+                                    handler((JSAPIUserResource*)data, error);
+                                }
+                            }];
+}
+
+///
 /// Remove a tag from a user
 /// <b>Permissions Needed:</b> USERS_ADMIN
 ///  @param userId The id of the user 

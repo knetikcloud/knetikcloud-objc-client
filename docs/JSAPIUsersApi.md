@@ -16,6 +16,7 @@ Method | HTTP request | Description
 [**passwordReset**](JSAPIUsersApi.md#passwordreset) | **PUT** /users/{id}/password-reset | Choose a new password after a reset
 [**postUserMessage**](JSAPIUsersApi.md#postusermessage) | **POST** /users/{recipient_id}/messages | Send a user message
 [**registerUser**](JSAPIUsersApi.md#registeruser) | **POST** /users | Register a new user
+[**registerUserCuentas**](JSAPIUsersApi.md#registerusercuentas) | **POST** /users/cuentas | Register a new cuentas user
 [**removeUserTag**](JSAPIUsersApi.md#removeusertag) | **DELETE** /users/{user_id}/tags/{tag} | Remove a tag from a user
 [**setPassword**](JSAPIUsersApi.md#setpassword) | **PUT** /users/{id}/password | Set a user&#39;s password
 [**startPasswordReset**](JSAPIUsersApi.md#startpasswordreset) | **POST** /users/{id}/password-reset | Reset a user&#39;s password
@@ -784,6 +785,64 @@ JSAPIUsersApi*apiInstance = [[JSAPIUsersApi alloc] init];
                         }
                         if (error) {
                             NSLog(@"Error calling JSAPIUsersApi->registerUser: %@", error);
+                        }
+                    }];
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **userResource** | [**JSAPIUserResource***](JSAPIUserResource.md)| The user resource object | [optional] 
+
+### Return type
+
+[**JSAPIUserResource***](JSAPIUserResource.md)
+
+### Authorization
+
+[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **registerUserCuentas**
+```objc
+-(NSURLSessionTask*) registerUserCuentasWithUserResource: (JSAPIUserResource*) userResource
+        completionHandler: (void (^)(JSAPIUserResource* output, NSError* error)) handler;
+```
+
+Register a new cuentas user
+
+Password should be in plain text and will be encrypted on receipt. Use SSL for security.<br /><b>Permissions Needed:</b> NONE
+
+### Example 
+```objc
+JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+
+JSAPIUserResource* userResource = [[JSAPIUserResource alloc] init]; // The user resource object (optional)
+
+JSAPIUsersApi*apiInstance = [[JSAPIUsersApi alloc] init];
+
+// Register a new cuentas user
+[apiInstance registerUserCuentasWithUserResource:userResource
+          completionHandler: ^(JSAPIUserResource* output, NSError* error) {
+                        if (output) {
+                            NSLog(@"%@", output);
+                        }
+                        if (error) {
+                            NSLog(@"Error calling JSAPIUsersApi->registerUserCuentas: %@", error);
                         }
                     }];
 ```

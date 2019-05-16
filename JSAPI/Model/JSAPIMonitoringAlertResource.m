@@ -22,7 +22,7 @@
 
 + (NSDictionary *)modalDictionary {
 
-  return @{ @"enabled": @"enabled", @"_id": @"id", @"levels": @"levels", @"metric": @"metric", @"name": @"name" };
+  return @{ @"enabled": @"enabled", @"_id": @"id", @"levels": @"levels", @"mergeLabel": @"merge_label", @"metric": @"metric", @"name": @"name" };
 }
 
 /**
@@ -32,7 +32,7 @@
  */
 + (BOOL)propertyIsOptional:(NSString *)propertyName {
 
-  NSArray *optionalProperties = @[@"enabled", ];
+  NSArray *optionalProperties = @[@"enabled", @"mergeLabel", @"metric", ];
 
   return [optionalProperties containsObject:propertyName];
 }

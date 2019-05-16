@@ -37,6 +37,9 @@
 /* The name of the alert level 
  */
 @property(nonatomic) NSString* levelName;
+/* The value of the label from the alert that incidents are merged on [optional]
+ */
+@property(nonatomic) NSString* mergeValue;
 /* The new status of the alert level 
  */
 @property(nonatomic) NSString* status;

@@ -22,7 +22,7 @@
 
 + (NSDictionary *)modalDictionary {
 
-  return @{ @"alertId": @"alert_id", @"date": @"date", @"_id": @"id", @"incidentId": @"incident_id", @"levelName": @"level_name", @"status": @"status" };
+  return @{ @"alertId": @"alert_id", @"date": @"date", @"_id": @"id", @"incidentId": @"incident_id", @"levelName": @"level_name", @"mergeValue": @"merge_value", @"status": @"status" };
 }
 
 /**
@@ -32,7 +32,7 @@
  */
 + (BOOL)propertyIsOptional:(NSString *)propertyName {
 
-  NSArray *optionalProperties = @[@"date", @"_id", @"incidentId", ];
+  NSArray *optionalProperties = @[@"date", @"_id", @"incidentId", @"mergeValue", ];
 
   return [optionalProperties containsObject:propertyName];
 }
