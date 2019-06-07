@@ -1217,6 +1217,7 @@ Name | Type | Description  | Notes
 ```objc
 -(NSURLSessionTask*) inviteToGroupWithUniqueName: (NSString*) uniqueName
     request: (JSAPIVerificationRequest*) request
+    originator: (NSNumber*) originator
         completionHandler: (void (^)(JSAPIVerificationRequest* output, NSError* error)) handler;
 ```
 
@@ -1237,12 +1238,14 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 NSString* uniqueName = @"uniqueName_example"; // The group unique name
 JSAPIVerificationRequest* request = [[JSAPIVerificationRequest alloc] init]; // The id of the user to invite (optional)
+NSNumber* originator = 56; // Optional originator id, admin only (optional)
 
 JSAPIUsersGroupsApi*apiInstance = [[JSAPIUsersGroupsApi alloc] init];
 
 // Invite to group
 [apiInstance inviteToGroupWithUniqueName:uniqueName
               request:request
+              originator:originator
           completionHandler: ^(JSAPIVerificationRequest* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
@@ -1259,6 +1262,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **uniqueName** | **NSString***| The group unique name | 
  **request** | [**JSAPIVerificationRequest***](JSAPIVerificationRequest.md)| The id of the user to invite | [optional] 
+ **originator** | **NSNumber***| Optional originator id, admin only | [optional] 
 
 ### Return type
 

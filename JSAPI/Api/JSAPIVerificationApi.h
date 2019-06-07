@@ -48,6 +48,7 @@ extern NSInteger kJSAPIVerificationApiMissingParamErrorCode;
 /// Verification requests ask for a user to respond and confirm something, like their email address of an invitation to join a group.<br /><b>Permissions Needed:</b> POST
 ///
 /// @param verificationRequest The request (optional)
+/// @param originator Optional originator id, admin only (optional)
 /// 
 ///  code:201 message:"Created",
 ///  code:400 message:"Bad Request",
@@ -57,6 +58,7 @@ extern NSInteger kJSAPIVerificationApiMissingParamErrorCode;
 ///
 /// @return JSAPIVerificationRequest*
 -(NSURLSessionTask*) createVerificationRequestWithVerificationRequest: (JSAPIVerificationRequest*) verificationRequest
+    originator: (NSNumber*) originator
     completionHandler: (void (^)(JSAPIVerificationRequest* output, NSError* error)) handler;
 
 

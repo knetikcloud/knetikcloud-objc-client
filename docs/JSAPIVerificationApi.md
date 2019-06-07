@@ -78,6 +78,7 @@ Name | Type | Description  | Notes
 # **createVerificationRequest**
 ```objc
 -(NSURLSessionTask*) createVerificationRequestWithVerificationRequest: (JSAPIVerificationRequest*) verificationRequest
+    originator: (NSNumber*) originator
         completionHandler: (void (^)(JSAPIVerificationRequest* output, NSError* error)) handler;
 ```
 
@@ -97,11 +98,13 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 JSAPIVerificationRequest* verificationRequest = [[JSAPIVerificationRequest alloc] init]; // The request (optional)
+NSNumber* originator = 56; // Optional originator id, admin only (optional)
 
 JSAPIVerificationApi*apiInstance = [[JSAPIVerificationApi alloc] init];
 
 // Create a new request
 [apiInstance createVerificationRequestWithVerificationRequest:verificationRequest
+              originator:originator
           completionHandler: ^(JSAPIVerificationRequest* output, NSError* error) {
                         if (output) {
                             NSLog(@"%@", output);
@@ -117,6 +120,7 @@ JSAPIVerificationApi*apiInstance = [[JSAPIVerificationApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **verificationRequest** | [**JSAPIVerificationRequest***](JSAPIVerificationRequest.md)| The request | [optional] 
+ **originator** | **NSNumber***| Optional originator id, admin only | [optional] 
 
 ### Return type
 

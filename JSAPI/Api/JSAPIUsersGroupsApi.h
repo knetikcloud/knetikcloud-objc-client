@@ -390,6 +390,7 @@ extern NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode;
 ///
 /// @param uniqueName The group unique name
 /// @param request The id of the user to invite (optional)
+/// @param originator Optional originator id, admin only (optional)
 /// 
 ///  code:201 message:"Created",
 ///  code:400 message:"Bad Request",
@@ -400,6 +401,7 @@ extern NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode;
 /// @return JSAPIVerificationRequest*
 -(NSURLSessionTask*) inviteToGroupWithUniqueName: (NSString*) uniqueName
     request: (JSAPIVerificationRequest*) request
+    originator: (NSNumber*) originator
     completionHandler: (void (^)(JSAPIVerificationRequest* output, NSError* error)) handler;
 
 

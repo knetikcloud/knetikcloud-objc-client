@@ -114,9 +114,12 @@ NSInteger kJSAPIVerificationApiMissingParamErrorCode = 234513;
 /// Verification requests ask for a user to respond and confirm something, like their email address of an invitation to join a group.<br /><b>Permissions Needed:</b> POST
 ///  @param verificationRequest The request (optional)
 ///
+///  @param originator Optional originator id, admin only (optional)
+///
 ///  @returns JSAPIVerificationRequest*
 ///
 -(NSURLSessionTask*) createVerificationRequestWithVerificationRequest: (JSAPIVerificationRequest*) verificationRequest
+    originator: (NSNumber*) originator
     completionHandler: (void (^)(JSAPIVerificationRequest* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/verification/requests"];
 
@@ -143,7 +146,7 @@ NSInteger kJSAPIVerificationApiMissingParamErrorCode = 234513;
     id bodyParam = nil;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *localVarFiles = [[NSMutableDictionary alloc] init];
-    bodyParam = verificationRequest;
+    bodyParam = originator;
 
     return [self.apiClient requestWithPath: resourcePath
                                     method: @"POST"

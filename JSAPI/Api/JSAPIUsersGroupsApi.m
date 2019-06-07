@@ -1482,10 +1482,13 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
 ///
 ///  @param request The id of the user to invite (optional)
 ///
+///  @param originator Optional originator id, admin only (optional)
+///
 ///  @returns JSAPIVerificationRequest*
 ///
 -(NSURLSessionTask*) inviteToGroupWithUniqueName: (NSString*) uniqueName
     request: (JSAPIVerificationRequest*) request
+    originator: (NSNumber*) originator
     completionHandler: (void (^)(JSAPIVerificationRequest* output, NSError* error)) handler {
     // verify the required parameter 'uniqueName' is set
     if (uniqueName == nil) {
@@ -1526,7 +1529,7 @@ NSInteger kJSAPIUsersGroupsApiMissingParamErrorCode = 234513;
     id bodyParam = nil;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *localVarFiles = [[NSMutableDictionary alloc] init];
-    bodyParam = request;
+    bodyParam = originator;
 
     return [self.apiClient requestWithPath: resourcePath
                                     method: @"POST"
