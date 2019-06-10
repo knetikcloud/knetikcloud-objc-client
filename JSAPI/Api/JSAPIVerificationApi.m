@@ -126,6 +126,9 @@ NSInteger kJSAPIVerificationApiMissingParamErrorCode = 234513;
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (originator != nil) {
+        queryParams[@"originator"] = originator;
+    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -146,7 +149,7 @@ NSInteger kJSAPIVerificationApiMissingParamErrorCode = 234513;
     id bodyParam = nil;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *localVarFiles = [[NSMutableDictionary alloc] init];
-    bodyParam = originator;
+    bodyParam = verificationRequest;
 
     return [self.apiClient requestWithPath: resourcePath
                                     method: @"POST"

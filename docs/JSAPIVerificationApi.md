@@ -98,7 +98,7 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 JSAPIVerificationRequest* verificationRequest = [[JSAPIVerificationRequest alloc] init]; // The request (optional)
-NSNumber* originator = 56; // Optional originator id, admin only (optional)
+NSNumber* originator = @56; // Optional originator id, admin only (optional)
 
 JSAPIVerificationApi*apiInstance = [[JSAPIVerificationApi alloc] init];
 

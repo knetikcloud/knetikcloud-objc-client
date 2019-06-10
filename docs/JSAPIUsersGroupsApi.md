@@ -1238,7 +1238,7 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 NSString* uniqueName = @"uniqueName_example"; // The group unique name
 JSAPIVerificationRequest* request = [[JSAPIVerificationRequest alloc] init]; // The id of the user to invite (optional)
-NSNumber* originator = 56; // Optional originator id, admin only (optional)
+NSNumber* originator = @56; // Optional originator id, admin only (optional)
 
 JSAPIUsersGroupsApi*apiInstance = [[JSAPIUsersGroupsApi alloc] init];
 
