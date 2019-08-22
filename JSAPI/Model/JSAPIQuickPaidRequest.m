@@ -22,7 +22,7 @@
 
 + (NSDictionary *)modalDictionary {
 
-  return @{ @"additionalProperties": @"additional_properties", @"giftTarget": @"gift_target", @"itemNotes": @"item_notes", @"paidAmount": @"paid_amount", @"priceOverride": @"price_override", @"sku": @"sku", @"template": @"template", @"transactionDetails": @"transaction_details", @"transactionType": @"transaction_type", @"userId": @"user_id" };
+  return @{ @"additionalProperties": @"additional_properties", @"federalTax": @"federal_tax", @"giftTarget": @"gift_target", @"itemNotes": @"item_notes", @"paidAmount": @"paid_amount", @"priceOverride": @"price_override", @"sku": @"sku", @"stateTax": @"state_tax", @"template": @"template", @"transactionDetails": @"transaction_details", @"transactionType": @"transaction_type", @"userId": @"user_id" };
 }
 
 /**
@@ -32,7 +32,7 @@
  */
 + (BOOL)propertyIsOptional:(NSString *)propertyName {
 
-  NSArray *optionalProperties = @[@"additionalProperties", @"itemNotes", @"priceOverride", @"template", @"transactionDetails", @"userId"];
+  NSArray *optionalProperties = @[@"additionalProperties", @"federalTax", @"itemNotes", @"paidAmount", @"priceOverride", @"stateTax", @"template", @"transactionDetails", @"userId"];
 
   return [optionalProperties containsObject:propertyName];
 }

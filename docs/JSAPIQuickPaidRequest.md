@@ -4,11 +4,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **additionalProperties** | [**NSDictionary***](JSAPIProperty.md) | A map of additional properties, keyed on the property name (private). Must match the names and types defined in the template for this invoice type, or be an extra not from the template | [optional] 
+**federalTax** | **NSNumber*** | The amount of federal tax to add (increases final price of invoice even if using price override). Minimum 0 | [optional] 
 **giftTarget** | **NSNumber*** | An optional target user to give the item to as a gift | 
 **itemNotes** | **NSString*** | An optional note to add to the item | [optional] 
-**paidAmount** | **NSNumber*** | The amount already paid. Must match final price to complete purchase. Minimum 0 | 
+**paidAmount** | **NSNumber*** | The amount already paid. Must match final price to complete purchase. Ignored for non-paid endpoints. Minimum 0 | [optional] 
 **priceOverride** | **NSNumber*** | Override the price of an item, if the behavior configuration permits it. Do not send if taking standard pricing. Minimum 0 | [optional] 
 **sku** | **NSString*** | SKU of item being purchased | 
+**stateTax** | **NSNumber*** | The amount of state tax to add (increases final price of invoice even if using price override). Minimum 0 | [optional] 
 **template** | **NSString*** | An invoice template this invoice is validated against (private). May be null and no validation of properties will be done | [optional] 
 **transactionDetails** | **NSString*** | Transaction details | [optional] 
 **transactionType** | **NSString*** | Transaction type | 
