@@ -69,12 +69,12 @@ Name | Type | Description  | Notes
 # **payStripeInvoice**
 ```objc
 -(NSURLSessionTask*) payStripeInvoiceWithRequest: (JSAPIStripePaymentRequest*) request
-        completionHandler: (void (^)(NSError* error)) handler;
+        completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler;
 ```
 
 Pay with a single use token
 
-Obtain a token from Stripe, following their examples and documentation. Pays an invoice without creating a payment method. Ensure that Stripe itself has been configured with the webhook so that invoices are marked paid. <br><br><b>Permissions Needed:</b> ANY
+Obtain a token from Stripe, following their examples and documentation. Pays an invoice without creating a payment method. Ensure that Stripe itself has been configured with the webhook so that invoices are marked paid. A 200 status code indicates sucess with a return value of \"succeeded\". \"pending\" status is also a 200 and otherwise a non-200 will be sent for failures. <br><br><b>Permissions Needed:</b> ANY
 
 ### Example 
 ```objc
@@ -93,7 +93,10 @@ JSAPIPaymentsStripeApi*apiInstance = [[JSAPIPaymentsStripeApi alloc] init];
 
 // Pay with a single use token
 [apiInstance payStripeInvoiceWithRequest:request
-          completionHandler: ^(NSError* error) {
+          completionHandler: ^(JSAPIStringWrapper* output, NSError* error) {
+                        if (output) {
+                            NSLog(@"%@", output);
+                        }
                         if (error) {
                             NSLog(@"Error calling JSAPIPaymentsStripeApi->payStripeInvoice: %@", error);
                         }
@@ -108,7 +111,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**JSAPIStringWrapper***](JSAPIStringWrapper.md)
 
 ### Authorization
 

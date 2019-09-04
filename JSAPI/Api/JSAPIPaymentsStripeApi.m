@@ -3,6 +3,7 @@
 #import "JSAPIApiClient.h"
 #import "JSAPIPaymentMethodResource.h"
 #import "JSAPIResult.h"
+#import "JSAPIStringWrapper.h"
 #import "JSAPIStripeCreatePaymentMethod.h"
 #import "JSAPIStripePaymentRequest.h"
 
@@ -109,13 +110,13 @@ NSInteger kJSAPIPaymentsStripeApiMissingParamErrorCode = 234513;
 
 ///
 /// Pay with a single use token
-/// Obtain a token from Stripe, following their examples and documentation. Pays an invoice without creating a payment method. Ensure that Stripe itself has been configured with the webhook so that invoices are marked paid. <br><br><b>Permissions Needed:</b> ANY
+/// Obtain a token from Stripe, following their examples and documentation. Pays an invoice without creating a payment method. Ensure that Stripe itself has been configured with the webhook so that invoices are marked paid. A 200 status code indicates sucess with a return value of \"succeeded\". \"pending\" status is also a 200 and otherwise a non-200 will be sent for failures. <br><br><b>Permissions Needed:</b> ANY
 ///  @param request The request to pay an invoice (optional)
 ///
-///  @returns void
+///  @returns JSAPIStringWrapper*
 ///
 -(NSURLSessionTask*) payStripeInvoiceWithRequest: (JSAPIStripePaymentRequest*) request
-    completionHandler: (void (^)(NSError* error)) handler {
+    completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/payment/provider/stripe/payments"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
@@ -154,10 +155,10 @@ NSInteger kJSAPIPaymentsStripeApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: nil
+                              responseType: @"JSAPIStringWrapper*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler(error);
+                                    handler((JSAPIStringWrapper*)data, error);
                                 }
                             }];
 }

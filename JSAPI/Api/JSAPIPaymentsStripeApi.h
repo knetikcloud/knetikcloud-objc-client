@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "JSAPIPaymentMethodResource.h"
 #import "JSAPIResult.h"
+#import "JSAPIStringWrapper.h"
 #import "JSAPIStripeCreatePaymentMethod.h"
 #import "JSAPIStripePaymentRequest.h"
 #import "JSAPIApi.h"
@@ -43,7 +44,7 @@ extern NSInteger kJSAPIPaymentsStripeApiMissingParamErrorCode;
 
 
 /// Pay with a single use token
-/// Obtain a token from Stripe, following their examples and documentation. Pays an invoice without creating a payment method. Ensure that Stripe itself has been configured with the webhook so that invoices are marked paid. <br><br><b>Permissions Needed:</b> ANY
+/// Obtain a token from Stripe, following their examples and documentation. Pays an invoice without creating a payment method. Ensure that Stripe itself has been configured with the webhook so that invoices are marked paid. A 200 status code indicates sucess with a return value of \"succeeded\". \"pending\" status is also a 200 and otherwise a non-200 will be sent for failures. <br><br><b>Permissions Needed:</b> ANY
 ///
 /// @param request The request to pay an invoice (optional)
 /// 
@@ -53,9 +54,9 @@ extern NSInteger kJSAPIPaymentsStripeApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return void
+/// @return JSAPIStringWrapper*
 -(NSURLSessionTask*) payStripeInvoiceWithRequest: (JSAPIStripePaymentRequest*) request
-    completionHandler: (void (^)(NSError* error)) handler;
+    completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler;
 
 
 
