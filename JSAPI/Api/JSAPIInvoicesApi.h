@@ -253,10 +253,10 @@ extern NSInteger kJSAPIInvoicesApiMissingParamErrorCode;
 ///  code:403 message:"Forbidden",
 ///  code:404 message:"Not Found"
 ///
-/// @return void
+/// @return JSAPIStringWrapper*
 -(NSURLSessionTask*) payInvoiceWithId: (NSNumber*) _id
     request: (JSAPIPayBySavedMethodRequest*) request
-    completionHandler: (void (^)(NSError* error)) handler;
+    completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler;
 
 
 /// Set the fulfillment status of a bundled invoice item

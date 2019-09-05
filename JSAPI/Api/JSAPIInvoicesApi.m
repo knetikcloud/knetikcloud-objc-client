@@ -816,18 +816,18 @@ NSInteger kJSAPIInvoicesApiMissingParamErrorCode = 234513;
 ///
 ///  @param request The payment method details. Will default to the appropriate user's wallet in the invoice currency if ommited. (optional)
 ///
-///  @returns void
+///  @returns JSAPIStringWrapper*
 ///
 -(NSURLSessionTask*) payInvoiceWithId: (NSNumber*) _id
     request: (JSAPIPayBySavedMethodRequest*) request
-    completionHandler: (void (^)(NSError* error)) handler {
+    completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler {
     // verify the required parameter '_id' is set
     if (_id == nil) {
         NSParameterAssert(_id);
         if(handler) {
             NSDictionary * userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Missing required parameter '%@'", nil),@"_id"] };
             NSError* error = [NSError errorWithDomain:kJSAPIInvoicesApiErrorDomain code:kJSAPIInvoicesApiMissingParamErrorCode userInfo:userInfo];
-            handler(error);
+            handler(nil, error);
         }
         return nil;
     }
@@ -873,10 +873,10 @@ NSInteger kJSAPIInvoicesApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: nil
+                              responseType: @"JSAPIStringWrapper*"
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler(error);
+                                    handler((JSAPIStringWrapper*)data, error);
                                 }
                             }];
 }

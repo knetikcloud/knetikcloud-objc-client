@@ -693,7 +693,7 @@ Name | Type | Description  | Notes
 ```objc
 -(NSURLSessionTask*) payInvoiceWithId: (NSNumber*) _id
     request: (JSAPIPayBySavedMethodRequest*) request
-        completionHandler: (void (^)(NSError* error)) handler;
+        completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler;
 ```
 
 Pay an invoice using a saved payment method
@@ -719,7 +719,10 @@ JSAPIInvoicesApi*apiInstance = [[JSAPIInvoicesApi alloc] init];
 // Pay an invoice using a saved payment method
 [apiInstance payInvoiceWithId:_id
               request:request
-          completionHandler: ^(NSError* error) {
+          completionHandler: ^(JSAPIStringWrapper* output, NSError* error) {
+                        if (output) {
+                            NSLog(@"%@", output);
+                        }
                         if (error) {
                             NSLog(@"Error calling JSAPIInvoicesApi->payInvoice: %@", error);
                         }
@@ -735,7 +738,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**JSAPIStringWrapper***](JSAPIStringWrapper.md)
 
 ### Authorization
 

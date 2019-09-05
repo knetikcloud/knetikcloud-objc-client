@@ -235,6 +235,22 @@ extern NSInteger kJSAPIStoreApiMissingParamErrorCode;
     completionHandler: (void (^)(JSAPIInvoiceResource* output, NSError* error)) handler;
 
 
+/// One-step invoice creation
+/// Used to create an invoice. PAYMENTS_ADMIN permission is required if user ID is specified and is not the ID of the currently logged in user. <br><br><b>Permissions Needed:</b> PAYMENTS_USER and owner, or PAYMENTS_ADMIN
+///
+/// @param quickNewRequest Quick new details (optional)
+/// 
+///  code:200 message:"Item is being purchased, invoice provided in response",
+///  code:400 message:"Bad Request",
+///  code:401 message:"Unauthorized",
+///  code:403 message:"Forbidden",
+///  code:404 message:"Not Found"
+///
+/// @return JSAPIInvoiceResource*
+-(NSURLSessionTask*) quickNewWithQuickNewRequest: (JSAPIQuickPaidRequest*) quickNewRequest
+    completionHandler: (void (^)(JSAPIInvoiceResource* output, NSError* error)) handler;
+
+
 /// One-step purchase when already paid
 /// Used to create and automatically mark paid an invoice. Must not be an item that requires shipping. PAYMENTS_ADMIN permission is required if user ID is specified and is not the ID of the currently logged in user. <br><br><b>Permissions Needed:</b> PAYMENTS_USER and owner, or PAYMENTS_ADMIN
 ///

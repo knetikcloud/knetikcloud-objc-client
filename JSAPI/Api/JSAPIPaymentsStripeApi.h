@@ -48,7 +48,7 @@ extern NSInteger kJSAPIPaymentsStripeApiMissingParamErrorCode;
 ///
 /// @param request The request to pay an invoice (optional)
 /// 
-///  code:204 message:"No Content",
+///  code:200 message:"OK",
 ///  code:400 message:"Bad Request",
 ///  code:401 message:"Unauthorized",
 ///  code:403 message:"Forbidden",
