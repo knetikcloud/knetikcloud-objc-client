@@ -3,6 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**invoiceId** | **NSNumber*** | An invoice id to link the inventory to (skip_invoice should be true) | [optional] 
 **note** | **NSString*** | A note to be passed to the invoice or transaction | 
 **overrides** | **NSArray&lt;NSString*&gt;*** | A list of behaviors to ignore explicitely.  Ex: &#39;limited_gettable&#39; | [optional] 
 **skipInvoice** | **NSNumber*** | If set to true will cause the endpoint to skip creation of cart and invoice to track the inventory change | 

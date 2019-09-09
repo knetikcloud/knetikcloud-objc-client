@@ -22,6 +22,9 @@
 
 @interface JSAPIUserInventoryAddRequest : JSAPIObject
 
+/* An invoice id to link the inventory to (skip_invoice should be true) [optional]
+ */
+@property(nonatomic) NSNumber* invoiceId;
 /* A note to be passed to the invoice or transaction 
  */
 @property(nonatomic) NSString* note;

@@ -22,7 +22,7 @@
 
 + (NSDictionary *)modalDictionary {
 
-  return @{ @"note": @"note", @"overrides": @"overrides", @"skipInvoice": @"skip_invoice", @"sku": @"sku" };
+  return @{ @"invoiceId": @"invoice_id", @"note": @"note", @"overrides": @"overrides", @"skipInvoice": @"skip_invoice", @"sku": @"sku" };
 }
 
 /**
@@ -32,7 +32,7 @@
  */
 + (BOOL)propertyIsOptional:(NSString *)propertyName {
 
-  NSArray *optionalProperties = @[@"overrides", ];
+  NSArray *optionalProperties = @[@"invoiceId", @"overrides", ];
 
   return [optionalProperties containsObject:propertyName];
 }
