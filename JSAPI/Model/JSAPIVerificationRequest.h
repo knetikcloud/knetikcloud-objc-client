@@ -43,6 +43,9 @@
 /* The date, as a unix timestamp in seconds, that the request expires [optional]
  */
 @property(nonatomic) NSNumber* expirationDate;
+/* Whether to include letters, if the code is auto-generated. Default: true [optional]
+ */
+@property(nonatomic) NSNumber* includeLetters;
 /* Whether to include numbers, if the code is auto-generated. Default: true [optional]
  */
 @property(nonatomic) NSNumber* includeNumbers;

@@ -22,7 +22,7 @@
 
 + (NSDictionary *)modalDictionary {
 
-  return @{ @"additionalProperties": @"additional_properties", @"code": @"code", @"codelength": @"codelength", @"createdDate": @"created_date", @"expirationDate": @"expiration_date", @"includeNumbers": @"include_numbers", @"originator": @"originator", @"targetUser": @"target_user", @"template": @"template", @"updatedDate": @"updated_date" };
+  return @{ @"additionalProperties": @"additional_properties", @"code": @"code", @"codelength": @"codelength", @"createdDate": @"created_date", @"expirationDate": @"expiration_date", @"includeLetters": @"include_letters", @"includeNumbers": @"include_numbers", @"originator": @"originator", @"targetUser": @"target_user", @"template": @"template", @"updatedDate": @"updated_date" };
 }
 
 /**
@@ -32,7 +32,7 @@
  */
 + (BOOL)propertyIsOptional:(NSString *)propertyName {
 
-  NSArray *optionalProperties = @[@"additionalProperties", @"code", @"codelength", @"createdDate", @"expirationDate", @"includeNumbers", @"originator", @"targetUser", @"template", @"updatedDate"];
+  NSArray *optionalProperties = @[@"additionalProperties", @"code", @"codelength", @"createdDate", @"expirationDate", @"includeLetters", @"includeNumbers", @"originator", @"targetUser", @"template", @"updatedDate"];
 
   return [optionalProperties containsObject:propertyName];
 }
