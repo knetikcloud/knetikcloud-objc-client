@@ -192,6 +192,7 @@ extern NSInteger kJSAPIInvoicesApiMissingParamErrorCode;
 /// @param filterShipping Filters invoices by shipping price. Multiple values possible for range search. Format: filter_shipping&#x3D;OP,ts&amp;... where OP in (GT, LT, GOE, LOE, EQ). Ex: filter_shipping&#x3D;GT,14.58,LT,15.54 (optional)
 /// @param filterVendorName Filters invoices by vendor name starting with given string (optional)
 /// @param filterSku Filters invoices by item sku (optional)
+/// @param filterNotSku Filters for invoices that do not have an item sku (optional)
 /// @param size The number of objects returned per page (optional) (default to 25)
 /// @param page The number of the page returned, starting with 1 (optional) (default to 1)
 /// @param order A comma separated list of sorting requirements in priority order, each entry matching PROPERTY_NAME:[ASC|DESC] (optional)
@@ -217,6 +218,7 @@ extern NSInteger kJSAPIInvoicesApiMissingParamErrorCode;
     filterShipping: (NSString*) filterShipping
     filterVendorName: (NSString*) filterVendorName
     filterSku: (NSString*) filterSku
+    filterNotSku: (NSString*) filterNotSku
     size: (NSNumber*) size
     page: (NSNumber*) page
     order: (NSString*) order

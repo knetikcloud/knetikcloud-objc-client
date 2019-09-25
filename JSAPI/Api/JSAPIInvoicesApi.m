@@ -624,6 +624,8 @@ NSInteger kJSAPIInvoicesApiMissingParamErrorCode = 234513;
 ///
 ///  @param filterSku Filters invoices by item sku (optional)
 ///
+///  @param filterNotSku Filters for invoices that do not have an item sku (optional)
+///
 ///  @param size The number of objects returned per page (optional, default to 25)
 ///
 ///  @param page The number of the page returned, starting with 1 (optional, default to 1)
@@ -646,6 +648,7 @@ NSInteger kJSAPIInvoicesApiMissingParamErrorCode = 234513;
     filterShipping: (NSString*) filterShipping
     filterVendorName: (NSString*) filterVendorName
     filterSku: (NSString*) filterSku
+    filterNotSku: (NSString*) filterNotSku
     size: (NSNumber*) size
     page: (NSNumber*) page
     order: (NSString*) order
@@ -696,6 +699,9 @@ NSInteger kJSAPIInvoicesApiMissingParamErrorCode = 234513;
     }
     if (filterSku != nil) {
         queryParams[@"filter_sku"] = filterSku;
+    }
+    if (filterNotSku != nil) {
+        queryParams[@"filter_not_sku"] = filterNotSku;
     }
     if (size != nil) {
         queryParams[@"size"] = size;

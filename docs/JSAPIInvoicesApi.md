@@ -521,6 +521,7 @@ Name | Type | Description  | Notes
     filterShipping: (NSString*) filterShipping
     filterVendorName: (NSString*) filterVendorName
     filterSku: (NSString*) filterSku
+    filterNotSku: (NSString*) filterNotSku
     size: (NSNumber*) size
     page: (NSNumber*) page
     order: (NSString*) order
@@ -556,6 +557,7 @@ NSString* filterShippingCountryName = @"filterShippingCountryName_example"; // F
 NSString* filterShipping = @"filterShipping_example"; // Filters invoices by shipping price. Multiple values possible for range search. Format: filter_shipping=OP,ts&... where OP in (GT, LT, GOE, LOE, EQ). Ex: filter_shipping=GT,14.58,LT,15.54 (optional)
 NSString* filterVendorName = @"filterVendorName_example"; // Filters invoices by vendor name starting with given string (optional)
 NSString* filterSku = @"filterSku_example"; // Filters invoices by item sku (optional)
+NSString* filterNotSku = @"filterNotSku_example"; // Filters for invoices that do not have an item sku (optional)
 NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
 NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 NSString* order = @"order_example"; // A comma separated list of sorting requirements in priority order, each entry matching PROPERTY_NAME:[ASC|DESC] (optional)
@@ -577,6 +579,7 @@ JSAPIInvoicesApi*apiInstance = [[JSAPIInvoicesApi alloc] init];
               filterShipping:filterShipping
               filterVendorName:filterVendorName
               filterSku:filterSku
+              filterNotSku:filterNotSku
               size:size
               page:page
               order:order
@@ -608,6 +611,7 @@ Name | Type | Description  | Notes
  **filterShipping** | **NSString***| Filters invoices by shipping price. Multiple values possible for range search. Format: filter_shipping&#x3D;OP,ts&amp;... where OP in (GT, LT, GOE, LOE, EQ). Ex: filter_shipping&#x3D;GT,14.58,LT,15.54 | [optional] 
  **filterVendorName** | **NSString***| Filters invoices by vendor name starting with given string | [optional] 
  **filterSku** | **NSString***| Filters invoices by item sku | [optional] 
+ **filterNotSku** | **NSString***| Filters for invoices that do not have an item sku | [optional] 
  **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
  **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
  **order** | **NSString***| A comma separated list of sorting requirements in priority order, each entry matching PROPERTY_NAME:[ASC|DESC] | [optional] 
