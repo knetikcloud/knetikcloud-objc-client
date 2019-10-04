@@ -520,6 +520,12 @@ NSInteger kJSAPIVerificationApiMissingParamErrorCode = 234513;
 ///
 /// List requests
 /// Get a list of verification requests.<br /><b>Permissions Needed:</b> LIST
+///  @param filterTemplate Filter for verifications with specified template (optional)
+///
+///  @param filterTarget Filter for verifications with specified user id as the target (optional)
+///
+///  @param filterOriginator Filter for verifications with specified user id as the originator (optional)
+///
 ///  @param size The number of objects returned per page (optional, default to 25)
 ///
 ///  @param page The number of the page returned (optional, default to 1)
@@ -528,7 +534,10 @@ NSInteger kJSAPIVerificationApiMissingParamErrorCode = 234513;
 ///
 ///  @returns JSAPIPageResourceVerificationRequest_*
 ///
--(NSURLSessionTask*) getVerificationRequestsWithSize: (NSNumber*) size
+-(NSURLSessionTask*) getVerificationRequestsWithFilterTemplate: (NSString*) filterTemplate
+    filterTarget: (NSString*) filterTarget
+    filterOriginator: (NSString*) filterOriginator
+    size: (NSNumber*) size
     page: (NSNumber*) page
     order: (NSString*) order
     completionHandler: (void (^)(JSAPIPageResourceVerificationRequest_* output, NSError* error)) handler {
@@ -537,6 +546,15 @@ NSInteger kJSAPIVerificationApiMissingParamErrorCode = 234513;
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (filterTemplate != nil) {
+        queryParams[@"filter_template"] = filterTemplate;
+    }
+    if (filterTarget != nil) {
+        queryParams[@"filter_target"] = filterTarget;
+    }
+    if (filterOriginator != nil) {
+        queryParams[@"filter_originator"] = filterOriginator;
+    }
     if (size != nil) {
         queryParams[@"size"] = size;
     }

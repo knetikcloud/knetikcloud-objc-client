@@ -431,7 +431,10 @@ Name | Type | Description  | Notes
 
 # **getVerificationRequests**
 ```objc
--(NSURLSessionTask*) getVerificationRequestsWithSize: (NSNumber*) size
+-(NSURLSessionTask*) getVerificationRequestsWithFilterTemplate: (NSString*) filterTemplate
+    filterTarget: (NSString*) filterTarget
+    filterOriginator: (NSString*) filterOriginator
+    size: (NSNumber*) size
     page: (NSNumber*) page
     order: (NSString*) order
         completionHandler: (void (^)(JSAPIPageResourceVerificationRequest_* output, NSError* error)) handler;
@@ -452,6 +455,9 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 [apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
 
 
+NSString* filterTemplate = @"filterTemplate_example"; // Filter for verifications with specified template (optional)
+NSString* filterTarget = @"filterTarget_example"; // Filter for verifications with specified user id as the target (optional)
+NSString* filterOriginator = @"filterOriginator_example"; // Filter for verifications with specified user id as the originator (optional)
 NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
 NSNumber* page = @1; // The number of the page returned (optional) (default to 1)
 NSString* order = @"id:ASC"; // A comma separated list of sorting requirements in priority order, each entry matching PROPERTY_NAME:[ASC|DESC] (optional) (default to id:ASC)
@@ -459,7 +465,10 @@ NSString* order = @"id:ASC"; // A comma separated list of sorting requirements i
 JSAPIVerificationApi*apiInstance = [[JSAPIVerificationApi alloc] init];
 
 // List requests
-[apiInstance getVerificationRequestsWithSize:size
+[apiInstance getVerificationRequestsWithFilterTemplate:filterTemplate
+              filterTarget:filterTarget
+              filterOriginator:filterOriginator
+              size:size
               page:page
               order:order
           completionHandler: ^(JSAPIPageResourceVerificationRequest_* output, NSError* error) {
@@ -476,6 +485,9 @@ JSAPIVerificationApi*apiInstance = [[JSAPIVerificationApi alloc] init];
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **filterTemplate** | **NSString***| Filter for verifications with specified template | [optional] 
+ **filterTarget** | **NSString***| Filter for verifications with specified user id as the target | [optional] 
+ **filterOriginator** | **NSString***| Filter for verifications with specified user id as the originator | [optional] 
  **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
  **page** | **NSNumber***| The number of the page returned | [optional] [default to 1]
  **order** | **NSString***| A comma separated list of sorting requirements in priority order, each entry matching PROPERTY_NAME:[ASC|DESC] | [optional] [default to id:ASC]
