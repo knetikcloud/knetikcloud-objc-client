@@ -261,6 +261,24 @@ extern NSInteger kJSAPIInvoicesApiMissingParamErrorCode;
     completionHandler: (void (^)(JSAPIStringWrapper* output, NSError* error)) handler;
 
 
+/// Set the additional properties of an invoice
+/// <b>Permissions Needed:</b> INVOICES_ADMIN
+///
+/// @param _id The id of the invoice
+/// @param properties The new properties for the membership
+/// 
+///  code:204 message:"No Content",
+///  code:400 message:"Bad Request",
+///  code:401 message:"Unauthorized",
+///  code:403 message:"Forbidden",
+///  code:404 message:"Not Found"
+///
+/// @return void
+-(NSURLSessionTask*) setAdditionalPropertiesWithId: (NSNumber*) _id
+    properties: (NSObject*) properties
+    completionHandler: (void (^)(NSError* error)) handler;
+
+
 /// Set the fulfillment status of a bundled invoice item
 /// This allows external fulfillment systems to report success or failure. Fulfillment status changes are restricted by a specific flow determining which status can lead to which. <br><br><b>Permissions Needed:</b> INVOICES_ADMIN
 ///

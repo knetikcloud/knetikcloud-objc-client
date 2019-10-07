@@ -15,6 +15,7 @@ Method | HTTP request | Description
 [**getInvoices**](JSAPIInvoicesApi.md#getinvoices) | **GET** /invoices | Retrieve invoices
 [**getPaymentStatuses**](JSAPIInvoicesApi.md#getpaymentstatuses) | **GET** /invoices/payment-statuses | Lists available payment statuses
 [**payInvoice**](JSAPIInvoicesApi.md#payinvoice) | **POST** /invoices/{id}/payments | Pay an invoice using a saved payment method
+[**setAdditionalProperties**](JSAPIInvoicesApi.md#setadditionalproperties) | **PUT** /invoices/{id}/properties | Set the additional properties of an invoice
 [**setBundledInvoiceItemFulfillmentStatus**](JSAPIInvoicesApi.md#setbundledinvoiceitemfulfillmentstatus) | **PUT** /invoices/{id}/items/{bundleSku}/bundled-skus/{sku}/fulfillment-status | Set the fulfillment status of a bundled invoice item
 [**setExternalRef**](JSAPIInvoicesApi.md#setexternalref) | **PUT** /invoices/{id}/external-ref | Set the external reference of an invoice
 [**setInvoiceItemFulfillmentStatus**](JSAPIInvoicesApi.md#setinvoiceitemfulfillmentstatus) | **PUT** /invoices/{id}/items/{sku}/fulfillment-status | Set the fulfillment status of an invoice item
@@ -743,6 +744,65 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**JSAPIStringWrapper***](JSAPIStringWrapper.md)
+
+### Authorization
+
+[oauth2_client_credentials_grant](../README.md#oauth2_client_credentials_grant), [oauth2_password_grant](../README.md#oauth2_password_grant)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **setAdditionalProperties**
+```objc
+-(NSURLSessionTask*) setAdditionalPropertiesWithId: (NSNumber*) _id
+    properties: (NSObject*) properties
+        completionHandler: (void (^)(NSError* error)) handler;
+```
+
+Set the additional properties of an invoice
+
+<b>Permissions Needed:</b> INVOICES_ADMIN
+
+### Example 
+```objc
+JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_client_credentials_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2_password_grant)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+
+NSNumber* _id = @56; // The id of the invoice
+NSObject* properties = NULL; // The new properties for the membership
+
+JSAPIInvoicesApi*apiInstance = [[JSAPIInvoicesApi alloc] init];
+
+// Set the additional properties of an invoice
+[apiInstance setAdditionalPropertiesWithId:_id
+              properties:properties
+          completionHandler: ^(NSError* error) {
+                        if (error) {
+                            NSLog(@"Error calling JSAPIInvoicesApi->setAdditionalProperties: %@", error);
+                        }
+                    }];
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **_id** | **NSNumber***| The id of the invoice | 
+ **properties** | **NSObject***| The new properties for the membership | 
+
+### Return type
+
+void (empty response body)
 
 ### Authorization
 
