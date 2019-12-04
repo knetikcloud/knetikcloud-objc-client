@@ -28,6 +28,42 @@
 /* A map of additional properties, keyed on the property name (private). Must match the names and types defined in the template for this invoice type, or be an extra not from the template [optional]
  */
 @property(nonatomic) NSDictionary* additionalProperties;
+/* Line one of the customer's shipping address [optional]
+ */
+@property(nonatomic) NSString* address1;
+/* Line two of the customer's shipping address [optional]
+ */
+@property(nonatomic) NSString* address2;
+/* Line one of the customer's billing address [optional]
+ */
+@property(nonatomic) NSString* billingAddress1;
+/* Line two of the customer's billing address [optional]
+ */
+@property(nonatomic) NSString* billingAddress2;
+/* The city for the customer's billing address [optional]
+ */
+@property(nonatomic) NSString* billingCityName;
+/* The country for the customer's billing address [optional]
+ */
+@property(nonatomic) NSString* billingCountryName;
+/* The customer's name for the billing address [optional]
+ */
+@property(nonatomic) NSString* billingFullName;
+/* The postal code for the customer's billing address [optional]
+ */
+@property(nonatomic) NSString* billingPostalCode;
+/* The state for the customer's billing address [optional]
+ */
+@property(nonatomic) NSString* billingStateName;
+/* The city for the customer's shipping address [optional]
+ */
+@property(nonatomic) NSString* cityName;
+/* The country for the customer's shipping address [optional]
+ */
+@property(nonatomic) NSString* countryName;
+/* The customer's email address [optional]
+ */
+@property(nonatomic) NSString* email;
 /* The amount of federal tax to add (increases final price of invoice even if using price override). Minimum 0 [optional]
  */
 @property(nonatomic) NSNumber* federalTax;
@@ -37,15 +73,24 @@
 /* An optional note to add to the item [optional]
  */
 @property(nonatomic) NSString* itemNotes;
+/* The customer's name prefix [optional]
+ */
+@property(nonatomic) NSString* namePrefix;
 /* The amount already paid. Must match final price to complete purchase. Ignored for non-paid endpoints. Minimum 0 [optional]
  */
 @property(nonatomic) NSNumber* paidAmount;
+/* The postal code for the customer's shipping address [optional]
+ */
+@property(nonatomic) NSString* postalCode;
 /* Override the price of an item, if the behavior configuration permits it. Do not send if taking standard pricing. Minimum 0 [optional]
  */
 @property(nonatomic) NSNumber* priceOverride;
 /* SKU of item being purchased 
  */
 @property(nonatomic) NSString* sku;
+/* The state for the customer's shipping address [optional]
+ */
+@property(nonatomic) NSString* stateName;
 /* The amount of state tax to add (increases final price of invoice even if using price override). Minimum 0 [optional]
  */
 @property(nonatomic) NSNumber* stateTax;

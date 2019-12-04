@@ -22,7 +22,7 @@
 
 + (NSDictionary *)modalDictionary {
 
-  return @{ @"additionalProperties": @"additional_properties", @"federalTax": @"federal_tax", @"giftTarget": @"gift_target", @"itemNotes": @"item_notes", @"paidAmount": @"paid_amount", @"priceOverride": @"price_override", @"sku": @"sku", @"stateTax": @"state_tax", @"template": @"template", @"transactionDetails": @"transaction_details", @"transactionType": @"transaction_type", @"userId": @"user_id" };
+  return @{ @"additionalProperties": @"additional_properties", @"address1": @"address1", @"address2": @"address2", @"billingAddress1": @"billing_address1", @"billingAddress2": @"billing_address2", @"billingCityName": @"billing_city_name", @"billingCountryName": @"billing_country_name", @"billingFullName": @"billing_full_name", @"billingPostalCode": @"billing_postal_code", @"billingStateName": @"billing_state_name", @"cityName": @"city_name", @"countryName": @"country_name", @"email": @"email", @"federalTax": @"federal_tax", @"giftTarget": @"gift_target", @"itemNotes": @"item_notes", @"namePrefix": @"name_prefix", @"paidAmount": @"paid_amount", @"postalCode": @"postal_code", @"priceOverride": @"price_override", @"sku": @"sku", @"stateName": @"state_name", @"stateTax": @"state_tax", @"template": @"template", @"transactionDetails": @"transaction_details", @"transactionType": @"transaction_type", @"userId": @"user_id" };
 }
 
 /**
@@ -32,7 +32,7 @@
  */
 + (BOOL)propertyIsOptional:(NSString *)propertyName {
 
-  NSArray *optionalProperties = @[@"additionalProperties", @"federalTax", @"itemNotes", @"paidAmount", @"priceOverride", @"stateTax", @"template", @"transactionDetails", @"userId"];
+  NSArray *optionalProperties = @[@"additionalProperties", @"address1", @"address2", @"billingAddress1", @"billingAddress2", @"billingCityName", @"billingCountryName", @"billingFullName", @"billingPostalCode", @"billingStateName", @"cityName", @"countryName", @"email", @"federalTax", @"itemNotes", @"namePrefix", @"paidAmount", @"postalCode", @"priceOverride", @"stateName", @"stateTax", @"template", @"transactionDetails", @"userId"];
 
   return [optionalProperties containsObject:propertyName];
 }

@@ -22,9 +22,54 @@
 
 @interface JSAPIQuickBuyRequest : JSAPIObject
 
+/* Line one of the customer's shipping address [optional]
+ */
+@property(nonatomic) NSString* address1;
+/* Line two of the customer's shipping address [optional]
+ */
+@property(nonatomic) NSString* address2;
+/* Line one of the customer's billing address [optional]
+ */
+@property(nonatomic) NSString* billingAddress1;
+/* Line two of the customer's billing address [optional]
+ */
+@property(nonatomic) NSString* billingAddress2;
+/* The city for the customer's billing address [optional]
+ */
+@property(nonatomic) NSString* billingCityName;
+/* The country for the customer's billing address [optional]
+ */
+@property(nonatomic) NSString* billingCountryName;
+/* The customer's name for the billing address [optional]
+ */
+@property(nonatomic) NSString* billingFullName;
+/* The postal code for the customer's billing address [optional]
+ */
+@property(nonatomic) NSString* billingPostalCode;
+/* The state for the customer's billing address [optional]
+ */
+@property(nonatomic) NSString* billingStateName;
+/* The city for the customer's shipping address [optional]
+ */
+@property(nonatomic) NSString* cityName;
+/* The country for the customer's shipping address [optional]
+ */
+@property(nonatomic) NSString* countryName;
+/* The customer's email address [optional]
+ */
+@property(nonatomic) NSString* email;
+/* The customer's name prefix [optional]
+ */
+@property(nonatomic) NSString* namePrefix;
+/* The postal code for the customer's shipping address [optional]
+ */
+@property(nonatomic) NSString* postalCode;
 /* SKU of item being purchased 
  */
 @property(nonatomic) NSString* sku;
+/* The state for the customer's shipping address [optional]
+ */
+@property(nonatomic) NSString* stateName;
 /* ID of the user making the purchase. If null, currently logged in user will be used. [optional]
  */
 @property(nonatomic) NSNumber* userId;
