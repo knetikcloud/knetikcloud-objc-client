@@ -323,6 +323,7 @@ Name | Type | Description  | Notes
 # **getObjectItems**
 ```objc
 -(NSURLSessionTask*) getObjectItemsWithTemplateId: (NSString*) templateId
+    filterNameSearch: (NSString*) filterNameSearch
     size: (NSNumber*) size
     page: (NSNumber*) page
     order: (NSString*) order
@@ -345,6 +346,7 @@ JSAPIDefaultConfiguration *apiConfig = [JSAPIDefaultConfiguration sharedConfig];
 
 
 NSString* templateId = @"templateId_example"; // The id of the template to get objects for
+NSString* filterNameSearch = @"filterNameSearch_example"; // Filter for items whose name starts with a given string. (optional)
 NSNumber* size = @25; // The number of objects returned per page (optional) (default to 25)
 NSNumber* page = @1; // The number of the page returned, starting with 1 (optional) (default to 1)
 NSString* order = @"id:ASC"; // A comma separated list of sorting requirements in priority order, each entry matching PROPERTY_NAME:[ASC|DESC] (optional) (default to id:ASC)
@@ -353,6 +355,7 @@ JSAPIObjectsApi*apiInstance = [[JSAPIObjectsApi alloc] init];
 
 // List and search objects
 [apiInstance getObjectItemsWithTemplateId:templateId
+              filterNameSearch:filterNameSearch
               size:size
               page:page
               order:order
@@ -371,6 +374,7 @@ JSAPIObjectsApi*apiInstance = [[JSAPIObjectsApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **templateId** | **NSString***| The id of the template to get objects for | 
+ **filterNameSearch** | **NSString***| Filter for items whose name starts with a given string. | [optional] 
  **size** | **NSNumber***| The number of objects returned per page | [optional] [default to 25]
  **page** | **NSNumber***| The number of the page returned, starting with 1 | [optional] [default to 1]
  **order** | **NSString***| A comma separated list of sorting requirements in priority order, each entry matching PROPERTY_NAME:[ASC|DESC] | [optional] [default to id:ASC]

@@ -436,6 +436,8 @@ NSInteger kJSAPIObjectsApiMissingParamErrorCode = 234513;
 /// <b>Permissions Needed:</b> ANY
 ///  @param templateId The id of the template to get objects for 
 ///
+///  @param filterNameSearch Filter for items whose name starts with a given string. (optional)
+///
 ///  @param size The number of objects returned per page (optional, default to 25)
 ///
 ///  @param page The number of the page returned, starting with 1 (optional, default to 1)
@@ -445,6 +447,7 @@ NSInteger kJSAPIObjectsApiMissingParamErrorCode = 234513;
 ///  @returns JSAPIPageResourceObjectResource_*
 ///
 -(NSURLSessionTask*) getObjectItemsWithTemplateId: (NSString*) templateId
+    filterNameSearch: (NSString*) filterNameSearch
     size: (NSNumber*) size
     page: (NSNumber*) page
     order: (NSString*) order
@@ -468,6 +471,9 @@ NSInteger kJSAPIObjectsApiMissingParamErrorCode = 234513;
     }
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (filterNameSearch != nil) {
+        queryParams[@"filter_name_search"] = filterNameSearch;
+    }
     if (size != nil) {
         queryParams[@"size"] = size;
     }
